@@ -103,6 +103,8 @@ label {
     cursor: pointer;
 }
 
+
+
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
 body {
@@ -163,15 +165,20 @@ body {
 
         }
 
-        .quiz-type {
+        .quiz-type.displayNone {
             display: none;
         }
 
         .cat-list {
-            position: absolute;
+
+
             flex-direction: row;
             flex-wrap: wrap;
             padding: 20px;
+
+            &.displayNone {
+                display: none
+            }
 
             li {
                 width: 150px;
@@ -188,6 +195,7 @@ body {
                 }
             }
         }
+
 
 
 

@@ -8,8 +8,8 @@ import {
 } from './images.js';
 
 getImgs().then(value => {
-    makeCat(value, "artists")
-    makeCat(value, "paintings")
+    makeCat(value, "Artists")
+    makeCat(value, "Paintings")
 }, reason => {
     // отклонение
 });
