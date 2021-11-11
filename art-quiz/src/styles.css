@@ -149,7 +149,7 @@ body main {
   padding: 20px;
 }
 
-body main ul {
+body main .quiz-type {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -165,14 +165,65 @@ body main ul {
   font-size: 40px;
 }
 
-body main ul li {
+body main .quiz-type li {
   background-color: #57574f;
   padding: 20px;
   cursor: pointer;
   color: white;
 }
 
-body .settings {
+body .settings-popup {
+  position: absolute;
+  display: none;
+  width: 320px;
+  height: 250px;
+  top: -200px;
+  left: -330px;
+  background-color: #57574f;
+  padding: 20px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+body .settings-popup h2 {
+  font-size: 25px;
+}
+
+body .settings-popup h3 {
+  font-size: 16px;
+  text-align: left;
+}
+
+body .settings-popup .settings-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+body .settings-popup .but-set-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: right;
+      -ms-flex-pack: right;
+          justify-content: right;
+  -webkit-column-gap: 20px;
+          column-gap: 20px;
+}
+
+body .settings-position {
   position: absolute;
   bottom: 20px;
   right: 20px;
@@ -180,9 +231,23 @@ body .settings {
   background-color: transparent;
 }
 
-body .settings img {
+body .settings-position img {
   width: 40px;
   height: 40px;
+}
+
+body .settings-position #but-settings-open {
+  display: none;
+}
+
+body .settings-position label[for=but-settings-open] {
+  cursor: pointer;
+}
+
+body #but-settings-open:checked ~ .settings-popup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 body footer {
@@ -251,7 +316,7 @@ body footer ul a {
   body main {
     padding: 30px;
   }
-  body main ul {
+  body main .quiz-type {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
@@ -259,7 +324,7 @@ body footer ul a {
     -webkit-column-gap: 30px;
             column-gap: 30px;
   }
-  body main ul li {
+  body main .quiz-type li {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;

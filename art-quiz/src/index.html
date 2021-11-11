@@ -22,7 +22,7 @@
             <h1>Art Quiz</h1>
         </header>
         <main>
-            <ul>
+            <ul class="quiz-type">
                 <li>
                     <h2>Artists</h2>
 
@@ -32,9 +32,42 @@
 
                 </li>
             </ul>
-            <button class="settings">
-                <img src="./images/settings.svg" alt="settings">
-            </button>
+            <div class="settings settings-position">
+                <input type="checkbox" id="but-settings-open">
+                <label for="but-settings-open"><img src="./images/settings.svg" alt="settings"></label>
+
+                <div class="settings-popup">
+                    <h2>Settings</h2>
+                    <ul class="settings-list">
+                        <li>
+                            <h3>Volume</h3>
+                            <button class="volumeOff but-volume"></button>
+                            <input type="range">
+
+                            <button class="volumeOn but-volume"></button>
+                        </li>
+                        <li>
+                            <h3>Timer</h3>
+                            <input type="checkbox" id="toggle-button" class="toggle-button">
+                            <label for="toggle-button" class="text"></label>
+                        </li>
+                        <li>
+                            <h3>Time to answer</h3>
+                            <button class="time-down but-time"></button>
+                            <input type="text">
+                            <button class="time-up but-time"></button>
+                        </li>
+                    </ul>
+                    <ul class="but-set-list">
+                        <li>
+                            <button class="default-set but-set">Default</button>
+                        </li>
+                        <li>
+                            <button class="save-set but-set">Save</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </main>
 
         <footer>
