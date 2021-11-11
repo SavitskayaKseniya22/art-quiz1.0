@@ -106,13 +106,13 @@ body {
 
 
     .container {
-        background-color: #dbbebe73;
-        width: 100%;
+        background-color: rgba(219, 190, 190, 0.451);
+        min-width: 360px;
         height: 100vh;
         margin: 0 auto;
-        background-image: url("./images/leftanglestripes.png");
-        background-repeat: no-repeat;
-        background-position: left 15% bottom 100%;
+
+
+        background: linear-gradient(90deg, rgba(219, 190, 190, 0.45) 0%, rgba(219, 190, 190, 0.45) 20%, rgba(7, 175, 218, 1) 20%, rgba(7, 175, 218, 1) 32%, rgba(139, 195, 60, 1) 32%, rgba(139, 195, 60, 1) 44%, rgba(84, 99, 172, 1) 44%, rgba(84, 99, 172, 1) 56%, rgba(235, 12, 140, 1) 56%, rgba(235, 12, 140, 1) 68%, rgba(246, 143, 29, 1) 68%, rgba(246, 143, 29, 1) 80%, rgba(219, 190, 190, 0.45) 80%, rgba(219, 190, 190, 0.45) 100%);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -234,13 +234,7 @@ body {
     }
 
     @media (min-width: 1024px) {
-        .container {
 
-
-            background-size: auto;
-            background-position: left 550px bottom 370px;
-
-        }
 
         main {
 
@@ -266,10 +260,7 @@ body {
     @media (min-width: 1920px) {
         .container {
 
-            width: 1920px;
-            background-size: auto;
-            background-position: right -300px top 0;
-            background-repeat: repeat;
+
             background: linear-gradient(90deg, rgba(7, 175, 218, 1) 20%, rgba(139, 195, 60, 1) 20%, rgba(139, 195, 60, 1) 40%, rgba(84, 99, 172, 1) 40%, rgba(84, 99, 172, 1) 60%, rgba(235, 12, 140, 1) 60%, rgba(235, 12, 140, 1) 80%, rgba(246, 143, 29, 1) 80%, rgba(246, 143, 29, 1) 99%);
         }
 

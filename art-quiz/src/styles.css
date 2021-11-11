@@ -103,13 +103,12 @@ body {
 }
 
 body .container {
-  background-color: #dbbebe73;
-  width: 100%;
+  background-color: rgba(219, 190, 190, 0.451);
+  min-width: 360px;
   height: 100vh;
   margin: 0 auto;
-  background-image: url("./images/leftanglestripes.png");
-  background-repeat: no-repeat;
-  background-position: left 15% bottom 100%;
+  background: -webkit-gradient(linear, left top, right top, from(rgba(219, 190, 190, 0.45)), color-stop(20%, rgba(219, 190, 190, 0.45)), color-stop(20%, #07afda), color-stop(32%, #07afda), color-stop(32%, #8bc33c), color-stop(44%, #8bc33c), color-stop(44%, #5463ac), color-stop(56%, #5463ac), color-stop(56%, #eb0c8c), color-stop(68%, #eb0c8c), color-stop(68%, #f68f1d), color-stop(80%, #f68f1d), color-stop(80%, rgba(219, 190, 190, 0.45)), to(rgba(219, 190, 190, 0.45)));
+  background: linear-gradient(90deg, rgba(219, 190, 190, 0.45) 0%, rgba(219, 190, 190, 0.45) 20%, #07afda 20%, #07afda 32%, #8bc33c 32%, #8bc33c 44%, #5463ac 44%, #5463ac 56%, #eb0c8c 56%, #eb0c8c 68%, #f68f1d 68%, #f68f1d 80%, rgba(219, 190, 190, 0.45) 80%, rgba(219, 190, 190, 0.45) 100%);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -249,10 +248,6 @@ body footer ul a {
 }
 
 @media (min-width: 1024px) {
-  body .container {
-    background-size: auto;
-    background-position: left 550px bottom 370px;
-  }
   body main {
     padding: 30px;
   }
@@ -273,10 +268,6 @@ body footer ul a {
 
 @media (min-width: 1920px) {
   body .container {
-    width: 1920px;
-    background-size: auto;
-    background-position: right -300px top 0;
-    background-repeat: repeat;
     background: -webkit-gradient(linear, left top, right top, color-stop(20%, #07afda), color-stop(20%, #8bc33c), color-stop(40%, #8bc33c), color-stop(40%, #5463ac), color-stop(60%, #5463ac), color-stop(60%, #eb0c8c), color-stop(80%, #eb0c8c), color-stop(80%, #f68f1d), color-stop(99%, #f68f1d));
     background: linear-gradient(90deg, #07afda 20%, #8bc33c 20%, #8bc33c 40%, #5463ac 40%, #5463ac 60%, #eb0c8c 60%, #eb0c8c 80%, #f68f1d 80%, #f68f1d 99%);
   }
