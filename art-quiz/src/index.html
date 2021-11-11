@@ -6,14 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Art-quiz</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Righteous&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+
+
 </head>
 
 <body>
@@ -32,30 +26,42 @@
 
                 </li>
             </ul>
+
             <div class="settings settings-position">
                 <input type="checkbox" id="but-settings-open">
                 <label for="but-settings-open"><img src="./images/settings.svg" alt="settings"></label>
 
                 <div class="settings-popup">
+                    <label for="but-settings-open"><img src="./images/crossWhite.png" alt="cross"
+                            class="cross-close"></label>
+
                     <h2>Settings</h2>
                     <ul class="settings-list">
                         <li>
                             <h3>Volume</h3>
-                            <button class="volumeOff but-volume"></button>
-                            <input type="range">
+                            <div class="settings-block-content">
+                                <button class="but-volume-off but-volume"></button>
+                                <input type="range">
+                                <button class="but-volume-on but-volume"></button>
+                            </div>
 
-                            <button class="volumeOn but-volume"></button>
                         </li>
                         <li>
                             <h3>Timer</h3>
-                            <input type="checkbox" id="toggle-button" class="toggle-button">
-                            <label for="toggle-button" class="text"></label>
+                            <div class="settings-block-content">
+                                <input type="checkbox" id="toggle-button-timer" class="toggle-button">
+                                <label for="toggle-button-timer" class="text" name="off">Off</label>
+                                <label for="toggle-button-timer" class="text" name="on">On</label>
+                            </div>
+
                         </li>
                         <li>
                             <h3>Time to answer</h3>
-                            <button class="time-down but-time"></button>
-                            <input type="text">
-                            <button class="time-up but-time"></button>
+                            <div class="settings-block-content">
+                                <button class="but-time-down but-time"></button>
+                                <input type="text" value="15">
+                                <button class="but-time-up but-time"></button>
+                            </div>
                         </li>
                     </ul>
                     <ul class="but-set-list">

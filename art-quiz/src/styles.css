@@ -1,3 +1,5 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
 body,
 div,
 dl,
@@ -196,7 +198,6 @@ body .settings-popup h2 {
 
 body .settings-popup h3 {
   font-size: 16px;
-  text-align: left;
 }
 
 body .settings-popup .settings-list {
@@ -212,6 +213,47 @@ body .settings-popup .settings-list {
           justify-content: space-between;
 }
 
+body .settings-popup .settings-list h3 {
+  margin: 10px;
+}
+
+body .settings-popup .settings-list .settings-block-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-column-gap: 20px;
+          column-gap: 20px;
+}
+
+body .settings-popup .settings-list .but-volume,
+body .settings-popup .settings-list .but-time {
+  border: none;
+  background-color: transparent;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+body .settings-popup .settings-list .but-volume-off {
+  background-image: url("./images/volumeOf.svg");
+}
+
+body .settings-popup .settings-list .but-volume-on {
+  background-image: url("./images/volumeOn.svg");
+}
+
+body .settings-popup .settings-list .but-time-down {
+  background-image: url("./images/–.svg");
+}
+
+body .settings-popup .settings-list .but-time-up {
+  background-image: url("./images/+.svg");
+}
+
 body .settings-popup .but-set-list {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -221,6 +263,10 @@ body .settings-popup .but-set-list {
           justify-content: right;
   -webkit-column-gap: 20px;
           column-gap: 20px;
+}
+
+body #toggle-button-timer:checked ~ label[name="off"] {
+  display: none;
 }
 
 body .settings-position {

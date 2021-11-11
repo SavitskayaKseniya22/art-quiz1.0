@@ -99,6 +99,12 @@ h1 {
     color: gold;
 }
 
+label {
+    cursor: pointer;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
 body {
     background-color: #363636;
     color: white;
@@ -121,7 +127,7 @@ body {
     }
 
     header {
-        padding: 20px 20px;
+        padding: 5%;
         width: 100%;
         background-color: #3636367a;
     }
@@ -136,9 +142,11 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 20px;
+        padding: 5%;
 
-        .quiz-type {
+
+        .quiz-type,
+        .cat-list {
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -154,20 +162,60 @@ body {
             }
 
         }
+
+        .quiz-type {
+            display: none;
+        }
+
+        .cat-list {
+            position: absolute;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding: 20px;
+
+            li {
+                width: 150px;
+                padding: 10px;
+
+
+                h3 {
+                    font-size: 16px;
+                    margin-bottom: 10px;
+                }
+
+                img {
+                    width: 100%;
+                }
+            }
+        }
+
+
+
     }
+
+
 
     .settings-popup {
         position: absolute;
         display: none;
-        width: 320px;
-        height: 250px;
-        top: -200px;
-        left: -330px;
-        background-color: #57574f;
-        padding: 20px;
+        width: calc(100vw - 40px);
+        height: calc(100vh - 540px);
+        bottom: 0;
+        right: 0;
 
+        padding: 20px;
         flex-direction: column;
+
+
         justify-content: space-between;
+
+        .cross-close {
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            right: 20px;
+            cursor: pointer;
+        }
 
         h2 {
             font-size: 25px;
@@ -175,24 +223,97 @@ body {
 
         h3 {
             font-size: 16px;
-            text-align: left;
+
+
         }
 
         .settings-list {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            row-gap: 30px;
+
+            &>li {
+                display: flex;
+                flex-direction: column;
+                row-gap: 10px;
+                padding: 10px;
+                border-bottom: 1px double rgba(246, 143, 29, 0.5);
+                border-top: 3px double rgba(246, 143, 29, 1);
+            }
+
+
+
+            .settings-block-content {
+                display: flex;
+                justify-content: center;
+                column-gap: 20px;
+            }
+
+            .but-volume,
+            .but-time {
+                border: none;
+                background-color: transparent;
+                width: 20px;
+                height: 20px;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            .but-volume-off {
+                background-image: url("./images/volumeOf.svg");
+            }
+
+            .but-volume-on {
+                background-image: url("./images/volumeOn.svg");
+            }
+
+            .but-time-down {
+                background-image: url("./images/–.svg");
+            }
+
+            .but-time-up {
+                background-image: url("./images/+.svg");
+            }
+
+            label[name="off"] {
+                display: block;
+            }
+
+            label[name="on"] {
+                display: none;
+            }
+
+            #toggle-button-timer:checked~label[name="off"] {
+                display: none;
+            }
+
+            #toggle-button-timer:checked~label[name="on"] {
+                display: block;
+            }
 
 
         }
+
 
         .but-set-list {
             display: flex;
-
-            justify-content: right;
             column-gap: 20px;
+            width: 100%;
+
+            li {
+                flex-grow: 1;
+
+                .but-set {
+                    border: none;
+                    padding: 10px;
+                    width: 100%;
+                    color: rgba(84, 99, 172, 1)
+                }
+            }
         }
     }
+
 
     .settings-position {
         position: absolute;
@@ -212,19 +333,18 @@ body {
 
         }
 
-        label[for=but-settings-open] {
-            cursor: pointer;
+        #but-settings-open:checked~.settings-popup {
+            display: flex;
+
         }
     }
 
-    #but-settings-open:checked~.settings-popup {
-        display: flex;
-    }
+
 
 
     footer {
         background-color: #3636367a;
-        padding: 20px 20px;
+        padding: 5%;
         width: 100%;
         background-image: url("./images/bottomStripes.png");
         background-repeat: repeat-x;
@@ -254,6 +374,20 @@ body {
             background-size: auto;
             background-position: left 300px bottom 620px;
 
+        }
+
+        .settings-popup {
+            position: absolute;
+            display: none;
+            width: 400px;
+            height: calc(100vh - 540px);
+            bottom: 0;
+            right: 0;
+            background-color: #57574f;
+            padding: 20px;
+            flex-direction: column;
+
+            justify-content: space-between;
         }
 
         header {
