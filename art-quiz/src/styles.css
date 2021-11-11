@@ -104,7 +104,7 @@ body {
 
 body .container {
   background-color: #dbbebe73;
-  width: 360px;
+  width: 100%;
   height: 100vh;
   margin: 0 auto;
   background-image: url("./images/leftanglestripes.png");
@@ -191,7 +191,7 @@ body footer {
   padding: 20px 20px;
   width: 100%;
   background-image: url("./images/bottomStripes.png");
-  background-repeat: no-repeat;
+  background-repeat: repeat-x;
 }
 
 body footer ul {
@@ -214,5 +214,71 @@ body footer ul li {
 body footer ul a {
   color: white;
   font-size: 16px;
+}
+
+@media (min-width: 768px) {
+  body .container {
+    background-size: auto;
+    background-position: left 300px bottom 620px;
+  }
+  body header {
+    padding: 30px 30px;
+  }
+  body h1 {
+    font-size: 60px;
+  }
+  body footer {
+    padding: 30px 30px;
+  }
+  body footer ul {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    width: 100%;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  body footer ul li {
+    font-size: 20px;
+  }
+  body footer ul a {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  body .container {
+    background-size: auto;
+    background-position: left 550px bottom 370px;
+  }
+  body main {
+    padding: 30px;
+  }
+  body main ul {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-column-gap: 30px;
+            column-gap: 30px;
+  }
+  body main ul li {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+  }
+}
+
+@media (min-width: 1920px) {
+  body .container {
+    width: 1920px;
+    background-size: auto;
+    background-position: right -300px top 0;
+    background-repeat: repeat;
+    background: -webkit-gradient(linear, left top, right top, color-stop(20%, #07afda), color-stop(20%, #8bc33c), color-stop(40%, #8bc33c), color-stop(40%, #5463ac), color-stop(60%, #5463ac), color-stop(60%, #eb0c8c), color-stop(80%, #eb0c8c), color-stop(80%, #f68f1d), color-stop(99%, #f68f1d));
+    background: linear-gradient(90deg, #07afda 20%, #8bc33c 20%, #8bc33c 40%, #5463ac 40%, #5463ac 60%, #eb0c8c 60%, #eb0c8c 80%, #f68f1d 80%, #f68f1d 99%);
+  }
 }
 /*# sourceMappingURL=styles.css.map */
