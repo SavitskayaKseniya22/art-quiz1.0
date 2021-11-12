@@ -84,6 +84,8 @@ ins {
 
 button {
     cursor: pointer;
+    border: none;
+    background-color: transparent;
 
 }
 
@@ -131,11 +133,27 @@ body {
         padding: 5%;
         width: 100%;
         background-color: #3636367a;
+        position: relative;
+
+        .back-home-button {
+
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            top: 0;
+            right: 0;
+
+            &.displayNone {
+                display: none;
+            }
+        }
     }
 
     h1 {
         font-size: 50px;
     }
+
+
 
     main {
         position: relative;
@@ -155,7 +173,7 @@ body {
             width: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
             row-gap: 20px;
 
             font-size: 40px;
@@ -181,11 +199,14 @@ body {
             padding: 20px;
             column-gap: 20px;
             row-gap: 20px;
+            align-items: baseline;
+
 
 
             li {
                 width: 150px;
                 padding: 10px;
+
 
                 h3 {
                     font-size: 16px;
@@ -200,9 +221,9 @@ body {
     }
 
     .settings-position {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
         border: none;
         background-color: transparent;
         z-index: 100;
@@ -278,8 +299,7 @@ body {
 
             .but-volume,
             .but-time {
-                border: none;
-                background-color: transparent;
+
                 width: 20px;
                 height: 20px;
                 background-repeat: no-repeat;
@@ -329,7 +349,7 @@ body {
                 flex-grow: 1;
 
                 .but-set {
-                    border: none;
+
                     padding: 10px;
                     width: 100%;
                     color: rgba(84, 99, 172, 1)
@@ -393,12 +413,10 @@ body {
         }
 
         .settings-position {
-            position: absolute;
+            bottom: 130px;
         }
 
         .settings-popup {
-
-
             width: 400px;
             height: 500px;
             top: 38%;
