@@ -9,8 +9,8 @@ import {
     images
 } from './images.js';
 import {
-
-    fillArtistsCat,
+    fillPaintingsCat,
+    fillArtistsCat
 
 } from './questions.js';
 
@@ -18,6 +18,7 @@ getImgs().then(value => {
     makeCat(value, "Artists")
     makeCat(value, "Paintings")
     fillArtistsCat(value, images, mainBlock)
+    fillPaintingsCat(value, images, mainBlock)
 
 
 

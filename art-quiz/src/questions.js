@@ -14,7 +14,58 @@ class Picture {
         return this.desc.year
     }
 }
+class QuestionPaintings {
+    constructor(obj, block, arr) {
+        this.pic = obj.pic;
+        this.block = block
+        this.arr = arr
 
+
+        let mainLi = document.createElement("li");
+
+        let liArr = [];
+        let img = document.createElement("img");
+        img.src = this.pic;
+
+        liArr.push(img)
+
+        for (let i = 0; i < 3; i++) {
+            let img = document.createElement("img");
+            img.src = this.arr[random(240)]
+            liArr.push(img)
+        }
+        shuffle(liArr)
+
+        for (let i = 0; i < liArr.length; i++) {
+            mainLi.appendChild(liArr[i])
+        }
+        this.block.appendChild(mainLi)
+    }
+}
+
+function makePaintingsQuestion(arrPic, arrDesc, block, i) {
+
+    let arrImgs = getAllImages(arrPic, arrDesc);
+    let arrAuthors = getAllAuthors(arrDesc)
+    return (new QuestionPaintings(arrImgs[i], block, arrPic))
+
+
+}
+
+export function fillPaintingsCat(arrPic, arrDesc, block) {
+    let k = 120;
+    for (let j = 0; j < 12; j++) {
+        let ul1 = document.createElement("ul")
+
+        for (let i = 0; i < 10; i++) {
+            makePaintingsQuestion(arrPic, arrDesc, ul1, k)
+            k++;
+        }
+
+        block.appendChild(ul1)
+    }
+
+}
 
 
 class QuestionArtist {
