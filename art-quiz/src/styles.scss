@@ -111,15 +111,14 @@ body {
     background-color: #363636;
     color: white;
     font-family: 'Righteous', cursive;
+    min-width: 320px;
 
 
     .container {
         background-color: rgba(219, 190, 190, 0.451);
-        min-width: 360px;
+        min-width: 320px;
         height: 100vh;
         margin: 0 auto;
-
-
         background: linear-gradient(90deg, rgba(219, 190, 190, 0.45) 0%, rgba(219, 190, 190, 0.45) 20%, rgba(7, 175, 218, 1) 20%, rgba(7, 175, 218, 1) 32%, rgba(139, 195, 60, 1) 32%, rgba(139, 195, 60, 1) 44%, rgba(84, 99, 172, 1) 44%, rgba(84, 99, 172, 1) 56%, rgba(235, 12, 140, 1) 56%, rgba(235, 12, 140, 1) 68%, rgba(246, 143, 29, 1) 68%, rgba(246, 143, 29, 1) 80%, rgba(219, 190, 190, 0.45) 80%, rgba(219, 190, 190, 0.45) 100%);
         display: flex;
         flex-direction: column;
@@ -145,7 +144,11 @@ body {
         justify-content: center;
         align-items: center;
         padding: 5%;
+        overflow-y: auto;
 
+        &.main-not-centered {
+            align-items: unset;
+        }
 
         .quiz-type,
         .cat-list {
@@ -154,7 +157,14 @@ body {
             flex-direction: column;
             justify-content: space-between;
             row-gap: 20px;
+
             font-size: 40px;
+            position: relative;
+            z-index: 99;
+
+            &.displayNone {
+                display: none;
+            }
 
             li {
                 background-color: rgb(87, 87, 79);
@@ -162,28 +172,20 @@ body {
                 cursor: pointer;
                 color: white;
             }
-
-        }
-
-        .quiz-type.displayNone {
-            display: none;
         }
 
         .cat-list {
 
-
             flex-direction: row;
             flex-wrap: wrap;
             padding: 20px;
+            column-gap: 20px;
+            row-gap: 20px;
 
-            &.displayNone {
-                display: none
-            }
 
             li {
                 width: 150px;
                 padding: 10px;
-
 
                 h3 {
                     font-size: 16px;
@@ -195,27 +197,47 @@ body {
                 }
             }
         }
-
-
-
-
     }
 
+    .settings-position {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        border: none;
+        background-color: transparent;
+        z-index: 100;
 
+
+        img {
+            width: 40px;
+            height: 40px;
+        }
+
+        #but-settings-open {
+            display: none;
+
+        }
+
+        #but-settings-open:checked~.settings-popup {
+            display: flex;
+
+        }
+    }
 
     .settings-popup {
-        position: absolute;
+        position: fixed;
         display: none;
+        min-width: 280px;
         width: calc(100vw - 40px);
         height: calc(100vh - 540px);
-        bottom: 0;
-        right: 0;
-
+        top: 30%;
+        right: 20px;
         padding: 20px;
         flex-direction: column;
-
-
         justify-content: space-between;
+        background-color: #57574f;
+        box-shadow: 0px 0px 50px 90px #363636d7;
+        transition: .5s;
 
         .cross-close {
             width: 15px;
@@ -231,8 +253,6 @@ body {
 
         h3 {
             font-size: 16px;
-
-
         }
 
         .settings-list {
@@ -249,8 +269,6 @@ body {
                 border-bottom: 1px double rgba(246, 143, 29, 0.5);
                 border-top: 3px double rgba(246, 143, 29, 1);
             }
-
-
 
             .settings-block-content {
                 display: flex;
@@ -299,8 +317,6 @@ body {
             #toggle-button-timer:checked~label[name="on"] {
                 display: block;
             }
-
-
         }
 
 
@@ -321,33 +337,6 @@ body {
             }
         }
     }
-
-
-    .settings-position {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        border: none;
-        background-color: transparent;
-
-
-        img {
-            width: 40px;
-            height: 40px;
-        }
-
-        #but-settings-open {
-            display: none;
-
-        }
-
-        #but-settings-open:checked~.settings-popup {
-            display: flex;
-
-        }
-    }
-
-
 
 
     footer {
@@ -377,25 +366,9 @@ body {
 
     @media (min-width: 768px) {
         .container {
-
-
             background-size: auto;
             background-position: left 300px bottom 620px;
 
-        }
-
-        .settings-popup {
-            position: absolute;
-            display: none;
-            width: 400px;
-            height: calc(100vh - 540px);
-            bottom: 0;
-            right: 0;
-            background-color: #57574f;
-            padding: 20px;
-            flex-direction: column;
-
-            justify-content: space-between;
         }
 
         header {
@@ -406,13 +379,41 @@ body {
             font-size: 60px;
         }
 
+        main {
+            .cat-list {
+                li {
+                    width: 200px;
+
+                    h3 {
+                        font-size: 20px;
+
+                    }
+                }
+            }
+        }
+
+        .settings-position {
+            position: absolute;
+        }
+
+        .settings-popup {
+
+
+            width: 400px;
+            height: 500px;
+            top: 38%;
+            right: 20px;
+            box-shadow: 0px 0px 50px 1000px #363636d7;
+        }
+
+
+
 
 
         footer {
             padding: 30px 30px;
 
             ul {
-
                 flex-direction: row;
                 width: 100%;
                 justify-content: space-between;
@@ -432,33 +433,56 @@ body {
 
 
         main {
-
             padding: 30px;
 
             .quiz-type {
-
                 flex-direction: row;
-
                 column-gap: 30px;
 
                 li {
                     flex-grow: 1;
-
-
                 }
-
             }
+
+
         }
 
+        .settings-popup {
+            top: 20%;
+            box-shadow: 0px 0px 50px 2000px #363636d7;
+        }
     }
 
     @media (min-width: 1920px) {
         .container {
-
-
             background: linear-gradient(90deg, rgba(7, 175, 218, 1) 20%, rgba(139, 195, 60, 1) 20%, rgba(139, 195, 60, 1) 40%, rgba(84, 99, 172, 1) 40%, rgba(84, 99, 172, 1) 60%, rgba(235, 12, 140, 1) 60%, rgba(235, 12, 140, 1) 80%, rgba(246, 143, 29, 1) 80%, rgba(246, 143, 29, 1) 99%);
         }
 
-    }
+        .settings-popup {
+            top: 38%;
 
+        }
+
+
+        main {
+            .cat-list {
+
+                column-gap: 30px;
+                row-gap: 40px;
+
+                li {
+                    width: 250px;
+
+
+                    h3 {
+                        font-size: 25px;
+
+                    }
+
+
+                }
+            }
+        }
+
+    }
 }

@@ -11,10 +11,11 @@ class Category {
 }
 let choosenCats = document.querySelectorAll(".quiz-type h2")
 let quizType = document.querySelector(".quiz-type")
+let mainBlock = document.querySelector("main")
 for (const elem of choosenCats) {
     elem.addEventListener("click", function (event) {
         quizType.classList.add("displayNone")
-        console.log(event.target.textContent)
+        mainBlock.classList.add("main-not-centered")
         let list = document.querySelector(`.${event.target.textContent}`)
         list.classList.remove("displayNone")
 
@@ -50,7 +51,7 @@ export function makeCat(arr, catName) {
 
         ul.appendChild(li)
     }
-    let mainBlock = document.querySelector("main")
+
     mainBlock.appendChild(ul)
 }
 

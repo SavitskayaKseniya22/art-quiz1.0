@@ -14,4 +14,4 @@ getImgs().then(value => {
     // отклонение
 });
 
-console.log(images)
+//console.log(images)
