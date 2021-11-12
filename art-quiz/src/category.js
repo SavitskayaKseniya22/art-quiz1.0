@@ -11,7 +11,7 @@ class Category {
 }
 let choosenCats = document.querySelectorAll(".quiz-type h2")
 let quizType = document.querySelector(".quiz-type")
-let mainBlock = document.querySelector("main")
+export let mainBlock = document.querySelector("main")
 let backHomeButton = document.querySelector(".back-home-button")
 for (const elem of choosenCats) {
     elem.addEventListener("click", function (event) {

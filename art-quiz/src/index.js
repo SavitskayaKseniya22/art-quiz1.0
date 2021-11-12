@@ -2,21 +2,22 @@ import './styles.scss'
 import {
     makeCat,
     getImgs,
-    makeCatQuestion
+    makeCatQuestion,
+    mainBlock
 
 } from './category.js';
 import {
     images
 } from './images.js';
 import {
-    makeArtistsQuestion,
+    makeArtistsQuestions,
     getAllAuthors
 } from './questions.js';
 
 getImgs().then(value => {
     makeCat(value, "Artists")
     makeCat(value, "Paintings")
-    makeArtistsQuestion(value, images)
+    makeArtistsQuestions(value, images, mainBlock)
     makeCatQuestion()
     getAllAuthors(images)
 }, reason => {

@@ -23,9 +23,23 @@ class Picture {
 
 }
 class QuestionArtist {
-    constructor(obj) {
-        this.obj = obj;
-        this.desc = desc;
+    constructor(obj, block) {
+        this.pic = obj.pic;
+        this.desc = obj.desc;
+        this.block = block
+
+        let div = document.createElement("div");
+        let img = document.createElement("img");
+        img.src = this.pic;
+        div.appendChild(img)
+        let ul = document.createElement("ul");
+        div.appendChild(ul)
+
+        let li = document.createElement("li");
+        li.textContent = this.desc.author
+
+        ul.appendChild(li)
+        this.block.appendChild(div)
 
     }
 }
@@ -40,21 +54,22 @@ function makeAllImages(arrPic, arrDesc) {
 }
 export function getAllAuthors(arrDesc) {
     let authors = [];
-    console.log(arrDesc)
+    //console.log(arrDesc)
     for (let i = 0; i < arrDesc.length; i++) {
         authors.push(arrDesc[i].author)
     }
-    console.log(authors)
+    //console.log(authors)
     return authors
 
 }
-export function makeArtistsQuestion(arrPic, arrDesc) {
+export function makeArtistsQuestions(arrPic, arrDesc, block) {
     //console.log(arrPic)
     //console.log(arrDesc)
     //console.log(makeAllImages(arrPic, arrDesc))
 
     let arr = makeAllImages(arrPic, arrDesc);
-    console.log(arr[0].name)
+
+    return (new QuestionArtist(arr[0], block))
 
 
 }
