@@ -1,10 +1,3 @@
-import {
-    images
-} from './images.js';
-
-
-
-
 class Picture {
     constructor(pic, desc) {
         this.pic = pic;
@@ -20,8 +13,10 @@ class Picture {
     get year() {
         return this.desc.year
     }
-
 }
+
+
+
 class QuestionArtist {
     constructor(obj, block, arr) {
         this.pic = obj.pic;
@@ -29,14 +24,14 @@ class QuestionArtist {
         this.block = block
         this.arr = arr
 
-        let div = document.createElement("div");
+        let mainLi = document.createElement("li");
         let img = document.createElement("img");
         img.src = this.pic;
-        div.appendChild(img)
+        mainLi.appendChild(img)
         let ul = document.createElement("ul");
-        div.appendChild(ul)
+        ul.classList.add("catSingle")
+        mainLi.appendChild(ul)
         let liArr = [];
-
         let li = document.createElement("li");
         li.textContent = this.desc.author;
         liArr.push(li)
@@ -48,10 +43,10 @@ class QuestionArtist {
         }
         shuffle(liArr)
         for (let i = 0; i < liArr.length; i++) {
+            liArr[i].classList.add("catSingleElem")
             ul.appendChild(liArr[i])
         }
-        this.block.appendChild(div)
-
+        this.block.appendChild(mainLi)
     }
 }
 
@@ -61,9 +56,9 @@ function getAllImages(arrPic, arrDesc) {
         allImages.push(new Picture(arrPic[i], arrDesc[i]))
     }
     return allImages;
-
 }
-export function getAllAuthors(arrDesc) {
+
+function getAllAuthors(arrDesc) {
     let authors = [];
     for (let i = 0; i < arrDesc.length; i++) {
         authors.push(arrDesc[i].author)
@@ -71,15 +66,34 @@ export function getAllAuthors(arrDesc) {
     return authors
 
 }
-export function makeArtistsQuestions(arrPic, arrDesc, block) {
 
+function makeArtistsQuestion(arrPic, arrDesc, block, i) {
 
     let arrImgs = getAllImages(arrPic, arrDesc);
     let arrAuthors = getAllAuthors(arrDesc)
-    return (new QuestionArtist(arrImgs[0], block, arrAuthors))
+    return (new QuestionArtist(arrImgs[i], block, arrAuthors))
 
 
 }
+
+export function fillArtistsCat(arrPic, arrDesc, block) {
+    let k = 0;
+    for (let j = 0; j < 12; j++) {
+        let ul1 = document.createElement("ul")
+
+        for (let i = 0; i < 10; i++) {
+            makeArtistsQuestion(arrPic, arrDesc, ul1, k)
+            k++;
+        }
+
+        block.appendChild(ul1)
+    }
+
+}
+
+
+
+
 
 function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {

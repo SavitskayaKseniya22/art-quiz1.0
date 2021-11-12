@@ -2,7 +2,6 @@ import './styles.scss'
 import {
     makeCat,
     getImgs,
-    makeCatQuestion,
     mainBlock
 
 } from './category.js';
@@ -10,15 +9,17 @@ import {
     images
 } from './images.js';
 import {
-    makeArtistsQuestions,
-    getAllAuthors
+
+    fillArtistsCat,
+
 } from './questions.js';
 
 getImgs().then(value => {
     makeCat(value, "Artists")
     makeCat(value, "Paintings")
-    makeArtistsQuestions(value, images, mainBlock)
-    makeCatQuestion()
+    fillArtistsCat(value, images, mainBlock)
+
+
 
 }, reason => {
     // отклонение

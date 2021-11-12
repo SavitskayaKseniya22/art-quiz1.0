@@ -73,17 +73,3 @@ export async function getImgs() {
     }
     return arrImgs
 }
-
-export function makeCatQuestion(arr, catName) {
-    for (let j = 0; j < 12; j++) {
-        let ul = document.createElement("ul")
-
-        for (let i = 1; i <= 10; i++) {
-            let li = document.createElement("li");
-            ul.appendChild(li)
-        }
-
-        mainBlock.appendChild(ul)
-    }
-
-}
