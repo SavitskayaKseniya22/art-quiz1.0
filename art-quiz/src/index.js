@@ -19,7 +19,7 @@ getImgs().then(value => {
     makeCat(value, "Paintings")
     makeArtistsQuestions(value, images, mainBlock)
     makeCatQuestion()
-    getAllAuthors(images)
+
 }, reason => {
     // отклонение
 });
