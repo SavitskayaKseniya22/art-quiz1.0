@@ -44,6 +44,7 @@ function getAllAuthors(arrDesc) {
 class QuestionPaintings {
   constructor(obj, block, arr) {
     this._pic = obj.pic;
+    this.desc = obj.desc;
     this.block = block;
     this.arr = arr;
 
@@ -96,10 +97,13 @@ export function fillPaintingsCat(arrPic, arrDesc, block) {
       let obj = makePaintingsQuestion(arrPic, arrDesc, ul, k);
       for (let elem of obj.liArr) {
         elem.addEventListener("click", function () {
+
           if (elem.src == obj.pic) {
-            alert(1)
+
+            printCard(elem, obj, "true", getNext)
           } else {
-            alert(0)
+
+            printCard(elem, obj, "false", getNext)
           }
         })
       }
@@ -187,24 +191,17 @@ export function fillArtistsCat(arrPic, arrDesc, block) {
 
     for (let i = 0; i < 10; i++) {
       let obj = makeArtistsQuestion(arrPic, arrDesc, ul, k);
+
       for (let elem of obj.liArr) {
         elem.addEventListener("click", function () {
-          function ggg() {
-            let tempDiv = document.querySelector(".tempDiv")
-            tempDiv.classList.remove("tempDiv")
-            tempDiv.parentNode.classList.add("displayNone")
-            tempDiv.parentNode.classList.add("complete")
-            tempDiv.parentNode.nextSibling.classList.remove("displayNone")
 
 
-
-          }
           if (elem.textContent == obj.rightAnswer) {
 
-            printCard(elem, obj, "true", ggg)
+            printCard(elem.parentNode, obj, "true", getNext)
 
           } else {
-            printCard(elem, obj, "false", ggg)
+            printCard(elem.parentNode, obj, "false", getNext)
           }
         })
       }
@@ -216,13 +213,22 @@ export function fillArtistsCat(arrPic, arrDesc, block) {
 }
 
 function printCard(elem, obj, result, func) {
-  for (let item of elem.parentNode.parentNode.childNodes) {
+  for (let item of elem.parentNode.childNodes) {
     item.classList.add("displayNone")
   }
-  new Card(obj, elem.parentNode.parentNode, result, func)
+  new Card(obj, elem.parentNode, result, func)
 }
 
+function getNext() {
+  let tempDiv = document.querySelector(".tempDiv")
+  tempDiv.classList.remove("tempDiv")
+  tempDiv.parentNode.classList.add("displayNone")
+  tempDiv.parentNode.classList.add("complete")
+  if (tempDiv.parentNode.nextSibling) {
+    tempDiv.parentNode.nextSibling.classList.remove("displayNone")
+  }
 
+}
 
 
 
