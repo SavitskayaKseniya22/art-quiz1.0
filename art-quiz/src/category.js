@@ -1,6 +1,7 @@
 let quizType = document.querySelector(".quiz-type");
 export let mainBlock = document.querySelector("main");
 let backHomeButton = document.querySelector(".back-home-button");
+
 let backCat = document.querySelector(".back-cat");
 document.addEventListener("click", function (event) {
 
@@ -12,6 +13,7 @@ document.addEventListener("click", function (event) {
     list.classList.remove("displayNone");
     list.classList.add("activeCat");
     backHomeButton.removeAttribute("disabled")
+
   } else if (event.target.closest(".back-home-button")) {
     quizType.classList.remove("displayNone");
     mainBlock.classList.remove("main-not-centered");
@@ -20,6 +22,7 @@ document.addEventListener("click", function (event) {
     makeAllCatInvis()
     makeAllQInvis()
     makeAllCatInactive()
+
   } else if (event.target.closest(".back-cat")) {
     backCat.setAttribute("disabled", "true")
     makeAllQInvis()

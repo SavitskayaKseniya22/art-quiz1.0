@@ -111,6 +111,7 @@ class QuestionArtist {
     this.desc = obj.desc;
     this.block = block;
     this.arr = arr;
+    this._rightAnswer = this.desc.author;
 
     let mainLi = document.createElement("li");
     let img = document.createElement("img");
@@ -119,23 +120,36 @@ class QuestionArtist {
     let ul = document.createElement("ul");
     ul.classList.add("possibleAnswer");
     mainLi.appendChild(ul);
-    let liArr = [];
+    this._liArr = [];
     let li = document.createElement("li");
     li.textContent = this.desc.author;
-    liArr.push(li);
+    this._liArr.push(li);
 
     for (let i = 0; i < 3; i++) {
       let li = document.createElement("li");
       li.textContent = this.arr[random(240)];
-      liArr.push(li);
+      this._liArr.push(li);
     }
-    shuffle(liArr);
-    for (let i = 0; i < liArr.length; i++) {
-      liArr[i].classList.add("possibleAnswerElem");
-      ul.appendChild(liArr[i]);
+    shuffle(this._liArr);
+    for (let elem of this._liArr) {
+      elem.classList.add("possibleAnswerElem");
+      ul.appendChild(elem);
     }
+    if (this.block.childNodes.length != 0) {
+      mainLi.classList.add("displayNone")
+    }
+
+
     this.block.appendChild(mainLi);
+
   }
+  get rightAnswer() {
+    return this._rightAnswer
+  }
+  get liArr() {
+    return this._liArr
+  }
+
 }
 
 function makeArtistsQuestion(arrPic, arrDesc, block, i) {
@@ -154,7 +168,16 @@ export function fillArtistsCat(arrPic, arrDesc, block) {
     ul.classList.add("displayNone");
 
     for (let i = 0; i < 10; i++) {
-      makeArtistsQuestion(arrPic, arrDesc, ul, k);
+      let obj = makeArtistsQuestion(arrPic, arrDesc, ul, k);
+      for (let elem of obj.liArr) {
+        elem.addEventListener("click", function () {
+          if (elem.textContent == obj.rightAnswer) {
+            alert(1)
+          } else {
+            alert(0)
+          }
+        })
+      }
       k++;
     }
 
