@@ -189,10 +189,15 @@ export function fillArtistsCat(arrPic, arrDesc, block) {
       let obj = makeArtistsQuestion(arrPic, arrDesc, ul, k);
       for (let elem of obj.liArr) {
         elem.addEventListener("click", function () {
-          if (elem.textContent == obj.rightAnswer) {
+          function ggg() {
             alert(1)
+          }
+          if (elem.textContent == obj.rightAnswer) {
+
+            printCard(elem, obj, "true", ggg)
+
           } else {
-            alert(0)
+            printCard(elem, obj, "false", ggg)
           }
         })
       }
@@ -203,6 +208,12 @@ export function fillArtistsCat(arrPic, arrDesc, block) {
   }
 }
 
+function printCard(elem, obj, result, func) {
+  for (let item of elem.parentNode.parentNode.childNodes) {
+    item.classList.add("displayNone")
+  }
+  new Card(obj, elem.parentNode.parentNode, result, func)
+}
 
 
 
@@ -231,4 +242,61 @@ function random(max) {
   }
   shuffle(arr);
   return arr[0];
+}
+
+class Card {
+  constructor(obj, block, result, func) {
+
+    this.pic = obj.pic;
+    this.author = obj.desc.author;
+    this.name = obj.desc.name;
+    this.year = obj.desc.year;
+    this.result = result
+    this.func = func
+
+    let div = document.createElement("div");
+    div.classList.add("tempDiv")
+    let img = document.createElement("img");
+    img.src = this.pic;
+
+    let h2 = document.createElement("h2");
+    h2.textContent = `"${this.name}"`
+    let h3 = document.createElement("h3");
+    h3.textContent = this.author
+
+    let span = document.createElement("span");
+    span.textContent = this.year;
+
+    div.appendChild(img)
+    div.appendChild(h2)
+    div.appendChild(h3)
+    div.appendChild(span)
+
+    let imgResult = document.createElement("img");
+    if (result == "true") {
+
+      imgResult.src = "./images/check-mark.svg"
+    } else {
+      imgResult.src = "./images/x-mark.svg"
+    }
+    let button = document.createElement("button");
+    button.addEventListener("click", this.func)
+    button.value = "Next question";
+    button.textContent = "Next question"
+    button.classList.add("nextQButton")
+    div.appendChild(button)
+    div.appendChild(imgResult)
+
+    block.appendChild(div)
+  }
+  /*
+  get author() {
+    return this.obj.desc.author;
+  }
+  get name() {
+    return this.obj.desc.name;
+  }
+  get year() {
+    return this.obj.desc.year;
+  }*/
 }
