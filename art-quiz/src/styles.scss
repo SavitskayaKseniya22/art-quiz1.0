@@ -23,14 +23,14 @@ th,
 td,
 embed,
 object {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 fieldset,
 img,
 abbr {
-    border: 0;
+  border: 0;
 }
 
 address,
@@ -48,17 +48,17 @@ h6,
 strong,
 th,
 var {
-    font-weight: normal;
-    font-style: normal;
+  font-weight: normal;
+  font-style: normal;
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 caption,
 th {
-    text-align: left;
+  text-align: left;
 }
 
 h1,
@@ -67,440 +67,427 @@ h3,
 h4,
 h5,
 h6 {
-    font-size: 1.0em;
+  font-size: 1em;
 }
 
 q:before,
 q:after {
-    content: '';
+  content: "";
 }
 
 a,
 ins {
-    text-decoration: none;
+  text-decoration: none;
 }
 
-
-
 button {
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
 }
 
 *,
 ::before,
 ::after {
-    box-sizing: border-box;
-    font-family: inherit;
-
+  box-sizing: border-box;
+  font-family: inherit;
 }
 
 h1 {
-    color: gold;
+  color: gold;
 }
 
 label {
-    cursor: pointer;
+  cursor: pointer;
 }
 
+.displayNone {
+  display: none;
+}
 
-
-@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
 
 body {
-    background-color: #363636;
-    color: white;
-    font-family: 'Righteous', cursive;
+  background-color: #363636;
+  color: white;
+  font-family: "Righteous", cursive;
+  min-width: 320px;
+
+  .container {
+    background-color: rgba(219, 190, 190, 0.451);
     min-width: 320px;
+    height: 100vh;
+    margin: 0 auto;
+    background: linear-gradient(90deg,
+        rgba(219, 190, 190, 0.45) 0%,
+        rgba(219, 190, 190, 0.45) 20%,
+        rgba(7, 175, 218, 1) 20%,
+        rgba(7, 175, 218, 1) 32%,
+        rgba(139, 195, 60, 1) 32%,
+        rgba(139, 195, 60, 1) 44%,
+        rgba(84, 99, 172, 1) 44%,
+        rgba(84, 99, 172, 1) 56%,
+        rgba(235, 12, 140, 1) 56%,
+        rgba(235, 12, 140, 1) 68%,
+        rgba(246, 143, 29, 1) 68%,
+        rgba(246, 143, 29, 1) 80%,
+        rgba(219, 190, 190, 0.45) 80%,
+        rgba(219, 190, 190, 0.45) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+  }
 
+  header {
+    padding: 5%;
+    width: 100%;
+    background-color: #3636367a;
+    position: relative;
 
-    .container {
-        background-color: rgba(219, 190, 190, 0.451);
-        min-width: 320px;
-        height: 100vh;
-        margin: 0 auto;
-        background: linear-gradient(90deg, rgba(219, 190, 190, 0.45) 0%, rgba(219, 190, 190, 0.45) 20%, rgba(7, 175, 218, 1) 20%, rgba(7, 175, 218, 1) 32%, rgba(139, 195, 60, 1) 32%, rgba(139, 195, 60, 1) 44%, rgba(84, 99, 172, 1) 44%, rgba(84, 99, 172, 1) 56%, rgba(235, 12, 140, 1) 56%, rgba(235, 12, 140, 1) 68%, rgba(246, 143, 29, 1) 68%, rgba(246, 143, 29, 1) 80%, rgba(219, 190, 190, 0.45) 80%, rgba(219, 190, 190, 0.45) 100%);
+    .back-home-button {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      top: 0;
+      right: 0;
+
+      &.displayNone {
+        display: none;
+      }
+    }
+  }
+
+  h1 {
+    font-size: 50px;
+  }
+
+  main {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5%;
+    overflow-y: auto;
+
+    &.main-not-centered {
+      align-items: unset;
+    }
+
+    .quiz-type,
+    .cat-title {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      row-gap: 20px;
+
+      font-size: 40px;
+      position: relative;
+      z-index: 99;
+
+      &.displayNone {
+        display: none;
+      }
+
+      li {
+        background-color: rgb(87, 87, 79);
+        padding: 20px;
+        cursor: pointer;
+        color: white;
+      }
+    }
+
+    .cat-title {
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 20px;
+      column-gap: 20px;
+      row-gap: 20px;
+      align-items: baseline;
+
+      li {
+        width: 150px;
+        padding: 10px;
+
+        h3 {
+          font-size: 16px;
+          margin-bottom: 10px;
+        }
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .settings-position {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    border: none;
+    background-color: transparent;
+    z-index: 100;
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+
+    #but-settings-open {
+      display: none;
+    }
+
+    #but-settings-open:checked~.settings-popup {
+      display: flex;
+    }
+  }
+
+  .settings-popup {
+    position: fixed;
+    display: none;
+    min-width: 280px;
+    width: calc(100vw - 40px);
+    height: calc(100vh - 540px);
+    top: 30%;
+    right: 20px;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #57574f;
+    box-shadow: 0px 0px 50px 90px #363636d7;
+    transition: 0.5s;
+
+    .cross-close {
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      right: 20px;
+      cursor: pointer;
+    }
+
+    h2 {
+      font-size: 25px;
+    }
+
+    h3 {
+      font-size: 16px;
+    }
+
+    .settings-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      row-gap: 30px;
+
+      &>li {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        text-align: center;
+        row-gap: 10px;
+        padding: 10px;
+        border-bottom: 1px double rgba(246, 143, 29, 0.5);
+        border-top: 3px double rgba(246, 143, 29, 1);
+      }
 
+      .settings-block-content {
+        display: flex;
+        justify-content: center;
+        column-gap: 20px;
+      }
+
+      .but-volume,
+      .but-time {
+        width: 20px;
+        height: 20px;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      .but-volume-off {
+        background-image: url("./images/volumeOf.svg");
+      }
+
+      .but-volume-on {
+        background-image: url("./images/volumeOn.svg");
+      }
+
+      .but-time-down {
+        background-image: url("./images/–.svg");
+      }
+
+      .but-time-up {
+        background-image: url("./images/+.svg");
+      }
+
+      label[name="off"] {
+        display: block;
+      }
+
+      label[name="on"] {
+        display: none;
+      }
+
+      #toggle-button-timer:checked~label[name="off"] {
+        display: none;
+      }
+
+      #toggle-button-timer:checked~label[name="on"] {
+        display: block;
+      }
+    }
+
+    .but-set-list {
+      display: flex;
+      column-gap: 20px;
+      width: 100%;
+
+      li {
+        flex-grow: 1;
+
+        .but-set {
+          padding: 10px;
+          width: 100%;
+          color: rgba(84, 99, 172, 1);
+        }
+      }
+    }
+  }
+
+  footer {
+    background-color: #3636367a;
+    padding: 5%;
+    width: 100%;
+    background-image: url("./images/bottomStripes.png");
+    background-repeat: repeat-x;
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      width: 60%;
+      margin: 0 auto;
+      row-gap: 10px;
+
+      li {
+        font-size: 12px;
+      }
+
+      a {
+        color: white;
+        font-size: 16px;
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      background-size: auto;
+      background-position: left 300px bottom 620px;
     }
 
     header {
-        padding: 5%;
-        width: 100%;
-        background-color: #3636367a;
-        position: relative;
-
-        .back-home-button {
-
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            top: 0;
-            right: 0;
-
-            &.displayNone {
-                display: none;
-            }
-        }
+      padding: 30px 30px;
     }
 
     h1 {
-        font-size: 50px;
+      font-size: 60px;
     }
 
-
-
     main {
-        position: relative;
-        flex-grow: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 5%;
-        overflow-y: auto;
+      .cat-title {
+        li {
+          width: 200px;
 
-        &.main-not-centered {
-            align-items: unset;
+          h3 {
+            font-size: 20px;
+          }
         }
-
-        .quiz-type,
-        .cat-list {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            row-gap: 20px;
-
-            font-size: 40px;
-            position: relative;
-            z-index: 99;
-
-            &.displayNone {
-                display: none;
-            }
-
-            li {
-                background-color: rgb(87, 87, 79);
-                padding: 20px;
-                cursor: pointer;
-                color: white;
-            }
-        }
-
-        .cat-list {
-
-            flex-direction: row;
-            flex-wrap: wrap;
-            padding: 20px;
-            column-gap: 20px;
-            row-gap: 20px;
-            align-items: baseline;
-
-
-
-            li {
-                width: 150px;
-                padding: 10px;
-
-
-                h3 {
-                    font-size: 16px;
-                    margin-bottom: 10px;
-                }
-
-                img {
-                    width: 100%;
-                }
-            }
-        }
+      }
     }
 
     .settings-position {
-        position: absolute;
-        bottom: 30px;
-        right: 30px;
-        border: none;
-        background-color: transparent;
-        z-index: 100;
-
-
-        img {
-            width: 40px;
-            height: 40px;
-        }
-
-        #but-settings-open {
-            display: none;
-
-        }
-
-        #but-settings-open:checked~.settings-popup {
-            display: flex;
-
-        }
+      bottom: 130px;
     }
 
     .settings-popup {
-        position: fixed;
-        display: none;
-        min-width: 280px;
-        width: calc(100vw - 40px);
-        height: calc(100vh - 540px);
-        top: 30%;
-        right: 20px;
-        padding: 20px;
-        flex-direction: column;
-        justify-content: space-between;
-        background-color: #57574f;
-        box-shadow: 0px 0px 50px 90px #363636d7;
-        transition: .5s;
-
-        .cross-close {
-            width: 15px;
-            height: 15px;
-            position: absolute;
-            right: 20px;
-            cursor: pointer;
-        }
-
-        h2 {
-            font-size: 25px;
-        }
-
-        h3 {
-            font-size: 16px;
-        }
-
-        .settings-list {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            row-gap: 30px;
-
-            &>li {
-                display: flex;
-                flex-direction: column;
-                row-gap: 10px;
-                padding: 10px;
-                border-bottom: 1px double rgba(246, 143, 29, 0.5);
-                border-top: 3px double rgba(246, 143, 29, 1);
-            }
-
-            .settings-block-content {
-                display: flex;
-                justify-content: center;
-                column-gap: 20px;
-            }
-
-            .but-volume,
-            .but-time {
-
-                width: 20px;
-                height: 20px;
-                background-repeat: no-repeat;
-                background-position: center;
-            }
-
-            .but-volume-off {
-                background-image: url("./images/volumeOf.svg");
-            }
-
-            .but-volume-on {
-                background-image: url("./images/volumeOn.svg");
-            }
-
-            .but-time-down {
-                background-image: url("./images/–.svg");
-            }
-
-            .but-time-up {
-                background-image: url("./images/+.svg");
-            }
-
-            label[name="off"] {
-                display: block;
-            }
-
-            label[name="on"] {
-                display: none;
-            }
-
-            #toggle-button-timer:checked~label[name="off"] {
-                display: none;
-            }
-
-            #toggle-button-timer:checked~label[name="on"] {
-                display: block;
-            }
-        }
-
-
-        .but-set-list {
-            display: flex;
-            column-gap: 20px;
-            width: 100%;
-
-            li {
-                flex-grow: 1;
-
-                .but-set {
-
-                    padding: 10px;
-                    width: 100%;
-                    color: rgba(84, 99, 172, 1)
-                }
-            }
-        }
+      width: 400px;
+      height: 500px;
+      top: 38%;
+      right: 20px;
+      box-shadow: 0px 0px 50px 1000px #363636d7;
     }
-
 
     footer {
-        background-color: #3636367a;
-        padding: 5%;
+      padding: 30px 30px;
+
+      ul {
+        flex-direction: row;
         width: 100%;
-        background-image: url("./images/bottomStripes.png");
-        background-repeat: repeat-x;
+        justify-content: space-between;
 
-        ul {
-            display: flex;
-            flex-direction: column;
-            width: 60%;
-            margin: 0 auto;
-            row-gap: 10px;
-
-            li {
-                font-size: 12px;
-            }
-
-            a {
-                color: white;
-                font-size: 16px;
-            }
+        li {
+          font-size: 20px;
         }
+
+        a {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  @media (min-width: 1024px) {
+    main {
+      padding: 30px;
+
+      .quiz-type {
+        flex-direction: row;
+        column-gap: 30px;
+
+        li {
+          flex-grow: 1;
+        }
+      }
     }
 
-    @media (min-width: 768px) {
-        .container {
-            background-size: auto;
-            background-position: left 300px bottom 620px;
+    .settings-popup {
+      top: 20%;
+      box-shadow: 0px 0px 50px 2000px #363636d7;
+    }
+  }
 
-        }
-
-        header {
-            padding: 30px 30px;
-        }
-
-        h1 {
-            font-size: 60px;
-        }
-
-        main {
-            .cat-list {
-                li {
-                    width: 200px;
-
-                    h3 {
-                        font-size: 20px;
-
-                    }
-                }
-            }
-        }
-
-        .settings-position {
-            bottom: 130px;
-        }
-
-        .settings-popup {
-            width: 400px;
-            height: 500px;
-            top: 38%;
-            right: 20px;
-            box-shadow: 0px 0px 50px 1000px #363636d7;
-        }
-
-
-
-
-
-        footer {
-            padding: 30px 30px;
-
-            ul {
-                flex-direction: row;
-                width: 100%;
-                justify-content: space-between;
-
-                li {
-                    font-size: 20px;
-                }
-
-                a {
-                    font-size: 20px;
-                }
-            }
-        }
+  @media (min-width: 1920px) {
+    .container {
+      background: linear-gradient(90deg,
+          rgba(7, 175, 218, 1) 20%,
+          rgba(139, 195, 60, 1) 20%,
+          rgba(139, 195, 60, 1) 40%,
+          rgba(84, 99, 172, 1) 40%,
+          rgba(84, 99, 172, 1) 60%,
+          rgba(235, 12, 140, 1) 60%,
+          rgba(235, 12, 140, 1) 80%,
+          rgba(246, 143, 29, 1) 80%,
+          rgba(246, 143, 29, 1) 99%);
     }
 
-    @media (min-width: 1024px) {
-
-
-        main {
-            padding: 30px;
-
-            .quiz-type {
-                flex-direction: row;
-                column-gap: 30px;
-
-                li {
-                    flex-grow: 1;
-                }
-            }
-
-
-        }
-
-        .settings-popup {
-            top: 20%;
-            box-shadow: 0px 0px 50px 2000px #363636d7;
-        }
+    .settings-popup {
+      top: 38%;
     }
 
-    @media (min-width: 1920px) {
-        .container {
-            background: linear-gradient(90deg, rgba(7, 175, 218, 1) 20%, rgba(139, 195, 60, 1) 20%, rgba(139, 195, 60, 1) 40%, rgba(84, 99, 172, 1) 40%, rgba(84, 99, 172, 1) 60%, rgba(235, 12, 140, 1) 60%, rgba(235, 12, 140, 1) 80%, rgba(246, 143, 29, 1) 80%, rgba(246, 143, 29, 1) 99%);
+    main {
+      .cat-title {
+        column-gap: 30px;
+        row-gap: 40px;
+
+        li {
+          width: 250px;
+
+          h3 {
+            font-size: 25px;
+          }
         }
-
-        .settings-popup {
-            top: 38%;
-
-        }
-
-
-        main {
-            .cat-list {
-
-                column-gap: 30px;
-                row-gap: 40px;
-
-                li {
-                    width: 250px;
-
-
-                    h3 {
-                        font-size: 25px;
-
-                    }
-
-
-                }
-            }
-        }
-
+      }
     }
+  }
 }

@@ -1,29 +1,22 @@
-import './styles.scss'
+import "./styles.scss";
 import {
-    makeCat,
-    getImgs,
-    mainBlock
-
-} from './category.js';
+  makeCat,
+  getImgs,
+  mainBlock
+} from "./category.js";
 import {
-    images
-} from './images.js';
+  images
+} from "./images.js";
 import {
-    fillPaintingsCat,
-    fillArtistsCat
+  fillPaintingsCat,
+  fillArtistsCat
+} from "./questions.js";
 
-} from './questions.js';
-
-getImgs().then(value => {
-    makeCat(value, "Artists")
-    makeCat(value, "Paintings")
-    fillArtistsCat(value, images, mainBlock)
-    fillPaintingsCat(value, images, mainBlock)
-
-
-
-}, reason => {
-    // отклонение
+getImgs().then((value) => {
+  makeCat(value, "Artists");
+  makeCat(value, "Paintings");
+  fillArtistsCat(value, images, mainBlock);
+  fillPaintingsCat(value, images, mainBlock);
 });
 
 //console.log(images)
