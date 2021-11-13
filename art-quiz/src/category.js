@@ -1,25 +1,31 @@
 let quizType = document.querySelector(".quiz-type");
 export let mainBlock = document.querySelector("main");
 let backHomeButton = document.querySelector(".back-home-button");
-
-
+let navButton = document.querySelector(".nav-button")
+let backCat = document.querySelector(".back-cat");
 document.addEventListener("click", function (event) {
   //alert(event.target.closest(".back-home-button"))
-  if (event.target.closest("h2")) {
+  if (event.target.closest(".quiz-type li")) {
     quizType.classList.add("displayNone");
     mainBlock.classList.add("main-not-centered");
     let list = document.querySelector(`.${event.target.textContent}`);
     list.classList.remove("displayNone");
     backHomeButton.classList.remove("displayNone");
+    navButton.classList.remove("displayNone");
   } else if (event.target.closest(".back-home-button")) {
     quizType.classList.remove("displayNone");
     mainBlock.classList.remove("main-not-centered");
+    navButton.classList.add("displayNone");
     let list = document.querySelectorAll(".cat-title");
     for (const elem of list) {
       elem.classList.add("displayNone");
     }
     backHomeButton.classList.add("displayNone");
+    makeAllQInvis()
 
+  } else if (event.target.closest(".back-cat")) {
+    backCat.setAttribute("disabled", "true")
+    makeAllQInvis()
   }
 })
 /*
@@ -65,8 +71,11 @@ export function makeCat(arr, catName) {
     }
 
     li.appendChild(img);
+
     li.addEventListener("click", function () {
-      let elem
+      makeAllQInvis()
+      backCat.removeAttribute("disabled")
+      let elem;
       if (catName == "Artists") {
         elem = document.querySelector(`.catContent${i}.cat1`)
 
@@ -90,4 +99,11 @@ export async function getImgs() {
     );
   }
   return arrImgs;
+}
+
+function makeAllQInvis() {
+  let colection = document.querySelectorAll("ul.cat");
+  for (let item of colection) {
+    item.classList.add("displayNone")
+  }
 }

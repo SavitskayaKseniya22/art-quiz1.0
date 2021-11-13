@@ -80,6 +80,7 @@ export function fillPaintingsCat(arrPic, arrDesc, block) {
   for (let j = 1; j <= 12; j++) {
     let ul = document.createElement("ul");
     ul.classList.add(`catContent${j}`);
+    ul.classList.add("cat");
     ul.classList.add("cat2");
     ul.classList.add("displayNone");
     for (let i = 0; i < 10; i++) {
@@ -149,6 +150,7 @@ export function fillArtistsCat(arrPic, arrDesc, block) {
     let ul = document.createElement("ul");
     ul.classList.add(`catContent${j}`);
     ul.classList.add("cat1");
+    ul.classList.add("cat");
     ul.classList.add("displayNone");
 
     for (let i = 0; i < 10; i++) {
