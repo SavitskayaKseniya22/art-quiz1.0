@@ -5,27 +5,29 @@ let navButton = document.querySelector(".nav-button")
 let backCat = document.querySelector(".back-cat");
 document.addEventListener("click", function (event) {
   //alert(event.target.closest(".back-home-button"))
-  if (event.target.closest(".quiz-type li")) {
+
+  if (event.target.closest(".quiz-type h2")) {
     quizType.classList.add("displayNone");
     mainBlock.classList.add("main-not-centered");
     let list = document.querySelector(`.${event.target.textContent}`);
     list.classList.remove("displayNone");
+    list.classList.add("activeCat");
     backHomeButton.classList.remove("displayNone");
     navButton.classList.remove("displayNone");
   } else if (event.target.closest(".back-home-button")) {
     quizType.classList.remove("displayNone");
     mainBlock.classList.remove("main-not-centered");
     navButton.classList.add("displayNone");
-    let list = document.querySelectorAll(".cat-title");
-    for (const elem of list) {
-      elem.classList.add("displayNone");
-    }
+    makeAllCatInvis()
     backHomeButton.classList.add("displayNone");
     makeAllQInvis()
+    makeAllCatInactive()
 
   } else if (event.target.closest(".back-cat")) {
     backCat.setAttribute("disabled", "true")
     makeAllQInvis()
+    let activeCat = document.querySelector(".activeCat");
+    activeCat.classList.remove("displayNone");
   }
 })
 /*
@@ -74,6 +76,7 @@ export function makeCat(arr, catName) {
 
     li.addEventListener("click", function () {
       makeAllQInvis()
+      makeAllCatInvis()
       backCat.removeAttribute("disabled")
       let elem;
       if (catName == "Artists") {
@@ -105,5 +108,19 @@ function makeAllQInvis() {
   let colection = document.querySelectorAll("ul.cat");
   for (let item of colection) {
     item.classList.add("displayNone")
+  }
+}
+
+function makeAllCatInvis() {
+  let colection = document.querySelectorAll("ul.cat-title");
+  for (let item of colection) {
+    item.classList.add("displayNone")
+  }
+}
+
+function makeAllCatInactive() {
+  let colection = document.querySelectorAll("ul.cat-title");
+  for (let item of colection) {
+    item.classList.remove("activeCat")
   }
 }
