@@ -43,29 +43,35 @@ function getAllAuthors(arrDesc) {
 
 class QuestionPaintings {
   constructor(obj, block, arr) {
-    this.pic = obj.pic;
+    this._pic = obj.pic;
     this.block = block;
     this.arr = arr;
 
     let mainLi = document.createElement("li");
 
-    let liArr = [];
+    this._liArr = [];
     let img = document.createElement("img");
-    img.src = this.pic;
+    img.src = this._pic;
 
-    liArr.push(img);
+    this._liArr.push(img);
 
     for (let i = 0; i < 3; i++) {
       let img = document.createElement("img");
       img.src = this.arr[random(240)];
-      liArr.push(img);
+      this._liArr.push(img);
     }
-    shuffle(liArr);
+    shuffle(this._liArr);
 
-    for (let i = 0; i < liArr.length; i++) {
-      mainLi.appendChild(liArr[i]);
+    for (let elem of this._liArr) {
+      mainLi.appendChild(elem);
     }
     this.block.appendChild(mainLi);
+  }
+  get pic() {
+    return this._pic
+  }
+  get liArr() {
+    return this._liArr
   }
 }
 
@@ -84,7 +90,16 @@ export function fillPaintingsCat(arrPic, arrDesc, block) {
     ul.classList.add("cat2");
     ul.classList.add("displayNone");
     for (let i = 0; i < 10; i++) {
-      makePaintingsQuestion(arrPic, arrDesc, ul, k);
+      let obj = makePaintingsQuestion(arrPic, arrDesc, ul, k);
+      for (let elem of obj.liArr) {
+        elem.addEventListener("click", function () {
+          if (elem.src == obj.pic) {
+            alert(1)
+          } else {
+            alert(0)
+          }
+        })
+      }
       k++;
     }
 
