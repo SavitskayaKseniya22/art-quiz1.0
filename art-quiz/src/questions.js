@@ -190,7 +190,14 @@ export function fillArtistsCat(arrPic, arrDesc, block) {
       for (let elem of obj.liArr) {
         elem.addEventListener("click", function () {
           function ggg() {
-            alert(1)
+            let tempDiv = document.querySelector(".tempDiv")
+            tempDiv.classList.remove("tempDiv")
+            tempDiv.parentNode.classList.add("displayNone")
+            tempDiv.parentNode.classList.add("complete")
+            tempDiv.parentNode.nextSibling.classList.remove("displayNone")
+
+
+
           }
           if (elem.textContent == obj.rightAnswer) {
 
