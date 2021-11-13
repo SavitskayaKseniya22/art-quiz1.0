@@ -84,6 +84,8 @@ button {
   cursor: pointer;
   border: none;
   background-color: transparent;
+  padding: 0;
+  margin: 0;
 }
 
 *,
@@ -154,7 +156,7 @@ body {
       justify-content: center;
       align-items: center;
       row-gap: 20px;
-      height: 200px;
+      height: 250px;
       flex-direction: column;
       background-image: url("./images/titlestrip.png");
       background-size: auto;
@@ -174,31 +176,21 @@ body {
         width: 100%;
       }
 
+      .but-settings-toggle,
       .back-home-button,
       .back-cat {
 
-        width: 40px;
-        height: 40px;
+        width: 32px;
+        height: 32px;
         opacity: 0.7;
+        transition: .5s;
 
         &.displayNone {
           display: none;
         }
-      }
-
-      .back-cat {
-
-        width: 40px;
-        height: 40px;
-        transition: .5s;
 
         &:disabled {
           opacity: 0.2;
-        }
-
-
-        &.displayNone {
-          display: none;
         }
       }
 
@@ -287,10 +279,8 @@ body {
     background-color: transparent;
     z-index: 100;
 
-    img {
-      width: 40px;
-      height: 40px;
-    }
+
+
 
     #but-settings-open {
       display: none;
@@ -315,6 +305,7 @@ body {
     background-color: #57574f;
     box-shadow: 0px 0px 50px 90px #363636d7;
     transition: 0.5s;
+
 
     .cross-close {
       width: 15px;
