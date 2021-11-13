@@ -65,6 +65,9 @@ class QuestionPaintings {
     for (let elem of this._liArr) {
       mainLi.appendChild(elem);
     }
+    if (this.block.childNodes.length != 0) {
+      mainLi.classList.add("displayNone")
+    }
     this.block.appendChild(mainLi);
   }
   get pic() {
