@@ -136,12 +136,22 @@ class QuestionArtist {
     this._rightAnswer = this.desc.author;
 
     let mainLi = document.createElement("li");
+    mainLi.classList.add("questionCard")
+
+    let h2 = document.createElement("h2")
+    h2.textContent = "Who is the author of the painting?";
+    mainLi.appendChild(h2);
+
     let img = document.createElement("img");
     img.src = this.pic;
     mainLi.appendChild(img);
+
     let ul = document.createElement("ul");
-    ul.classList.add("possibleAnswer");
+    ul.classList.add("possibleAnswers");
     mainLi.appendChild(ul);
+
+
+
     this._liArr = [];
     let li = document.createElement("li");
     li.textContent = this.desc.author;
@@ -159,6 +169,7 @@ class QuestionArtist {
     }
     if (this.block.childNodes.length != 0) {
       mainLi.classList.add("displayNone")
+
     }
 
 
@@ -260,17 +271,23 @@ function random(max) {
 class Card {
   constructor(obj, block, result, func) {
 
+    //this.obj = obj;
     this.pic = obj.pic;
     this.author = obj.desc.author;
     this.name = obj.desc.name;
     this.year = obj.desc.year;
     this.result = result
-    this.func = func
+    this.func = func;
+    this.imageNum = obj.desc.imageNum;
 
+    console.log(this.imageNum)
     let div = document.createElement("div");
     div.classList.add("tempDiv")
     let img = document.createElement("img");
     img.src = this.pic;
+    //img.src = `https://raw.githubusercontent.com/irinainina/image-data/dadea6e2555841b3f136d8ab07ce6474391f1a3f/full/${this.imageNum}full.jpg`
+    let divCont = document.createElement("div");
+    divCont.classList.add("tempDivCont")
 
     let h2 = document.createElement("h2");
     h2.textContent = `"${this.name}"`
@@ -281,25 +298,28 @@ class Card {
     span.textContent = this.year;
 
     div.appendChild(img)
-    div.appendChild(h2)
-    div.appendChild(h3)
-    div.appendChild(span)
+    divCont.appendChild(h2)
+    divCont.appendChild(h3)
+    divCont.appendChild(span)
 
     let imgResult = document.createElement("img");
+    imgResult.classList.add("imgResult")
     if (result == "true") {
 
-      imgResult.src = "./images/check-mark.svg"
+      imgResult.src = "./images/correct-right-arrow-direction-left-down-up-svgrepo-com.svg"
     } else {
-      imgResult.src = "./images/x-mark.svg"
+      imgResult.src = "./images/wrong-delete-remove-trash-minus-cancel-close-svgrepo-com.svg"
     }
     let button = document.createElement("button");
     button.addEventListener("click", this.func)
-    button.value = "Next question";
-    button.textContent = "Next question"
+    //button.value = "Next question";
+    // button.textContent = "Next question"
     button.classList.add("nextQButton")
-    div.appendChild(button)
-    div.appendChild(imgResult)
 
+    divCont.appendChild(button)
+    divCont.appendChild(imgResult)
+
+    div.appendChild(divCont)
     block.appendChild(div)
   }
   /*

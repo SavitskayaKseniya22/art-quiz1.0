@@ -269,16 +269,119 @@ body {
         }
       }
     }
+
+    .cat {
+      width: 100%;
+      padding: 20px 20px;
+
+
+      .questionCard {
+        height: 100%;
+        display: flex;
+
+        flex-direction: column;
+        justify-content: space-between;
+        row-gap: 20px;
+        font-size: 16px;
+
+
+        &.displayNone {
+          display: none;
+        }
+
+        h2 {
+          font-size: 26px;
+          text-align: left;
+        }
+
+        .possibleAnswers {
+          display: flex;
+          flex-direction: column;
+          row-gap: 20px;
+
+          &.displayNone {
+            display: none;
+          }
+
+          li {
+            padding: 10px;
+            background-color: #3636367a;
+
+          }
+
+        }
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .tempDiv {
+      width: 320px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+
+      .tempDivCont {
+        width: 100%;
+        position: relative;
+
+        img {
+          width: 100%;
+        }
+
+        h2 {
+          font-size: 30px;
+        }
+
+        h3 {
+          font-size: 20px;
+        }
+
+        span {
+          font-size: 18px;
+        }
+
+        .nextQButton,
+        .imgResult {
+
+          position: absolute;
+          width: 40px;
+          height: 40px;
+          top: 0;
+          left: 50%;
+          color: black;
+          opacity: 0.7;
+        }
+
+        .nextQButton {
+
+          top: 60px;
+          background-image: url("./images/next-arrow-direction-down-left-up-right-svgrepo-com.svg");
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center;
+        }
+      }
+    }
+
+
+
+
+
+
+
+
   }
 
 
 
 
-  .nextQButton {
-    width: 55px;
-    height: 55px;
-    color: black;
-  }
+
+
 
   .settings-position {
     position: absolute;
