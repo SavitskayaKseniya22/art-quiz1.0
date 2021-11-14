@@ -325,6 +325,15 @@ body {
       justify-content: center;
       row-gap: 30px;
 
+      a {
+        width: 100%;
+
+        img {
+          width: 100%;
+          cursor: pointer;
+        }
+      }
+
       .tempDivCont {
         width: 100%;
         position: relative;
@@ -687,7 +696,7 @@ body {
         align-items: center;
         padding: 20px;
 
-        &>img {
+        a {
           width: 60%;
         }
 
@@ -780,9 +789,7 @@ body {
         align-items: center;
         padding: 80px;
 
-        &>img {
-          width: 60%;
-        }
+
 
         .tempDivCont {
           width: 30%;

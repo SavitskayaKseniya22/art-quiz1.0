@@ -279,14 +279,20 @@ class Card {
     this.author = obj.desc.author;
     this.name = obj.desc.name;
     this.year = obj.desc.year;
-    this.result = result
+    //this.result = result
     this.func = func;
     this.imageNum = obj.desc.imageNum;
+    //alert(this.imageNum)
 
     let div = new Tag("div", "", "", "tempDiv")
+
+    let a = document.createElement("a");
     let img = new Tag("img", "", this.pic)
+    a.append(img)
+    a.target = "_blank"
+
     img.addEventListener("click", function () {
-      //img.src = `https://raw.githubusercontent.com/irinainina/image-data/dadea6e2555841b3f136d8ab07ce6474391f1a3f/full/${this.imageNum}full.jpg`
+      a.href = `https://raw.githubusercontent.com/irinainina/image-data/dadea6e2555841b3f136d8ab07ce6474391f1a3f/full/${obj.desc.imageNum}full.jpg`
     })
 
     let divCont = new Tag("div", "", "", "tempDivCont")
@@ -320,7 +326,7 @@ class Card {
     }, 400);
 
     divCont.append(h2, h3, span, nextQButton, imgResult)
-    div.append(img, divCont)
+    div.append(a, divCont)
     block.append(div)
   }
 
