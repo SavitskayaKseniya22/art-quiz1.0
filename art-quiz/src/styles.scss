@@ -278,12 +278,10 @@ body {
       .questionCard {
         height: 100%;
         display: flex;
-
         flex-direction: column;
         justify-content: space-between;
         row-gap: 20px;
         font-size: 16px;
-
 
         &.displayNone {
           display: none;
@@ -291,7 +289,6 @@ body {
 
         h2 {
           font-size: 26px;
-          text-align: left;
         }
 
         .possibleAnswers {
@@ -303,18 +300,20 @@ body {
             display: none;
           }
 
-          li {
+          &>li {
             padding: 10px;
             background-color: #3636367a;
 
           }
-
         }
+
+        &>img {
+          width: 100%;
+        }
+
       }
 
-      img {
-        width: 100%;
-      }
+
     }
 
     .tempDiv {
@@ -325,7 +324,6 @@ body {
       justify-content: center;
       row-gap: 30px;
 
-
       .tempDivCont {
         width: 100%;
         position: relative;
@@ -334,9 +332,7 @@ body {
         justify-content: center;
         row-gap: 30px;
 
-        img {
-          width: 100%;
-        }
+
 
         h2 {
           font-size: 30px;
@@ -565,6 +561,8 @@ body {
     }
 
     main {
+      padding: 5%;
+
       .cat-title {
         li {
           width: 200px;
@@ -572,6 +570,41 @@ body {
           h3 {
             font-size: 20px;
           }
+        }
+      }
+
+      .cat {
+        width: 100%;
+        padding: 0;
+
+        .questionCard {
+          height: 100%;
+          width: 75%;
+          margin: auto;
+          row-gap: 15px;
+
+          .possibleAnswers {
+            row-gap: 10px;
+
+            &>li {
+              padding: 8px;
+            }
+          }
+
+          &>img {
+            margin: auto;
+            width: 90%;
+          }
+        }
+      }
+
+      .tempDiv {
+
+        row-gap: 20px;
+
+        .tempDivCont {
+
+          row-gap: 15px;
         }
       }
     }
@@ -619,6 +652,58 @@ body {
           flex-grow: 1;
         }
       }
+
+      .cat {
+        width: 100%;
+        padding: 0;
+
+        .questionCard {
+          flex-direction: row;
+          flex-wrap: wrap;
+          row-gap: 20px;
+          column-gap: 20px;
+
+          &>h2 {
+            flex-grow: 2;
+          }
+
+          .possibleAnswers {
+            width: 30%;
+
+          }
+
+          &>img {
+            width: 60%;
+
+          }
+        }
+      }
+
+      .tempDiv {
+        flex-direction: row;
+        row-gap: 20px;
+        column-gap: 20px;
+        align-items: center;
+        padding: 20px;
+
+        &>img {
+          width: 60%;
+        }
+
+        .tempDivCont {
+          width: 30%;
+          row-gap: 20px;
+          height: 100%;
+          justify-content: flex-start;
+
+          .nextQButton,
+          .imgResult {
+
+            bottom: 20px;
+
+          }
+        }
+      }
     }
 
     .settings-popup {
@@ -658,6 +743,62 @@ body {
           }
         }
       }
+
+      .cat {
+
+        padding: 0;
+
+
+        .questionCard {
+          flex-direction: row;
+          flex-wrap: wrap;
+          row-gap: 20px;
+          column-gap: 20px;
+
+          font-size: 20px;
+          justify-content: center;
+
+          &>h2 {
+            flex-grow: 1;
+            width: 100%;
+            font-size: 30px;
+          }
+
+          &>img {
+            width: 45%;
+            margin: 0;
+
+          }
+        }
+      }
+
+      .tempDiv {
+        flex-direction: row;
+        row-gap: 20px;
+        column-gap: 20px;
+        align-items: center;
+        padding: 80px;
+
+        &>img {
+          width: 60%;
+        }
+
+        .tempDivCont {
+          width: 30%;
+          row-gap: 20px;
+          height: 100%;
+          justify-content: flex-start;
+
+          .nextQButton,
+          .imgResult {
+
+            bottom: 20px;
+
+          }
+        }
+      }
+
+
     }
   }
 }
