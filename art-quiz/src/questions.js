@@ -32,10 +32,29 @@ function getAllAuthors(arrDesc) {
 
 
 
+export class Tag {
+  constructor(tagName, content, src, ...args) {
+    this._tag = document.createElement(tagName);
+    if (content) {
+      this._tag.textContent = content;
+    }
+
+    if (src) {
+      this._tag.src = src;
+    }
 
 
+    if (args) {
+      for (let elem of args) {
+        this._tag.classList.add(elem)
+      }
 
 
+    }
+
+    return this._tag
+  }
+}
 
 
 
@@ -49,39 +68,32 @@ class QuestionPaintings {
     this.arr = arr;
     this.author = obj.desc.author;
 
-    console.log(this.author)
-
-    let mainLi = document.createElement("li");
-    mainLi.classList.add("questionCard");
-
-    let h2 = document.createElement("h2")
-    h2.textContent = `Which of these paintings did ${this.author} paint?`
-
+    let mainLi = new Tag("li", "", "", "questionCard")
+    if (this.block.childNodes.length != 0) {
+      mainLi.classList.add("displayNone")
+    }
+    let h2 = new Tag("h2", `Which of these paintings did ${this.author} paint?`, "")
     mainLi.append(h2);
 
-
     this._liArr = [];
-    let img = document.createElement("img");
-    img.src = this._pic;
 
-    this._liArr.push(img);
-
-    for (let i = 0; i < 3; i++) {
-      let img = document.createElement("img");
-      img.src = this.arr[random(240)];
-      this._liArr.push(img);
+    for (let i = 0; i < 4; i++) {
+      if (i == 0) {
+        this._liArr.push(new Tag("img", "", this._pic))
+      } else {
+        this._liArr.push(new Tag("img", "", this.arr[random(240)]));
+      }
     }
+
     shuffle(this._liArr);
 
     for (let elem of this._liArr) {
       mainLi.append(elem);
     }
-    if (this.block.childNodes.length != 0) {
-      mainLi.classList.add("displayNone")
-    }
-
     this.block.append(mainLi);
   }
+
+
   get pic() {
     return this._pic
   }
@@ -89,6 +101,7 @@ class QuestionPaintings {
     return this._liArr
   }
 }
+
 
 function makePaintingsQuestion(arrPic, arrDesc, block, i) {
   let arrImgs = getAllImages(arrPic, arrDesc);
@@ -99,18 +112,14 @@ function makePaintingsQuestion(arrPic, arrDesc, block, i) {
 export function fillPaintingsCat(arrPic, arrDesc, block) {
   let k = 120;
   for (let j = 1; j <= 12; j++) {
-    let ul = document.createElement("ul");
-    ul.classList.add(`catContent${j}`);
-    ul.classList.add("cat");
-    ul.classList.add("cat2");
-    ul.classList.add("displayNone");
+    let ul = new Tag("ul", "", "", `catContent${j}`, "cat", "cat2", "displayNone")
+
     for (let i = 0; i < 10; i++) {
       let obj = makePaintingsQuestion(arrPic, arrDesc, ul, k);
       for (let elem of obj.liArr) {
         elem.addEventListener("click", function () {
 
           if (elem.src == obj.pic) {
-
             printCard(elem, obj, "true", getNext)
           } else {
 
@@ -146,47 +155,40 @@ class QuestionArtist {
     this.arr = arr;
     this._rightAnswer = this.desc.author;
 
-    let mainLi = document.createElement("li");
-    mainLi.classList.add("questionCard")
-
-    let h2 = document.createElement("h2")
-    h2.textContent = "Who is the author of the painting?";
-
-
-    let img = document.createElement("img");
-    img.src = this.pic;
-
-
-    let ul = document.createElement("ul");
-    ul.classList.add("possibleAnswers");
-    mainLi.append(h2, img, ul);
-
-
-
-    this._liArr = [];
-    let li = document.createElement("li");
-    li.textContent = this.desc.author;
-    this._liArr.push(li);
-
-    for (let i = 0; i < 3; i++) {
-      let li = document.createElement("li");
-      li.textContent = this.arr[random(240)];
-      this._liArr.push(li);
-    }
-    shuffle(this._liArr);
-    for (let elem of this._liArr) {
-      elem.classList.add("possibleAnswerElem");
-      ul.append(elem);
-    }
+    let mainLi = new Tag("li", "", "", "questionCard")
     if (this.block.childNodes.length != 0) {
       mainLi.classList.add("displayNone")
 
     }
+    let h2 = new Tag("h2", "Who is the author of the painting?", "")
+    let img = new Tag("img", "", this.pic)
+    let ul = new Tag("ul", "", "", "possibleAnswers")
 
 
+    mainLi.append(h2, img, ul);
+
+    this._liArr = [];
+
+
+
+    for (let i = 0; i < 4; i++) {
+      if (i == 0) {
+        this._liArr.push(new Tag("li", this.desc.author, ""));
+      } else {
+        this._liArr.push(new Tag("li", this.arr[random(240)], ""));
+      }
+    }
+
+    shuffle(this._liArr);
+
+    for (let elem of this._liArr) {
+      elem.classList.add("possibleAnswerElem");
+      ul.append(elem);
+    }
     this.block.append(mainLi);
 
   }
+
   get rightAnswer() {
     return this._rightAnswer
   }
@@ -291,47 +293,41 @@ class Card {
     this.func = func;
     this.imageNum = obj.desc.imageNum;
 
-    console.log(this.imageNum)
-    let div = document.createElement("div");
-    div.classList.add("tempDiv")
-    let img = document.createElement("img");
-    img.src = this.pic;
-    //img.src = `https://raw.githubusercontent.com/irinainina/image-data/dadea6e2555841b3f136d8ab07ce6474391f1a3f/full/${this.imageNum}full.jpg`
-    let divCont = document.createElement("div");
-    divCont.classList.add("tempDivCont")
-
-    let h2 = document.createElement("h2");
-    h2.textContent = `"${this.name}"`
-    let h3 = document.createElement("h3");
-    h3.textContent = this.author
-
-    let span = document.createElement("span");
-    span.textContent = this.year;
 
 
 
 
 
-    let imgResult = document.createElement("img");
-    imgResult.classList.add("imgResult")
+    let div = new Tag("div", "", "", "tempDiv")
+    let img = new Tag("img", "", this.pic)
+    img.addEventListener("click", function () {
+      //img.src = `https://raw.githubusercontent.com/irinainina/image-data/dadea6e2555841b3f136d8ab07ce6474391f1a3f/full/${this.imageNum}full.jpg`
+    })
+
+
+    let divCont = new Tag("div", "", "", "tempDivCont")
+    let h2 = new Tag("h2", `"${this.name}"`, "")
+    let h3 = new Tag("h3", this.author, "")
+    let span = new Tag("span", this.year, "")
+    let imgResult = new Tag("img", "", "", "imgResult")
+
     if (result == "true") {
-
       setTimeout(() => {
         imgResult.style.backgroundColor = "GREEN";
         imgResult.style.transform = "scale(2)"
       }, 100);
       imgResult.src = "./images/correct-right-arrow-direction-left-down-up-svgrepo-com.svg"
     } else {
-
       setTimeout(() => {
         imgResult.style.backgroundColor = "RED";
         imgResult.style.transform = "scale(2)"
       }, 100);
       imgResult.src = "./images/wrong-delete-remove-trash-minus-cancel-close-svgrepo-com.svg"
     }
-    let nextQButton = document.createElement("button");
+
+    let nextQButton = new Tag("button", "", "", "nextQButton")
     nextQButton.addEventListener("click", this.func)
-    nextQButton.classList.add("nextQButton")
+
     setTimeout(() => {
       nextQButton.style.transform = "translateX(20px)"
       setTimeout(() => {
@@ -339,19 +335,9 @@ class Card {
       }, 200);
     }, 400);
 
-
     divCont.append(h2, h3, span, nextQButton, imgResult)
     div.append(img, divCont)
     block.append(div)
   }
-  /*
-  get author() {
-    return this.obj.desc.author;
-  }
-  get name() {
-    return this.obj.desc.name;
-  }
-  get year() {
-    return this.obj.desc.year;
-  }*/
+
 }

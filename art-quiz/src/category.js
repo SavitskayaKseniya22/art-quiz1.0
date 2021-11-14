@@ -1,3 +1,8 @@
+import {
+  Tag
+} from "./questions.js";
+
+
 let quizType = document.querySelector(".quiz-type");
 export let mainBlock = document.querySelector("main");
 let backHomeButton = document.querySelector(".back-home-button");
@@ -33,19 +38,13 @@ document.addEventListener("click", function (event) {
 
 
 export function makeCat(arr, catName) {
-  let ul = document.createElement("ul");
-  ul.classList.add("cat-title");
-  ul.classList.add(catName);
-  ul.classList.add("displayNone");
+  let ul = new Tag("ul", "", "", "cat-title", catName, "displayNone")
   for (let i = 1; i <= 12; i++) {
-    let li = document.createElement("li");
-    li.classList.add("cat");
-    li.classList.add(`cat${i}`);
-    let h3 = document.createElement("h3");
-    h3.textContent = `Round ${i}`;
+    let li = new Tag("li", "", "", "cat", `cat${i}`)
+    let h3 = new Tag("h3", `Round ${i}`, "")
     li.append(h3);
 
-    let img = document.createElement("img");
+    let img = new Tag("img", "", "")
 
     if (catName == "Artists") {
       img.src = arr[i];
