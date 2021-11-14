@@ -43,7 +43,7 @@ export function makeCat(arr, catName) {
     li.classList.add(`cat${i}`);
     let h3 = document.createElement("h3");
     h3.textContent = `Round ${i}`;
-    li.appendChild(h3);
+    li.append(h3);
 
     let img = document.createElement("img");
 
@@ -53,7 +53,7 @@ export function makeCat(arr, catName) {
       img.src = arr[i + 12];
     }
 
-    li.appendChild(img);
+    li.append(img);
     li.addEventListener("click", function () {
       makeAllQInvis()
       makeAllCatInvis()
@@ -66,9 +66,9 @@ export function makeCat(arr, catName) {
       }
       elem.classList.remove("displayNone")
     })
-    ul.appendChild(li);
+    ul.append(li);
   }
-  mainBlock.appendChild(ul);
+  mainBlock.append(ul);
 }
 
 export async function getImgs() {

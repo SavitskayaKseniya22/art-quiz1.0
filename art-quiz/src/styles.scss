@@ -210,7 +210,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5%;
+    padding: 10%;
     overflow-y: auto;
 
     &.main-not-centered {
@@ -272,7 +272,7 @@ body {
 
     .cat {
       width: 100%;
-      padding: 20px 20px;
+      padding: 20px 0;
 
 
       .questionCard {
@@ -318,16 +318,21 @@ body {
     }
 
     .tempDiv {
-      width: 320px;
+      min-width: 300px;
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      row-gap: 30px;
 
 
       .tempDivCont {
         width: 100%;
         position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        row-gap: 30px;
 
         img {
           width: 100%;
@@ -335,6 +340,7 @@ body {
 
         h2 {
           font-size: 30px;
+          text-align: center;
         }
 
         h3 {
@@ -349,17 +355,22 @@ body {
         .imgResult {
 
           position: absolute;
-          width: 40px;
-          height: 40px;
-          top: 0;
-          left: 50%;
+          width: 30px;
+          height: 30px;
+          bottom: -30px;
           color: black;
           opacity: 0.7;
+          transition: 0.3s;
+          border-radius: 50%;
+        }
+
+        .imgResult {
+          left: 30px;
         }
 
         .nextQButton {
 
-          top: 60px;
+          right: 30px;
           background-image: url("./images/next-arrow-direction-down-left-up-right-svgrepo-com.svg");
           background-repeat: no-repeat;
           background-size: contain;

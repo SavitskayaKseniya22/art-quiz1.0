@@ -47,8 +47,18 @@ class QuestionPaintings {
     this.desc = obj.desc;
     this.block = block;
     this.arr = arr;
+    this.author = obj.desc.author;
+
+    console.log(this.author)
 
     let mainLi = document.createElement("li");
+    mainLi.classList.add("questionCard");
+
+    let h2 = document.createElement("h2")
+    h2.textContent = `Which of these paintings did ${this.author} paint?`
+
+    mainLi.append(h2);
+
 
     this._liArr = [];
     let img = document.createElement("img");
@@ -64,12 +74,13 @@ class QuestionPaintings {
     shuffle(this._liArr);
 
     for (let elem of this._liArr) {
-      mainLi.appendChild(elem);
+      mainLi.append(elem);
     }
     if (this.block.childNodes.length != 0) {
       mainLi.classList.add("displayNone")
     }
-    this.block.appendChild(mainLi);
+
+    this.block.append(mainLi);
   }
   get pic() {
     return this._pic
@@ -110,7 +121,7 @@ export function fillPaintingsCat(arrPic, arrDesc, block) {
       k++;
     }
 
-    block.appendChild(ul);
+    block.append(ul);
   }
 }
 
@@ -140,15 +151,15 @@ class QuestionArtist {
 
     let h2 = document.createElement("h2")
     h2.textContent = "Who is the author of the painting?";
-    mainLi.appendChild(h2);
+
 
     let img = document.createElement("img");
     img.src = this.pic;
-    mainLi.appendChild(img);
+
 
     let ul = document.createElement("ul");
     ul.classList.add("possibleAnswers");
-    mainLi.appendChild(ul);
+    mainLi.append(h2, img, ul);
 
 
 
@@ -165,7 +176,7 @@ class QuestionArtist {
     shuffle(this._liArr);
     for (let elem of this._liArr) {
       elem.classList.add("possibleAnswerElem");
-      ul.appendChild(elem);
+      ul.append(elem);
     }
     if (this.block.childNodes.length != 0) {
       mainLi.classList.add("displayNone")
@@ -173,7 +184,7 @@ class QuestionArtist {
     }
 
 
-    this.block.appendChild(mainLi);
+    this.block.append(mainLi);
 
   }
   get rightAnswer() {
@@ -219,7 +230,7 @@ export function fillArtistsCat(arrPic, arrDesc, block) {
       k++;
     }
 
-    block.appendChild(ul);
+    block.append(ul);
   }
 }
 
@@ -297,30 +308,41 @@ class Card {
     let span = document.createElement("span");
     span.textContent = this.year;
 
-    div.appendChild(img)
-    divCont.appendChild(h2)
-    divCont.appendChild(h3)
-    divCont.appendChild(span)
+
+
+
 
     let imgResult = document.createElement("img");
     imgResult.classList.add("imgResult")
     if (result == "true") {
 
+      setTimeout(() => {
+        imgResult.style.backgroundColor = "GREEN";
+        imgResult.style.transform = "scale(2)"
+      }, 100);
       imgResult.src = "./images/correct-right-arrow-direction-left-down-up-svgrepo-com.svg"
     } else {
+
+      setTimeout(() => {
+        imgResult.style.backgroundColor = "RED";
+        imgResult.style.transform = "scale(2)"
+      }, 100);
       imgResult.src = "./images/wrong-delete-remove-trash-minus-cancel-close-svgrepo-com.svg"
     }
-    let button = document.createElement("button");
-    button.addEventListener("click", this.func)
-    //button.value = "Next question";
-    // button.textContent = "Next question"
-    button.classList.add("nextQButton")
+    let nextQButton = document.createElement("button");
+    nextQButton.addEventListener("click", this.func)
+    nextQButton.classList.add("nextQButton")
+    setTimeout(() => {
+      nextQButton.style.transform = "translateX(20px)"
+      setTimeout(() => {
+        nextQButton.style.transform = "scale(2)"
+      }, 200);
+    }, 400);
 
-    divCont.appendChild(button)
-    divCont.appendChild(imgResult)
 
-    div.appendChild(divCont)
-    block.appendChild(div)
+    divCont.append(h2, h3, span, nextQButton, imgResult)
+    div.append(img, divCont)
+    block.append(div)
   }
   /*
   get author() {
