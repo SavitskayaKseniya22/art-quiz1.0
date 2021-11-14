@@ -14,7 +14,7 @@ class Picture {
   }
 }
 
-function getAllImages(arrPic, arrDesc) {
+export async function getAllImages(arrPic, arrDesc) {
   let allImages = [];
   for (let i = 0; i < arrPic.length; i++) {
     allImages.push(new Picture(arrPic[i], arrDesc[i]));
@@ -103,19 +103,16 @@ class QuestionPaintings {
 }
 
 
-function makePaintingsQuestion(arrPic, arrDesc, block, i) {
-  let arrImgs = getAllImages(arrPic, arrDesc);
-  return new QuestionPaintings(arrImgs[i], block, arrPic);
-}
 
 
-export function fillPaintingsCat(arrPic, arrDesc, block) {
+
+export function fillPaintingsCat(arrPic, block, arrImgs) {
   let k = 120;
   for (let j = 1; j <= 12; j++) {
     let ul = new Tag("ul", "", "", `catContent${j}`, "cat", "cat2", "displayNone")
 
     for (let i = 0; i < 10; i++) {
-      let obj = makePaintingsQuestion(arrPic, arrDesc, ul, k);
+      let obj = new QuestionPaintings(arrImgs[k], ul, arrPic)
       for (let elem of obj.liArr) {
         elem.addEventListener("click", function () {
 
@@ -198,27 +195,20 @@ class QuestionArtist {
 
 }
 
-function makeArtistsQuestion(arrPic, arrDesc, block, i) {
-  let arrImgs = getAllImages(arrPic, arrDesc);
-  let arrAuthors = getAllAuthors(arrDesc);
-  return new QuestionArtist(arrImgs[i], block, arrAuthors);
-}
 
-export function fillArtistsCat(arrPic, arrDesc, block) {
+
+export function fillArtistsCat(arrDesc, block, arrImgs) {
   let k = 0;
+  let arrAuthors = getAllAuthors(arrDesc);
   for (let j = 1; j <= 12; j++) {
-    let ul = document.createElement("ul");
-    ul.classList.add(`catContent${j}`);
-    ul.classList.add("cat1");
-    ul.classList.add("cat");
-    ul.classList.add("displayNone");
+    let ul = new Tag("ul", "", "", `catContent${j}`, "cat1", "cat", "displayNone")
+
 
     for (let i = 0; i < 10; i++) {
-      let obj = makeArtistsQuestion(arrPic, arrDesc, ul, k);
+      let obj = new QuestionArtist(arrImgs[k], ul, arrAuthors);
 
       for (let elem of obj.liArr) {
         elem.addEventListener("click", function () {
-
 
           if (elem.textContent == obj.rightAnswer) {
 
@@ -284,7 +274,7 @@ function random(max) {
 class Card {
   constructor(obj, block, result, func) {
 
-    //this.obj = obj;
+
     this.pic = obj.pic;
     this.author = obj.desc.author;
     this.name = obj.desc.name;
@@ -293,17 +283,11 @@ class Card {
     this.func = func;
     this.imageNum = obj.desc.imageNum;
 
-
-
-
-
-
     let div = new Tag("div", "", "", "tempDiv")
     let img = new Tag("img", "", this.pic)
     img.addEventListener("click", function () {
       //img.src = `https://raw.githubusercontent.com/irinainina/image-data/dadea6e2555841b3f136d8ab07ce6474391f1a3f/full/${this.imageNum}full.jpg`
     })
-
 
     let divCont = new Tag("div", "", "", "tempDivCont")
     let h2 = new Tag("h2", `"${this.name}"`, "")
