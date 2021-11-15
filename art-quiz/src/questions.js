@@ -225,15 +225,15 @@ export function fillArtistsCat(arrDesc, block, arrImgs) {
     let ul = new Tag("ul", "", "", `catContent${j}`, "cat1", "cat", "displayNone")
 
 
+
+
     for (let i = 0; i < 10; i++) {
       let obj = new QuestionArtist(arrImgs[k], ul, arrAuthors);
+      obj.index = k;
       k++;
       for (let elem of obj.liArr) {
 
         elem.addEventListener("click", function () {
-
-
-
 
           if (elem.textContent == obj.rightAnswer) {
 
@@ -253,30 +253,22 @@ export function fillArtistsCat(arrDesc, block, arrImgs) {
           if (aA == 9) {
             getNext()
             printTotalCard(rA, elem.parentNode.parentNode.parentNode)
-            refillCat(elem.parentNode.parentNode.parentNode)
-
-            /*let str = "." + (elem.parentNode.parentNode.parentNode).classList[0] + "." + (elem.parentNode.parentNode.parentNode).classList[1]
-            let doc = document.querySelector(str)
-            doc.style.backgroundColor = "RED";
-            console.log(str)*/
+            refillCat(elem.parentNode.parentNode.parentNode, obj.index)
             nullCounts(rA, aA)
-
           }
-
-
         })
       }
-
     }
-
     block.append(ul);
   }
 }
 
-function refillCat(elem) {
+function refillCat(elem, i) {
+  console.log(i)
   let str = "." + elem.classList[0] + "." + elem.classList[1]
   let doc = document.querySelector(str)
   doc.style.backgroundColor = "RED";
+  elem.innerHTML = "";
 }
 
 export function nullCounts() {
