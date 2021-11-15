@@ -1,3 +1,5 @@
+let rA = 0;
+let aA = 0;
 class Picture {
   constructor(pic, desc) {
     this.pic = pic;
@@ -108,20 +110,41 @@ class QuestionPaintings {
 
 export function fillPaintingsCat(arrPic, block, arrImgs) {
   let k = 120;
+
   for (let j = 1; j <= 12; j++) {
+
     let ul = new Tag("ul", "", "", `catContent${j}`, "cat", "cat2", "displayNone")
 
     for (let i = 0; i < 10; i++) {
+
       let obj = new QuestionPaintings(arrImgs[k], ul, arrPic)
+
       for (let elem of obj.liArr) {
         elem.addEventListener("click", function () {
 
           if (elem.src == obj.pic) {
-            printCard(elem, obj, "true", getNext)
-          } else {
+            printCard(elem, obj, "true", getNext).then(() => {
+              rA++;
+              aA++;
+              if (aA == 10) {
+                getNext()
+                printTotalCard(rA, elem.parentNode.parentNode)
+                nullCounts(rA, aA)
+              }
+            })
 
-            printCard(elem, obj, "false", getNext)
+          } else {
+            printCard(elem, obj, "false", getNext).then(() => {
+              aA++;
+              if (aA == 10) {
+                getNext()
+                printTotalCard(rA, elem.parentNode.parentNode)
+                nullCounts(rA, aA)
+              }
+            })
+
           }
+
         })
       }
       k++;
@@ -199,6 +222,7 @@ class QuestionArtist {
 
 export function fillArtistsCat(arrDesc, block, arrImgs) {
   let k = 0;
+
   let arrAuthors = getAllAuthors(arrDesc);
   for (let j = 1; j <= 12; j++) {
     let ul = new Tag("ul", "", "", `catContent${j}`, "cat1", "cat", "displayNone")
@@ -206,32 +230,103 @@ export function fillArtistsCat(arrDesc, block, arrImgs) {
 
     for (let i = 0; i < 10; i++) {
       let obj = new QuestionArtist(arrImgs[k], ul, arrAuthors);
-
+      k++;
       for (let elem of obj.liArr) {
+
         elem.addEventListener("click", function () {
+
+
+
 
           if (elem.textContent == obj.rightAnswer) {
 
-            printCard(elem.parentNode, obj, "true", getNext)
+            printCard(elem.parentNode, obj, "true", getNext).then(() => {
+              rA++;
+              aA++;
+              if (aA == 10) {
+                getNext()
+                printTotalCard(rA, elem.parentNode.parentNode.parentNode)
+                nullCounts(rA, aA)
+              }
+            })
 
           } else {
-            printCard(elem.parentNode, obj, "false", getNext)
+            printCard(elem.parentNode, obj, "false", getNext).then(() => {
+
+              aA++;
+              if (aA == 10) {
+                getNext()
+                printTotalCard(rA, elem.parentNode.parentNode.parentNode)
+                nullCounts(rA, aA)
+
+              }
+            })
+
           }
+
+
         })
       }
-      k++;
+
     }
 
     block.append(ul);
   }
 }
 
-function printCard(elem, obj, result, func) {
+export function nullCounts() {
+  arguments.forEach(element => {
+    return element = 0
+  });
+
+}
+
+function printTotalCard(rightAnsw, block) {
+  let div = new Tag("div", "", "", "totalCard");
+  let h3 = new Tag("h3", "Round completed!", "");
+  let buttonHome = new Tag("button", "", "", "back-home-button")
+  let imgHome = new Tag("img", "", "./images/home-house-building-estate-property-real-furniture-svgrepo-com.svg")
+  imgHome.alt = "home"
+
+  buttonHome.append(imgHome)
+
+  let imgCat = new Tag("img", "", "./images/menu-navigation-direction-arrow-location-map-svgrepo-com.svg")
+
+  imgCat.alt = "category"
+  let buttonCat = new Tag("button", "", "", "back-cat")
+  buttonCat.append(imgCat)
+
+  let p;
+
+  if (rightAnsw <= 3) {
+
+    p = new Tag("p", "Please try again. You can do better!", "")
+  } else if (rightAnsw > 3 && rightAnsw <= 7) {
+
+    p = new Tag("p", "Nice try. Can we repeat it?", "")
+  } else if (rightAnsw > 7 && rightAnsw < 10) {
+
+    p = new Tag("p", "Almost done! One more time?", "")
+  } else if (rightAnsw == 10) {
+
+    p = new Tag("p", "Well done! You are now an art professor!", "")
+  }
+
+  let span = new Tag("span", `${rightAnsw} correct answers out of 10`, "")
+  div.append(h3, p, span, buttonHome, buttonCat)
+  block.append(div)
+
+
+}
+
+
+async function printCard(elem, obj, result, func) {
   for (let item of elem.parentNode.childNodes) {
     item.classList.add("displayNone")
   }
   new Card(obj, elem.parentNode, result, func)
 }
+
 
 function getNext() {
   let tempDiv = document.querySelector(".tempDiv")
@@ -285,12 +380,10 @@ class Card {
     //alert(this.imageNum)
 
     let div = new Tag("div", "", "", "tempDiv")
-
     let a = document.createElement("a");
     let img = new Tag("img", "", this.pic)
     a.append(img)
     a.target = "_blank"
-
     img.addEventListener("click", function () {
       a.href = `https://raw.githubusercontent.com/irinainina/image-data/dadea6e2555841b3f136d8ab07ce6474391f1a3f/full/${obj.desc.imageNum}full.jpg`
     })

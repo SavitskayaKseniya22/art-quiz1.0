@@ -1,5 +1,6 @@
 import {
-  Tag
+  Tag,
+  nullCounts
 } from "./questions.js";
 
 
@@ -27,21 +28,24 @@ document.addEventListener("click", function (event) {
     makeAllCatInvis()
     makeAllQInvis()
     makeAllCatInactive()
+    nullCounts()
+
 
   } else if (event.target.closest(".back-cat")) {
     backCat.setAttribute("disabled", "true")
     makeAllQInvis()
     let activeCat = document.querySelector(".activeCat");
     activeCat.classList.remove("displayNone");
+    nullCounts()
   }
 })
 
 
 export function makeCat(arr, catName) {
   let ul = new Tag("ul", "", "", "cat-title", catName, "displayNone")
-  for (let i = 1; i <= 12; i++) {
-    let li = new Tag("li", "", "", "cat", `cat${i}`)
-    let h3 = new Tag("h3", `Round ${i}`, "")
+  for (let i = 0; i <= 12; i++) {
+    let li = new Tag("li", "", "", "cat", `cat${i+1}`)
+    let h3 = new Tag("h3", `Round ${i+1}`, "")
     li.append(h3);
 
     let img = new Tag("img", "", "")
@@ -59,9 +63,9 @@ export function makeCat(arr, catName) {
       backCat.removeAttribute("disabled")
       let elem;
       if (catName == "Artists") {
-        elem = document.querySelector(`.catContent${i}.cat1`)
+        elem = document.querySelector(`.catContent${i+1}.cat1`)
       } else {
-        elem = document.querySelector(`.catContent${i}.cat2`)
+        elem = document.querySelector(`.catContent${i+1}.cat2`)
       }
       elem.classList.remove("displayNone")
     })
