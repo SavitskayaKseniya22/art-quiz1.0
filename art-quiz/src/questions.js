@@ -1,5 +1,7 @@
-let rA = 0;
-let aA = 0;
+export let rA = 0;
+export let aA = 0;
+
+let myStorage = window.localStorage;
 class Picture {
   constructor(pic, desc) {
     this.pic = pic;
@@ -113,7 +115,7 @@ export function fillPaintingsCat(arrPic, block, arrImgs) {
 
   for (let j = 1; j <= 12; j++) {
 
-    let ul = new Tag("ul", "", "", `catContent${j}`, "cat", "cat2", "displayNone")
+    let ul = new Tag("ul", "", "", `catContent${j}`, "cat2", "cat", "displayNone")
 
     for (let i = 0; i < 10; i++) {
 
@@ -126,23 +128,18 @@ export function fillPaintingsCat(arrPic, block, arrImgs) {
             printCard(elem, obj, "true", getNext).then(() => {
               rA++;
               aA++;
-              if (aA == 10) {
-                getNext()
-                printTotalCard(rA, elem.parentNode.parentNode)
-                nullCounts(rA, aA)
-              }
             })
 
           } else {
             printCard(elem, obj, "false", getNext).then(() => {
               aA++;
-              if (aA == 10) {
-                getNext()
-                printTotalCard(rA, elem.parentNode.parentNode)
-                nullCounts(rA, aA)
-              }
             })
 
+          }
+          if (aA == 9) {
+            getNext()
+            printTotalCard(rA, elem.parentNode.parentNode)
+            nullCounts(rA, aA)
           }
 
         })
@@ -243,24 +240,26 @@ export function fillArtistsCat(arrDesc, block, arrImgs) {
             printCard(elem.parentNode, obj, "true", getNext).then(() => {
               rA++;
               aA++;
-              if (aA == 10) {
-                getNext()
-                printTotalCard(rA, elem.parentNode.parentNode.parentNode)
-                nullCounts(rA, aA)
-              }
+
             })
 
           } else {
             printCard(elem.parentNode, obj, "false", getNext).then(() => {
-
               aA++;
-              if (aA == 10) {
-                getNext()
-                printTotalCard(rA, elem.parentNode.parentNode.parentNode)
-                nullCounts(rA, aA)
 
-              }
             })
+
+          }
+          if (aA == 9) {
+            getNext()
+            printTotalCard(rA, elem.parentNode.parentNode.parentNode)
+            refillCat(elem.parentNode.parentNode.parentNode)
+
+            /*let str = "." + (elem.parentNode.parentNode.parentNode).classList[0] + "." + (elem.parentNode.parentNode.parentNode).classList[1]
+            let doc = document.querySelector(str)
+            doc.style.backgroundColor = "RED";
+            console.log(str)*/
+            nullCounts(rA, aA)
 
           }
 
@@ -274,11 +273,16 @@ export function fillArtistsCat(arrDesc, block, arrImgs) {
   }
 }
 
-export function nullCounts() {
-  arguments.forEach(element => {
-    return element = 0
-  });
+function refillCat(elem) {
+  let str = "." + elem.classList[0] + "." + elem.classList[1]
+  let doc = document.querySelector(str)
+  doc.style.backgroundColor = "RED";
+}
 
+export function nullCounts() {
+  for (let item of arguments) {
+    item = 0;
+  }
 }
 
 function printTotalCard(rightAnsw, block) {

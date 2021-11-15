@@ -1,6 +1,8 @@
 import {
   Tag,
-  nullCounts
+  nullCounts,
+  rA,
+  aA
 } from "./questions.js";
 
 
@@ -28,7 +30,7 @@ document.addEventListener("click", function (event) {
     makeAllCatInvis()
     makeAllQInvis()
     makeAllCatInactive()
-    nullCounts()
+    nullCounts(rA, aA)
 
 
   } else if (event.target.closest(".back-cat")) {
@@ -36,7 +38,7 @@ document.addEventListener("click", function (event) {
     makeAllQInvis()
     let activeCat = document.querySelector(".activeCat");
     activeCat.classList.remove("displayNone");
-    nullCounts()
+    nullCounts(rA, aA)
   }
 })
 
