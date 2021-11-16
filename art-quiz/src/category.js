@@ -45,7 +45,7 @@ document.addEventListener("click", function (event) {
 
 export function makeCat(arr, catName) {
   let ul = new Tag("ul", "", "", "cat-title", catName, "displayNone")
-  for (let i = 0; i <= 12; i++) {
+  for (let i = 0; i < 12; i++) {
     let li = new Tag("li", "", "", "cat", `cat${i+1}`)
     let h3 = new Tag("h3", `Round ${i+1}`, "")
     li.append(h3);
