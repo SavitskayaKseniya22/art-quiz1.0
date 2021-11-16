@@ -125,13 +125,17 @@ export function fillPaintingsCat(arrPic, block, arrImgs) {
         elem.addEventListener("click", function () {
 
           if (elem.src == obj.pic) {
-            printCard(elem, obj, "true", getNext).then(() => {
+            printCard(elem, obj, "true", getNext, aA).then(() => {
               rA++;
               aA++;
+
+
+
+
             })
 
           } else {
-            printCard(elem, obj, "false", getNext).then(() => {
+            printCard(elem, obj, "false", getNext, aA).then(() => {
               aA++;
             })
 
@@ -180,14 +184,8 @@ class QuestionArtist {
     let h2 = new Tag("h2", "Who is the author of the painting?", "")
     let img = new Tag("img", "", this.pic)
     let ul = new Tag("ul", "", "", "possibleAnswers")
-
-
     mainLi.append(h2, img, ul);
-
     this._liArr = [];
-
-
-
     for (let i = 0; i < 4; i++) {
       if (i == 0) {
         this._liArr.push(new Tag("li", this.desc.author, ""));
@@ -195,7 +193,6 @@ class QuestionArtist {
         this._liArr.push(new Tag("li", this.arr[random(240)], ""));
       }
     }
-
     shuffle(this._liArr);
 
     for (let elem of this._liArr) {
@@ -222,60 +219,134 @@ export function fillArtistsCat(arrDesc, block, arrImgs) {
 
   let arrAuthors = getAllAuthors(arrDesc);
   for (let j = 1; j <= 12; j++) {
-    let ul = new Tag("ul", "", "", `catContent${j}`, "cat1", "cat", "displayNone")
 
-
-
-
-    for (let i = 0; i < 10; i++) {
-      let obj = new QuestionArtist(arrImgs[k], ul, arrAuthors);
-      obj.index = k;
-      k++;
-      for (let elem of obj.liArr) {
-
-        elem.addEventListener("click", function () {
-
-          if (elem.textContent == obj.rightAnswer) {
-
-            printCard(elem.parentNode, obj, "true", getNext).then(() => {
-              rA++;
-              aA++;
-
-            })
-
-          } else {
-            printCard(elem.parentNode, obj, "false", getNext).then(() => {
-              aA++;
-
-            })
-
-          }
-          if (aA == 9) {
-            getNext()
-            printTotalCard(rA, elem.parentNode.parentNode.parentNode)
-            refillCat(elem.parentNode.parentNode.parentNode, obj.index)
-            nullCounts(rA, aA)
-          }
-        })
-      }
-    }
+    let ul = new Tag("ul", "", "", `catContent${j}`, "cat1", "cat", "displayNone");
+    fillAllCat(arrImgs, k, ul, arrAuthors)
+    k += 10
     block.append(ul);
   }
 }
 
+
+
+function fillAllCat(arrImgs, k, block, arr) {
+  rA = 0;
+  aA = 0;
+
+  for (let i = 0; i < 10; i++) {
+    let obj = new QuestionArtist(arrImgs[k], block, arr);
+    k++;
+    for (let elem of obj.liArr) {
+      elem.addEventListener("click", function () {
+
+        if (elem.textContent == obj.rightAnswer) {
+
+          printCard(elem.parentNode, obj, "true", getNext, aA).then((res) => {
+            rA++;
+            aA++;
+
+
+
+
+            let butTotal = document.querySelector(".but-total")
+            butTotal.addEventListener("click", function () {
+              getNext()
+              let div = printTotalCard(rA, block, aA)
+              for (let item of div.childNodes) {
+                if (item.classList.contains("but-repeate")) {
+                  item.addEventListener("click", function () {
+                    refillCat(block, k)
+                    fillAllCat(arrImgs, k - 10, block, arr)
+                    block.childNodes[0].classList.remove("displayNone")
+                  })
+                }
+              }
+
+            })
+
+
+
+
+          })
+        } else {
+          printCard(elem.parentNode, obj, "false", getNext, aA).then((res) => {
+            aA++;
+
+
+
+
+            let butTotal = document.querySelector(".but-total")
+            butTotal.addEventListener("click", function () {
+              getNext()
+              let div = printTotalCard(rA, block, aA)
+              for (let item of div.childNodes) {
+                if (item.classList.contains("but-repeate")) {
+                  item.addEventListener("click", function () {
+                    refillCat(block, k)
+                    fillAllCat(arrImgs, k - 10, block, arr)
+                    block.childNodes[0].classList.remove("displayNone")
+                  })
+                }
+              }
+
+            })
+
+
+
+
+
+
+
+
+          })
+        }
+
+        console.log(aA)
+        /*
+
+        if (aA == 9) {
+
+          getNext()
+          let div = printTotalCard(rA, block, aA)
+
+          for (let item of div.childNodes) {
+            if (item.classList.contains("but-repeate")) {
+              item.addEventListener("click", function () {
+
+                refillCat(block, k)
+                fillAllCat(arrImgs, k - 10, block, arr)
+                block.childNodes[0].classList.remove("displayNone")
+              })
+            }
+          }
+
+
+
+        }*/
+      })
+    }
+  }
+}
+
 function refillCat(elem, i) {
+  /*
   console.log(i)
   let str = "." + elem.classList[0] + "." + elem.classList[1]
   let doc = document.querySelector(str)
-  doc.style.backgroundColor = "RED";
+  doc.style.backgroundColor = "RED";*/
   elem.innerHTML = "";
 }
 
 export function nullCounts() {
+
   for (let item of arguments) {
     item = 0;
+
   }
+
 }
+
+
 
 function printTotalCard(rightAnsw, block) {
   let div = new Tag("div", "", "", "totalCard");
@@ -283,14 +354,21 @@ function printTotalCard(rightAnsw, block) {
   let buttonHome = new Tag("button", "", "", "back-home-button")
   let imgHome = new Tag("img", "", "./images/home-house-building-estate-property-real-furniture-svgrepo-com.svg")
   imgHome.alt = "home"
-
   buttonHome.append(imgHome)
-
   let imgCat = new Tag("img", "", "./images/menu-navigation-direction-arrow-location-map-svgrepo-com.svg")
 
   imgCat.alt = "category"
   let buttonCat = new Tag("button", "", "", "back-cat")
   buttonCat.append(imgCat)
+
+
+  let buttonRepeate = new Tag("button", "", "", "but-repeate")
+  let imgRepeate = new Tag("img", "", "./images/arrow_repeat.svg")
+  buttonRepeate.append(imgRepeate)
+
+
+
+
 
   let p;
 
@@ -309,18 +387,22 @@ function printTotalCard(rightAnsw, block) {
   }
 
   let span = new Tag("span", `${rightAnsw} correct answers out of 10`, "")
-  div.append(h3, p, span, buttonHome, buttonCat)
+  div.append(h3, p, span, buttonHome, buttonRepeate, buttonCat)
+
+
   block.append(div)
+
+  return div
 
 
 }
 
 
-async function printCard(elem, obj, result, func) {
+async function printCard(elem, obj, result, func, aA) {
   for (let item of elem.parentNode.childNodes) {
     item.classList.add("displayNone")
   }
-  new Card(obj, elem.parentNode, result, func)
+  return new Card(obj, elem.parentNode, result, func, aA)
 }
 
 
@@ -363,7 +445,7 @@ function random(max) {
 }
 
 class Card {
-  constructor(obj, block, result, func) {
+  constructor(obj, block, result, func, aA) {
 
 
     this.pic = obj.pic;
@@ -403,20 +485,41 @@ class Card {
       }, 100);
       imgResult.src = "./images/wrong-delete-remove-trash-minus-cancel-close-svgrepo-com.svg"
     }
+    if (aA != 9) {
+      let nextQButton = new Tag("button", "", "", "nextQButton")
+      nextQButton.addEventListener("click", this.func)
+      let nextQImage = new Tag("img", "", "./images/next-arrow-direction-down-left-up-right-svgrepo-com.svg")
+      nextQButton.append(nextQImage)
+      divCont.append(nextQButton)
+      slowSlide(nextQButton)
+    } else {
+      let buttonTotal = new Tag("button", "", "", "but-total")
+      let imgTotal = new Tag("img", "", "./images/clipboard-check-line-svgrepo-com.svg")
+      buttonTotal.append(imgTotal)
+      divCont.append(buttonTotal)
+      slowSlide(buttonTotal)
+    }
 
-    let nextQButton = new Tag("button", "", "", "nextQButton")
-    nextQButton.addEventListener("click", this.func)
 
-    setTimeout(() => {
-      nextQButton.style.transform = "translateX(20px)"
-      setTimeout(() => {
-        nextQButton.style.transform = "scale(2)"
-      }, 200);
-    }, 400);
 
-    divCont.append(h2, h3, span, nextQButton, imgResult)
+
+
+
+
+    divCont.append(h2, h3, span, imgResult)
     div.append(a, divCont)
     block.append(div)
+
+    return div
   }
 
+}
+
+function slowSlide(item) {
+  setTimeout(() => {
+    item.style.transform = "translateX(20px)"
+    setTimeout(() => {
+      item.style.transform = "scale(2)"
+    }, 200);
+  }, 400);
 }
