@@ -11,6 +11,14 @@ export let mainBlock = document.querySelector("main");
 let backHomeButton = document.querySelector(".back-home-button");
 
 let backCat = document.querySelector(".back-cat");
+
+window.onunload = function () {
+  backHomeButton.setAttribute("disabled", "true");
+  backCat.setAttribute("disabled", "true");
+
+}
+
+
 document.addEventListener("click", function (event) {
 
 

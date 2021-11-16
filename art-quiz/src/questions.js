@@ -85,7 +85,15 @@ class QuestionPaintings {
       if (i == 0) {
         this._liArr.push(new Tag("img", "", this._pic))
       } else {
-        this._liArr.push(new Tag("img", "", this.arr[random(240)]));
+        let m;
+        do {
+          m = random(240)
+
+        } while (this._liArr.includes(new Tag("img", "", this.arr[m])))
+
+        this._liArr.push(new Tag("img", "", this.arr[m]))
+
+
       }
     }
 
@@ -139,20 +147,23 @@ function fillAllCatPaint(arrImgs, k, block, arr) {
             aA++;
 
             let butTotal = document.querySelector(".but-total")
-            butTotal.addEventListener("click", function () {
-              getNext()
-              let div = printTotalCard(rA, elem.parentNode.parentNode, aA)
-              for (let item of div.childNodes) {
-                if (item.classList.contains("but-repeate")) {
-                  item.addEventListener("click", function () {
-                    refillCat(block, k)
-                    fillAllCatPaint(arrImgs, k - 10, block, arr)
-                    block.childNodes[0].classList.remove("displayNone")
-                  })
+            if (butTotal) {
+              butTotal.addEventListener("click", function () {
+                getNext()
+                let div = printTotalCard(rA, elem.parentNode.parentNode, aA)
+                for (let item of div.childNodes) {
+                  if (item.classList.contains("but-repeate")) {
+                    item.addEventListener("click", function () {
+                      refillCat(block, k)
+                      fillAllCatPaint(arrImgs, k - 10, block, arr)
+                      block.childNodes[0].classList.remove("displayNone")
+                    })
+                  }
                 }
-              }
 
-            })
+              })
+            }
+
           })
 
         } else {
@@ -160,20 +171,23 @@ function fillAllCatPaint(arrImgs, k, block, arr) {
             aA++;
 
             let butTotal = document.querySelector(".but-total")
-            butTotal.addEventListener("click", function () {
-              getNext()
-              let div = printTotalCard(rA, elem.parentNode.parentNode, aA)
-              for (let item of div.childNodes) {
-                if (item.classList.contains("but-repeate")) {
-                  item.addEventListener("click", function () {
-                    refillCat(block, k)
-                    fillAllCatPaint(arrImgs, k - 10, block, arr)
-                    block.childNodes[0].classList.remove("displayNone")
-                  })
+            if (butTotal) {
+              butTotal.addEventListener("click", function () {
+                getNext()
+                let div = printTotalCard(rA, elem.parentNode.parentNode, aA)
+                for (let item of div.childNodes) {
+                  if (item.classList.contains("but-repeate")) {
+                    item.addEventListener("click", function () {
+                      refillCat(block, k)
+                      fillAllCatPaint(arrImgs, k - 10, block, arr)
+                      block.childNodes[0].classList.remove("displayNone")
+                    })
+                  }
                 }
-              }
 
-            })
+              })
+            }
+
           })
         }
       })
@@ -218,7 +232,13 @@ class QuestionArtist {
       if (i == 0) {
         this._liArr.push(new Tag("li", this.desc.author, ""));
       } else {
-        this._liArr.push(new Tag("li", this.arr[random(240)], ""));
+        let m;
+        do {
+          m = random(240)
+
+        } while (this._liArr.includes(new Tag("li", this.arr[m], "")))
+
+        this._liArr.push(new Tag("li", this.arr[m], ""))
       }
     }
     shuffle(this._liArr);
@@ -269,7 +289,7 @@ function fillAllCat(arrImgs, k, block, arr) {
 
         if (elem.textContent == obj.rightAnswer) {
 
-          printCard(elem.parentNode, obj, "true", getNext, aA).then((res) => {
+          printCard(elem.parentNode, obj, "true", getNext, aA).then(() => {
             rA++;
             aA++;
 
@@ -277,43 +297,49 @@ function fillAllCat(arrImgs, k, block, arr) {
 
 
             let butTotal = document.querySelector(".but-total")
-            butTotal.addEventListener("click", function () {
-              getNext()
-              let div = printTotalCard(rA, block, aA)
-              for (let item of div.childNodes) {
-                if (item.classList.contains("but-repeate")) {
-                  item.addEventListener("click", function () {
-                    refillCat(block, k)
-                    fillAllCat(arrImgs, k - 10, block, arr)
-                    block.childNodes[0].classList.remove("displayNone")
-                  })
+            if (butTotal) {
+              butTotal.addEventListener("click", function () {
+                getNext()
+                let div = printTotalCard(rA, block, aA)
+                for (let item of div.childNodes) {
+                  if (item.classList.contains("but-repeate")) {
+                    item.addEventListener("click", function () {
+                      refillCat(block, k)
+                      fillAllCat(arrImgs, k - 10, block, arr)
+                      block.childNodes[0].classList.remove("displayNone")
+                    })
+                  }
                 }
-              }
 
-            })
+              })
+            }
+
           })
         } else {
-          printCard(elem.parentNode, obj, "false", getNext, aA).then((res) => {
+          printCard(elem.parentNode, obj, "false", getNext, aA).then(() => {
             aA++;
 
 
 
 
             let butTotal = document.querySelector(".but-total")
-            butTotal.addEventListener("click", function () {
-              getNext()
-              let div = printTotalCard(rA, block, aA)
-              for (let item of div.childNodes) {
-                if (item.classList.contains("but-repeate")) {
-                  item.addEventListener("click", function () {
-                    refillCat(block, k)
-                    fillAllCat(arrImgs, k - 10, block, arr)
-                    block.childNodes[0].classList.remove("displayNone")
-                  })
+            if (butTotal) {
+              butTotal.addEventListener("click", function () {
+                getNext()
+                let div = printTotalCard(rA, block, aA)
+                for (let item of div.childNodes) {
+                  if (item.classList.contains("but-repeate")) {
+                    item.addEventListener("click", function () {
+                      refillCat(block, k)
+                      fillAllCat(arrImgs, k - 10, block, arr)
+                      block.childNodes[0].classList.remove("displayNone")
+                    })
+                  }
                 }
-              }
 
-            })
+              })
+            }
+
 
 
 
@@ -325,7 +351,7 @@ function fillAllCat(arrImgs, k, block, arr) {
           })
         }
 
-        console.log(aA)
+        //console.log(aA)
         /*
 
         if (aA == 9) {
@@ -352,7 +378,7 @@ function fillAllCat(arrImgs, k, block, arr) {
   }
 }
 
-function refillCat(elem, i) {
+function refillCat(elem) {
   /*
   console.log(i)
   let str = "." + elem.classList[0] + "." + elem.classList[1]

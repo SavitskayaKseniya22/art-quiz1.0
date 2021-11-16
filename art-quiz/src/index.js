@@ -2,7 +2,8 @@ import "./styles.scss";
 import {
   makeCat,
   getImgs,
-  mainBlock
+  mainBlock,
+
 } from "./category.js";
 import {
   images
@@ -12,6 +13,7 @@ import {
   fillArtistsCat,
   getAllImages
 } from "./questions.js";
+
 
 getImgs().then((value) => {
   makeCat(value, "Artists");
