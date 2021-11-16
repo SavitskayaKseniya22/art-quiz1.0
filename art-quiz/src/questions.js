@@ -65,12 +65,13 @@ export class Tag {
 
 
 class QuestionPaintings {
-  constructor(obj, block, arr) {
-    this._pic = obj.pic;
-    this.desc = obj.desc;
+  constructor(obj, block, arr, k) {
+    this.obj = obj[k]
+    this._pic = this.obj.pic;
+    this.desc = this.obj.desc;
     this.block = block;
     this.arr = arr;
-    this.author = obj.desc.author;
+    this.author = this.obj.desc.author;
 
     let mainLi = new Tag("li", "", "", "questionCard")
     if (this.block.childNodes.length != 0) {
@@ -88,8 +89,7 @@ class QuestionPaintings {
         let m;
         do {
           m = random(240)
-
-        } while (this._liArr.includes(new Tag("img", "", this.arr[m])))
+        } while (this._liArr.includes(new Tag("img", "", this.arr[m])) || this.author == obj[m].desc.author)
 
         this._liArr.push(new Tag("img", "", this.arr[m]))
 
@@ -136,7 +136,7 @@ function fillAllCatPaint(arrImgs, k, block, arr) {
   aA = 0;
 
   for (let i = 0; i < 10; i++) {
-    let obj = new QuestionPaintings(arrImgs[k], block, arr)
+    let obj = new QuestionPaintings(arrImgs, block, arr, k)
     k++;
     for (let elem of obj.liArr) {
       elem.addEventListener("click", function () {
