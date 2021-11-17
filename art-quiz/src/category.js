@@ -2,7 +2,8 @@ import {
   Tag,
   nullCounts,
   rA,
-  aA
+  aA,
+  myStorage
 } from "./questions.js";
 
 
@@ -16,6 +17,21 @@ window.onunload = function () {
   backHomeButton.setAttribute("disabled", "true");
   backCat.setAttribute("disabled", "true");
 
+
+
+}
+window.onload = function () {
+  for (let i = 0; i < myStorage.length; i++) {
+    let key = myStorage.key(i);
+    //alert(`${key}: ${localStorage.getItem(key)}`);
+    let item = document.querySelector(key)
+    for (let elem of item.childNodes) {
+      if (elem.classList.contains("numTotal")) {
+        elem.remove()
+      }
+    }
+    item.append(new Tag("span", localStorage.getItem(key), "", "numTotal"))
+  }
 }
 
 
@@ -39,13 +55,7 @@ document.addEventListener("click", function (event) {
     makeAllQInvis()
     makeAllCatInactive()
 
-    /*
 
-    let uu = document.querySelector("." + event.target.parentNode.parentNode.parentNode.classList[0] + "." + event.target.parentNode.parentNode.parentNode.classList[1])
-    let span = new Tag("span", rA, "", "numTotal");
-    uu.append(span)
-    uu.style.backgroundColor = "RED";
-    */
     nullCounts(rA, aA)
 
 
@@ -54,14 +64,6 @@ document.addEventListener("click", function (event) {
     makeAllQInvis()
     let activeCat = document.querySelector(".activeCat");
     activeCat.classList.remove("displayNone");
-
-    /*
-        let uu = document.querySelector("." + event.target.parentNode.parentNode.parentNode.classList[0] + "." + event.target.parentNode.parentNode.parentNode.classList[1])
-        let span = new Tag("span", rA, "", "numTotal");
-        uu.append(span)
-        uu.style.backgroundColor = "RED";*/
-
-
     nullCounts(rA, aA)
   }
 })

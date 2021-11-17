@@ -1,7 +1,7 @@
 export let rA = 0;
 export let aA = 0;
 
-let myStorage = window.localStorage;
+export let myStorage = window.localStorage;
 
 class Picture {
   constructor(pic, desc) {
@@ -143,25 +143,9 @@ function fillAllCatPaint(arrImgs, k, block, arr) {
             if (butTotal) {
               butTotal.addEventListener("click", function () {
                 getNext()
-                let div = printTotalCard(rA, elem.parentNode.parentNode, aA)
-
-
-                div.addEventListener("click", function (event) {
-                  if (event.target.closest(".but-repeate")) {
-                    refillCat(block, k)
-                    fillAllCatPaint(arrImgs, k - 10, block, arr)
-                    block.childNodes[0].classList.remove("displayNone")
-                  } else if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
-                    refillCat(block, k)
-                    fillAllCatPaint(arrImgs, k - 10, block, arr)
-                  }
-
-                })
-
-
+                printTotalCard(rA, elem.parentNode.parentNode, aA)
               })
             }
-
           })
 
         } else {
@@ -172,26 +156,27 @@ function fillAllCatPaint(arrImgs, k, block, arr) {
             if (butTotal) {
               butTotal.addEventListener("click", function () {
                 getNext()
-                let div = printTotalCard(rA, elem.parentNode.parentNode, aA)
-
-                div.addEventListener("click", function (event) {
-                  if (event.target.closest(".but-repeate")) {
-                    refillCat(block, k)
-                    fillAllCatPaint(arrImgs, k - 10, block, arr)
-                    block.childNodes[0].classList.remove("displayNone")
-                  } else if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
-                    refillCat(block, k)
-                    fillAllCatPaint(arrImgs, k - 10, block, arr)
-                  }
-
-                })
+                printTotalCard(rA, elem.parentNode.parentNode, aA)
 
               })
             }
 
+
           })
         }
+        document.addEventListener("click", function (event) {
+          if (event.target.closest(".but-repeate")) {
+            refillCat(block, k)
+            fillAllCatPaint(arrImgs, k - 10, block, arr)
+            block.childNodes[0].classList.remove("displayNone")
+          } else if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
+            refillCat(block, k)
+            fillAllCatPaint(arrImgs, k - 10, block, arr)
+          }
+
+        })
       })
+
     }
 
   }
@@ -293,88 +278,38 @@ function fillAllCat(arrImgs, k, block, arr) {
             rA++;
             aA++;
 
-
-
-
             let butTotal = document.querySelector(".but-total")
             if (butTotal) {
               butTotal.addEventListener("click", function () {
                 getNext()
-                let div = printTotalCard(rA, block, aA)
-
-
-                div.addEventListener("click", function (event) {
-                  if (event.target.closest(".but-repeate")) {
-                    refillCat(block, k)
-                    fillAllCat(arrImgs, k - 10, block, arr)
-                    block.childNodes[0].classList.remove("displayNone")
-                  } else if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
-                    refillCat(block, k)
-                    fillAllCat(arrImgs, k - 10, block, arr)
-
-
-
-                    /* 
-                     
-                     let uu = document.querySelector(`li.${event.target.parentNode.parentNode.parentNode.classList[0]}.${event.target.parentNode.parentNode.parentNode.classList[1]}`)
-                     let span = new Tag("span", rA, "", "numTotal");
-                     uu.append(span)
-                     uu.style.backgroundColor = "RED";*/
-
-
-
-
-                  }
-
-                })
+                printTotalCard(rA, block, aA)
 
 
               })
             }
-
           })
         } else {
           printCard(elem.parentNode, obj, "false", getNext, aA).then(() => {
             aA++;
-
             let butTotal = document.querySelector(".but-total")
             if (butTotal) {
               butTotal.addEventListener("click", function () {
                 getNext()
-                let div = printTotalCard(rA, block, aA)
-                /*
-                div.querySelector(".but-repeate").addEventListener("click", function () {
-                  refillCat(block, k)
-                  fillAllCat(arrImgs, k - 10, block, arr)
-                  block.childNodes[0].classList.remove("displayNone")
-                })*/
-                div.addEventListener("click", function (event) {
-                  if (event.target.closest(".but-repeate")) {
-                    refillCat(block, k)
-                    fillAllCat(arrImgs, k - 10, block, arr)
-                    block.childNodes[0].classList.remove("displayNone")
-                  } else if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
-                    refillCat(block, k)
-                    fillAllCat(arrImgs, k - 10, block, arr)
-
-
-                    /*
-                    
-
-                    let uu = document.querySelector(`li.${event.target.parentNode.parentNode.parentNode.classList[0]}.${event.target.parentNode.parentNode.parentNode.classList[1]}`)
-                    let span = new Tag("span", rA, "", "numTotal");
-                    uu.append(span)
-                    uu.style.backgroundColor = "RED";*/
-                  }
-
-                })
-
+                printTotalCard(rA, block, aA)
               })
             }
           })
         }
-
-
+        document.addEventListener("click", function (event) {
+          if (event.target.closest(".but-repeate")) {
+            refillCat(block, k)
+            fillAllCat(arrImgs, k - 10, block, arr)
+            block.childNodes[0].classList.remove("displayNone")
+          } else if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
+            refillCat(block, k)
+            fillAllCat(arrImgs, k - 10, block, arr)
+          }
+        })
       })
     }
   }
@@ -386,7 +321,6 @@ function refillCat(elem) {
 }
 
 export function nullCounts() {
-
   for (let item of arguments) {
     item = 0;
 
@@ -425,21 +359,31 @@ function printTotalCard(rightAnsw, block) {
   block.append(div)
 
   let arr = div.querySelectorAll("button");
-  for (let item of arr) {
-    item.addEventListener("click", function () {
 
-      let node = document.querySelector(`li.${item.parentNode.parentNode.classList[0]}.${item.parentNode.parentNode.classList[1]}.${item.parentNode.parentNode.classList[2]}`)
-      myStorage.setItem(`li.${item.parentNode.parentNode.classList[0]}.${item.parentNode.parentNode.classList[1]}.${item.parentNode.parentNode.classList[2]}`, rightAnsw);
-      for (let item of node.childNodes) {
-        if (item.classList.contains("numTotal")) {
-          item.remove()
-        }
+  function makePropStorage() {
+    let node = document.querySelector(`li.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`)
+    myStorage.setItem(`li.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`, rightAnsw);
+    for (let item of node.childNodes) {
+      if (item.classList.contains("numTotal")) {
+        item.remove()
       }
-      node.append(new Tag("span", rightAnsw, "", "numTotal"))
-
-      item.parentNode.remove()
-    })
+    }
+    node.append(new Tag("span", rightAnsw, "", "numTotal"))
+    div.remove()
   }
+  /*
+    for (let item of arr) {
+      item.addEventListener("click", function () {
+        makePropStorage()
+        
+      })
+
+    }*/
+  document.addEventListener("click", function (event) {
+    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || arr.includes(event.target)) {
+      makePropStorage()
+    }
+  })
   return div
 }
 
