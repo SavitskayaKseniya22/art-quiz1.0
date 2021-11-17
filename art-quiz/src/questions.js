@@ -2,6 +2,7 @@ export let rA = 0;
 export let aA = 0;
 
 let myStorage = window.localStorage;
+
 class Picture {
   constructor(pic, desc) {
     this.pic = pic;
@@ -42,20 +43,14 @@ export class Tag {
     if (content) {
       this._tag.textContent = content;
     }
-
     if (src) {
       this._tag.src = src;
     }
-
-
     if (args) {
       for (let elem of args) {
         this._tag.classList.add(elem)
       }
-
-
     }
-
     return this._tag
   }
 }
@@ -69,18 +64,18 @@ class QuestionPaintings {
     this.obj = obj[k]
     this._pic = this.obj.pic;
     this.desc = this.obj.desc;
-    this.block = block;
-    this.arr = arr;
     this.author = this.obj.desc.author;
+    this._liArr = [];
+    let mainLi = new Tag("li", "", "", "questionCard", "qCImgCont")
 
-    let mainLi = new Tag("li", "", "", "questionCard")
-    if (this.block.childNodes.length != 0) {
+    if (block.childNodes.length != 0) {
       mainLi.classList.add("displayNone")
     }
+
     let h2 = new Tag("h2", `Which of these paintings did ${this.author} paint?`, "")
     mainLi.append(h2);
 
-    this._liArr = [];
+
 
     for (let i = 0; i < 4; i++) {
       if (i == 0) {
@@ -89,11 +84,9 @@ class QuestionPaintings {
         let m;
         do {
           m = random(240)
-        } while (this._liArr.includes(new Tag("img", "", this.arr[m])) || this.author == obj[m].desc.author)
+        } while (this._liArr.includes(new Tag("img", "", arr[m])) || this.author == obj[m].desc.author)
 
-        this._liArr.push(new Tag("img", "", this.arr[m]))
-
-
+        this._liArr.push(new Tag("img", "", arr[m]))
       }
     }
 
@@ -102,7 +95,7 @@ class QuestionPaintings {
     for (let elem of this._liArr) {
       mainLi.append(elem);
     }
-    this.block.append(mainLi);
+    block.append(mainLi);
   }
 
 
@@ -121,9 +114,9 @@ class QuestionPaintings {
 export function fillPaintingsCat(arrPic, block, arrImgs) {
   let k = 120;
 
-  for (let j = 1; j <= 12; j++) {
+  for (let j = 0; j < 12; j++) {
 
-    let ul = new Tag("ul", "", "", `catContent${j}`, "cat2", "cat", "displayNone")
+    let ul = new Tag("ul", "", "", "cat2", "cat", "displayNone", `subCat${j}`)
     fillAllCatPaint(arrImgs, k, ul, arrPic)
 
     k += 10
@@ -214,12 +207,10 @@ class QuestionArtist {
   constructor(obj, block, arr) {
     this.pic = obj.pic;
     this.desc = obj.desc;
-    this.block = block;
-    this.arr = arr;
     this._rightAnswer = this.desc.author;
-
+    this._liArr = [];
     let mainLi = new Tag("li", "", "", "questionCard")
-    if (this.block.childNodes.length != 0) {
+    if (block.childNodes.length != 0) {
       mainLi.classList.add("displayNone")
 
     }
@@ -227,7 +218,7 @@ class QuestionArtist {
     let img = new Tag("img", "", this.pic)
     let ul = new Tag("ul", "", "", "possibleAnswers")
     mainLi.append(h2, img, ul);
-    this._liArr = [];
+
     for (let i = 0; i < 4; i++) {
       if (i == 0) {
         this._liArr.push(new Tag("li", this.desc.author, ""));
@@ -235,10 +226,9 @@ class QuestionArtist {
         let m;
         do {
           m = random(240)
+        } while (this._liArr.includes(new Tag("li", arr[m], "")))
 
-        } while (this._liArr.includes(new Tag("li", this.arr[m], "")))
-
-        this._liArr.push(new Tag("li", this.arr[m], ""))
+        this._liArr.push(new Tag("li", arr[m], ""))
       }
     }
     shuffle(this._liArr);
@@ -247,7 +237,7 @@ class QuestionArtist {
       elem.classList.add("possibleAnswerElem");
       ul.append(elem);
     }
-    this.block.append(mainLi);
+    block.append(mainLi);
 
   }
 
@@ -266,27 +256,29 @@ export function fillArtistsCat(arrDesc, block, arrImgs) {
   let k = 0;
 
   let arrAuthors = getAllAuthors(arrDesc);
-  for (let j = 1; j <= 12; j++) {
+  for (let j = 0; j < 12; j++) {
 
-    let ul = new Tag("ul", "", "", `catContent${j}`, "cat1", "cat", "displayNone");
+    let ul = new Tag("ul", "", "", "cat1", "cat", "displayNone", `subCat${j}`);
     fillAllCat(arrImgs, k, ul, arrAuthors)
     k += 10
     block.append(ul);
   }
+  rA = 0;
+  aA = 0;
 }
 
 
 
 function fillAllCat(arrImgs, k, block, arr) {
-  rA = 0;
-  aA = 0;
+  let rA = 0;
+  let aA = 0;
 
   for (let i = 0; i < 10; i++) {
     let obj = new QuestionArtist(arrImgs[k], block, arr);
     k++;
     for (let elem of obj.liArr) {
       elem.addEventListener("click", function () {
-
+        console.log(rA, aA)
         if (elem.textContent == obj.rightAnswer) {
 
           printCard(elem.parentNode, obj, "true", getNext, aA).then(() => {
@@ -319,9 +311,6 @@ function fillAllCat(arrImgs, k, block, arr) {
           printCard(elem.parentNode, obj, "false", getNext, aA).then(() => {
             aA++;
 
-
-
-
             let butTotal = document.querySelector(".but-total")
             if (butTotal) {
               butTotal.addEventListener("click", function () {
@@ -339,51 +328,17 @@ function fillAllCat(arrImgs, k, block, arr) {
 
               })
             }
-
-
-
-
-
-
-
-
-
           })
         }
 
-        //console.log(aA)
-        /*
 
-        if (aA == 9) {
-
-          getNext()
-          let div = printTotalCard(rA, block, aA)
-
-          for (let item of div.childNodes) {
-            if (item.classList.contains("but-repeate")) {
-              item.addEventListener("click", function () {
-
-                refillCat(block, k)
-                fillAllCat(arrImgs, k - 10, block, arr)
-                block.childNodes[0].classList.remove("displayNone")
-              })
-            }
-          }
-
-
-
-        }*/
       })
     }
   }
 }
 
 function refillCat(elem) {
-  /*
-  console.log(i)
-  let str = "." + elem.classList[0] + "." + elem.classList[1]
-  let doc = document.querySelector(str)
-  doc.style.backgroundColor = "RED";*/
+
   elem.innerHTML = "";
 }
 
@@ -406,45 +361,33 @@ function printTotalCard(rightAnsw, block) {
   imgHome.alt = "home"
   buttonHome.append(imgHome)
   let imgCat = new Tag("img", "", "./images/menu-navigation-direction-arrow-location-map-svgrepo-com.svg")
-
   imgCat.alt = "category"
   let buttonCat = new Tag("button", "", "", "back-cat")
   buttonCat.append(imgCat)
-
-
   let buttonRepeate = new Tag("button", "", "", "but-repeate")
   let imgRepeate = new Tag("img", "", "./images/arrow_repeat.svg")
   buttonRepeate.append(imgRepeate)
-
-
-
-
-
   let p;
-
   if (rightAnsw <= 3) {
-
     p = new Tag("p", "Please try again. You can do better!", "")
   } else if (rightAnsw > 3 && rightAnsw <= 7) {
-
     p = new Tag("p", "Nice try. Can we repeat it?", "")
   } else if (rightAnsw > 7 && rightAnsw < 10) {
-
     p = new Tag("p", "Almost done! One more time?", "")
   } else if (rightAnsw == 10) {
-
     p = new Tag("p", "Well done! You are now an art professor!", "")
   }
-
   let span = new Tag("span", `${rightAnsw} correct answers out of 10`, "")
   div.append(h3, p, span, buttonHome, buttonRepeate, buttonCat)
-
-
   block.append(div)
 
+  let arr = div.querySelectorAll("button");
+  for (let item of arr) {
+    item.addEventListener("click", function () {
+      item.parentNode.remove()
+    })
+  }
   return div
-
-
 }
 
 
@@ -458,12 +401,13 @@ async function printCard(elem, obj, result, func, aA) {
 
 function getNext() {
   let tempDiv = document.querySelector(".tempDiv")
-  tempDiv.classList.remove("tempDiv")
+
   tempDiv.parentNode.classList.add("displayNone")
   tempDiv.parentNode.classList.add("complete")
   if (tempDiv.parentNode.nextSibling) {
     tempDiv.parentNode.nextSibling.classList.remove("displayNone")
   }
+  tempDiv.remove()
 
 }
 

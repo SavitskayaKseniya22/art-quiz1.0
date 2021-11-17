@@ -34,10 +34,24 @@ document.addEventListener("click", function (event) {
     quizType.classList.remove("displayNone");
     mainBlock.classList.remove("main-not-centered");
     backHomeButton.setAttribute("disabled", "true")
+
+
+
+
+
+
     backCat.setAttribute("disabled", "true")
     makeAllCatInvis()
     makeAllQInvis()
     makeAllCatInactive()
+
+    /*
+
+    let uu = document.querySelector("." + event.target.parentNode.parentNode.parentNode.classList[0] + "." + event.target.parentNode.parentNode.parentNode.classList[1])
+    let span = new Tag("span", rA, "", "numTotal");
+    uu.append(span)
+    uu.style.backgroundColor = "RED";
+    */
     nullCounts(rA, aA)
 
 
@@ -46,6 +60,14 @@ document.addEventListener("click", function (event) {
     makeAllQInvis()
     let activeCat = document.querySelector(".activeCat");
     activeCat.classList.remove("displayNone");
+
+    /*
+        let uu = document.querySelector("." + event.target.parentNode.parentNode.parentNode.classList[0] + "." + event.target.parentNode.parentNode.parentNode.classList[1])
+        let span = new Tag("span", rA, "", "numTotal");
+        uu.append(span)
+        uu.style.backgroundColor = "RED";*/
+
+
     nullCounts(rA, aA)
   }
 })
@@ -54,7 +76,13 @@ document.addEventListener("click", function (event) {
 export function makeCat(arr, catName) {
   let ul = new Tag("ul", "", "", "cat-title", catName, "displayNone")
   for (let i = 0; i < 12; i++) {
-    let li = new Tag("li", "", "", "cat", `cat${i+1}`)
+    let li;
+    if (catName == "Artists") {
+      li = new Tag("li", "", "", "cat1", "cat")
+    } else {
+      li = new Tag("li", "", "", "cat2", "cat")
+    }
+
     let h3 = new Tag("h3", `Round ${i+1}`, "")
     li.append(h3);
 
@@ -67,15 +95,16 @@ export function makeCat(arr, catName) {
     }
 
     li.append(img);
+
     li.addEventListener("click", function () {
       makeAllQInvis()
       makeAllCatInvis()
       backCat.removeAttribute("disabled")
       let elem;
       if (catName == "Artists") {
-        elem = document.querySelector(`.catContent${i+1}.cat1`)
+        elem = document.querySelector(`ul.cat1.subCat${i}`)
       } else {
-        elem = document.querySelector(`.catContent${i+1}.cat2`)
+        elem = document.querySelector(`ul.cat2.subCat${i}`)
       }
       elem.classList.remove("displayNone")
     })

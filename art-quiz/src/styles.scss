@@ -336,9 +336,36 @@ body {
           display: none;
         }
 
+        &.qCImgCont {
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          column-gap: 20px;
+          row-gap: 20px;
+          align-content: center;
+
+          &>img {
+
+            cursor: pointer;
+            width: 45%;
+
+            margin: 0;
+
+
+
+          }
+
+          &>h2 {
+            margin-bottom: 50px;
+          }
+
+        }
+
         h2 {
           font-size: 26px;
         }
+
+
 
         .possibleAnswers {
           display: flex;
@@ -830,6 +857,7 @@ body {
           &>img {
             width: 45%;
             margin: 0;
+
 
           }
         }
