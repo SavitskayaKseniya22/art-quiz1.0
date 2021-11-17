@@ -34,12 +34,6 @@ document.addEventListener("click", function (event) {
     quizType.classList.remove("displayNone");
     mainBlock.classList.remove("main-not-centered");
     backHomeButton.setAttribute("disabled", "true")
-
-
-
-
-
-
     backCat.setAttribute("disabled", "true")
     makeAllCatInvis()
     makeAllQInvis()
