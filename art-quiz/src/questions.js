@@ -429,6 +429,7 @@ function printTotalCard(rightAnsw, block) {
     item.addEventListener("click", function () {
 
       let node = document.querySelector(`li.${item.parentNode.parentNode.classList[0]}.${item.parentNode.parentNode.classList[1]}.${item.parentNode.parentNode.classList[2]}`)
+      myStorage.setItem(`li.${item.parentNode.parentNode.classList[0]}.${item.parentNode.parentNode.classList[1]}.${item.parentNode.parentNode.classList[2]}`, rightAnsw);
       for (let item of node.childNodes) {
         if (item.classList.contains("numTotal")) {
           item.remove()
