@@ -116,7 +116,7 @@ export function fillPaintingsCat(arrPic, block, arrImgs) {
 
   for (let j = 0; j < 12; j++) {
 
-    let ul = new Tag("ul", "", "", "cat2", "cat", "displayNone", `subCat${j}`)
+    let ul = new Tag("ul", "", "", "cat2", "cat", `subCat${j}`, "displayNone")
     fillAllCatPaint(arrImgs, k, ul, arrPic)
 
     k += 10
@@ -145,12 +145,6 @@ function fillAllCatPaint(arrImgs, k, block, arr) {
                 getNext()
                 let div = printTotalCard(rA, elem.parentNode.parentNode, aA)
 
-                /*
-                                div.querySelector(".but-repeate").addEventListener("click", function () {
-                                  refillCat(block, k)
-                                  fillAllCatPaint(arrImgs, k - 10, block, arr)
-                                  block.childNodes[0].classList.remove("displayNone")
-                                })*/
 
                 div.addEventListener("click", function (event) {
                   if (event.target.closest(".but-repeate")) {
@@ -179,6 +173,7 @@ function fillAllCatPaint(arrImgs, k, block, arr) {
               butTotal.addEventListener("click", function () {
                 getNext()
                 let div = printTotalCard(rA, elem.parentNode.parentNode, aA)
+
                 div.addEventListener("click", function (event) {
                   if (event.target.closest(".but-repeate")) {
                     refillCat(block, k)
@@ -271,7 +266,7 @@ export function fillArtistsCat(arrDesc, block, arrImgs) {
   let arrAuthors = getAllAuthors(arrDesc);
   for (let j = 0; j < 12; j++) {
 
-    let ul = new Tag("ul", "", "", "cat1", "cat", "displayNone", `subCat${j}`);
+    let ul = new Tag("ul", "", "", "cat1", "cat", `subCat${j}`, "displayNone");
     fillAllCat(arrImgs, k, ul, arrAuthors)
     k += 10
     block.append(ul);
@@ -285,7 +280,7 @@ export function fillArtistsCat(arrDesc, block, arrImgs) {
 function fillAllCat(arrImgs, k, block, arr) {
   let rA = 0;
   let aA = 0;
-
+  //console.log(block.classList)
   for (let i = 0; i < 10; i++) {
     let obj = new QuestionArtist(arrImgs[k], block, arr);
     k++;
@@ -306,12 +301,7 @@ function fillAllCat(arrImgs, k, block, arr) {
               butTotal.addEventListener("click", function () {
                 getNext()
                 let div = printTotalCard(rA, block, aA)
-                /*
-                div.querySelector(".but-repeate").addEventListener("click", function () {
-                  refillCat(block, k)
-                  fillAllCat(arrImgs, k - 10, block, arr)
-                  block.childNodes[0].classList.remove("displayNone")
-                })*/
+
 
                 div.addEventListener("click", function (event) {
                   if (event.target.closest(".but-repeate")) {
@@ -321,6 +311,19 @@ function fillAllCat(arrImgs, k, block, arr) {
                   } else if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
                     refillCat(block, k)
                     fillAllCat(arrImgs, k - 10, block, arr)
+
+
+
+                    /* 
+                     
+                     let uu = document.querySelector(`li.${event.target.parentNode.parentNode.parentNode.classList[0]}.${event.target.parentNode.parentNode.parentNode.classList[1]}`)
+                     let span = new Tag("span", rA, "", "numTotal");
+                     uu.append(span)
+                     uu.style.backgroundColor = "RED";*/
+
+
+
+
                   }
 
                 })
@@ -353,6 +356,15 @@ function fillAllCat(arrImgs, k, block, arr) {
                   } else if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
                     refillCat(block, k)
                     fillAllCat(arrImgs, k - 10, block, arr)
+
+
+                    /*
+                    
+
+                    let uu = document.querySelector(`li.${event.target.parentNode.parentNode.parentNode.classList[0]}.${event.target.parentNode.parentNode.parentNode.classList[1]}`)
+                    let span = new Tag("span", rA, "", "numTotal");
+                    uu.append(span)
+                    uu.style.backgroundColor = "RED";*/
                   }
 
                 })
@@ -415,6 +427,15 @@ function printTotalCard(rightAnsw, block) {
   let arr = div.querySelectorAll("button");
   for (let item of arr) {
     item.addEventListener("click", function () {
+
+      let node = document.querySelector(`li.${item.parentNode.parentNode.classList[0]}.${item.parentNode.parentNode.classList[1]}.${item.parentNode.parentNode.classList[2]}`)
+      for (let item of node.childNodes) {
+        if (item.classList.contains("numTotal")) {
+          item.remove()
+        }
+      }
+      node.append(new Tag("span", rightAnsw, "", "numTotal"))
+
       item.parentNode.remove()
     })
   }

@@ -669,6 +669,7 @@ body {
         width: 100%;
         padding: 0;
 
+
         .questionCard {
           height: 100%;
           width: 75%;
@@ -748,6 +749,19 @@ body {
       .cat {
         width: 100%;
         padding: 0;
+        position: relative;
+
+        .numTotal {
+          position: absolute;
+          right: 10px;
+          bottom: 20px;
+          padding: 10px;
+          width: 100%;
+          cursor: pointer;
+          background-color: rgba(255, 0, 0, 0.473);
+          text-align: right;
+
+        }
 
         .questionCard {
           flex-direction: row;

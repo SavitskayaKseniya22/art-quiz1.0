@@ -72,9 +72,9 @@ export function makeCat(arr, catName) {
   for (let i = 0; i < 12; i++) {
     let li;
     if (catName == "Artists") {
-      li = new Tag("li", "", "", "cat1", "cat")
+      li = new Tag("li", "", "", "cat1", "cat", `subCat${i}`)
     } else {
-      li = new Tag("li", "", "", "cat2", "cat")
+      li = new Tag("li", "", "", "cat2", "cat", `subCat${i}`)
     }
 
     let h3 = new Tag("h3", `Round ${i+1}`, "")
