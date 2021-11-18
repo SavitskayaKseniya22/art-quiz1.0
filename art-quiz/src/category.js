@@ -37,6 +37,8 @@ window.onload = function () {
 
 document.addEventListener("click", function (event) {
 
+  //alert(event.target.tagName)
+
 
   if (event.target.closest(".quiz-type h2")) {
     quizType.classList.add("displayNone");

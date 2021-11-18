@@ -75,7 +75,10 @@ class QuestionPaintings {
     let h2 = new Tag("h2", `Which of these paintings did ${this.author} paint?`, "")
     mainLi.append(h2);
 
+    let filteredArr = arr.slice().filter(elem => this._pic != elem);
 
+
+    console.log(this.obj)
 
     for (let i = 0; i < 4; i++) {
       if (i == 0) {
@@ -86,7 +89,9 @@ class QuestionPaintings {
           m = random(240)
         } while (this._liArr.includes(new Tag("img", "", arr[m])) || this.author == obj[m].desc.author)
 
-        this._liArr.push(new Tag("img", "", arr[m]))
+
+
+        this._liArr.push(new Tag("img", "", filteredArr[m]))
       }
     }
 
@@ -211,17 +216,14 @@ class QuestionArtist {
     let img = new Tag("img", "", this.pic)
     let ul = new Tag("ul", "", "", "possibleAnswers")
     mainLi.append(h2, img, ul);
-
+    let filteredArr = arr.slice().filter(elem => elem != this.desc.author);
+    //console.log(arr.length, filteredArr.length)
     for (let i = 0; i < 4; i++) {
       if (i == 0) {
         this._liArr.push(new Tag("li", this.desc.author, ""));
       } else {
-        let m;
-        do {
-          m = random(240)
-        } while (this._liArr.includes(new Tag("li", arr[m], "")))
 
-        this._liArr.push(new Tag("li", arr[m], ""))
+        this._liArr.push(new Tag("li", filteredArr[random(240)], ""))
       }
     }
     shuffle(this._liArr);
@@ -369,7 +371,22 @@ function printTotalCard(rightAnsw, block) {
       }
     }
     node.append(new Tag("span", rightAnsw, "", "numTotal"))
-    div.remove()
+
+
+
+    let numTotal = document.querySelector(".numTotal");
+    document.addEventListener("click", function (event) {
+      if (event.target.closest(".numTotal")) {
+        alert(1)
+
+        let content = myStorage.getItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`)
+        let totalDesc = new Tag("div", content, "");
+        block.append(totalDesc)
+      }
+    })
+
+
+
   }
   /*
     for (let item of arr) {
@@ -382,6 +399,17 @@ function printTotalCard(rightAnsw, block) {
   document.addEventListener("click", function (event) {
     if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || arr.includes(event.target)) {
       makePropStorage()
+
+      myStorage.setItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`, block.innerHTML);
+      console.log(myStorage.getItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`))
+
+      let content = myStorage.getItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`)
+      let totalDesc = new Tag("div", "", "");
+      totalDesc.innerHTML = content;
+      block.append(totalDesc)
+
+
+      div.remove()
     }
   })
   return div
