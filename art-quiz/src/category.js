@@ -22,15 +22,18 @@ window.onunload = function () {
 }
 window.onload = function () {
   for (let i = 0; i < myStorage.length; i++) {
-    let key = myStorage.key(i);
-    //alert(`${key}: ${localStorage.getItem(key)}`);
+    let key = `li${myStorage.key(i)}`;
+
     let item = document.querySelector(key)
-    for (let elem of item.childNodes) {
-      if (elem.classList.contains("numTotal")) {
-        elem.remove()
+    if (item) {
+      for (let elem of item.childNodes) {
+        if (elem.classList.contains("numTotal")) {
+          elem.remove()
+        }
       }
+      item.append(new Tag("span", `${localStorage.getItem(key)} / 10`, "", "numTotal"))
     }
-    item.append(new Tag("span", `${localStorage.getItem(key)} / 10`, "", "numTotal"))
+
   }
 }
 

@@ -218,7 +218,17 @@ export function fillArtistsCat(block, arrImgs) {
 
 }
 
-function printDetailedResult(arr, block) {
+
+function saveDetailedResult(arr, block) {
+
+  /*
+  for (let item of block.childNodes) {
+    if (item.classList.contains("detailedResult")) {
+      item.remove()
+    }
+  }*/
+
+
   let ul = new Tag("div", "", "", "detailedResult", "displayNone")
   for (let item of arr) {
     let itemResult = new Tag("li", "", "", "itemResult")
@@ -232,16 +242,11 @@ function printDetailedResult(arr, block) {
 
     if (item.result == "false") {
       itemResult.style.opacity = "0.5"
-    } else {
-      itemResult.style.transform = "scale(1.5)"
     }
-
-
-    //console.log(item)
-
-
   }
-  block.append(ul)
+
+  //block.append(ul)
+  myStorage.setItem(`.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`, ul.innerHTML);
 }
 
 function fillAllCat(arrImgs, k, block) {
@@ -265,7 +270,7 @@ function fillAllCat(arrImgs, k, block) {
             res.querySelector(".but-total").addEventListener("click", function () {
               getNext()
               printTotalCard(rA, block)
-              printDetailedResult(objCat, block)
+              saveDetailedResult(objCat, block)
             })
 
 
@@ -278,7 +283,7 @@ function fillAllCat(arrImgs, k, block) {
             res.querySelector(".but-total").addEventListener("click", function () {
               getNext()
               printTotalCard(rA, block)
-              printDetailedResult(objCat, block)
+              saveDetailedResult(objCat, block)
             })
 
 
@@ -305,6 +310,7 @@ function fillAllCat(arrImgs, k, block) {
 function refillCat(elem) {
 
   elem.innerHTML = "";
+
 }
 
 export function nullCounts() {
@@ -355,37 +361,28 @@ function printTotalCard(rightAnsw, block) {
         item.remove()
       }
     }
-    node.append(new Tag("span", `${rightAnsw} / 10`, "", "numTotal"))
+    let numTotal = new Tag("span", `${rightAnsw} / 10`, "", "numTotal")
+    node.append(numTotal)
+    numTotal.addEventListener("click", function (event) {
+      let temp = myStorage.getItem(`.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`);
+      let ul = new Tag("ul", "", "")
 
+      ul.innerHTML = temp
+      block.parentNode.append(div)
 
-
-    let numTotal = document.querySelector(".numTotal");
-    document.addEventListener("click", function (event) {
-      if (event.target.closest(".numTotal")) {
-        alert(1)
-
-        let content = myStorage.getItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`)
-        let totalDesc = new Tag("div", content, "");
-        block.append(totalDesc)
-      }
     })
+
+
+
+
 
 
 
   }
 
   document.addEventListener("click", function (event) {
-    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
+    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".back-repeate")) {
       makePropStorage()
-
-      //myStorage.setItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`, block.innerHTML);
-      //console.log(myStorage.getItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`))
-
-      //let content = myStorage.getItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`)
-      //let totalDesc = new Tag("div", "", "");
-      // totalDesc.innerHTML = content;
-      //block.append(totalDesc)
-
 
       div.remove()
     }
