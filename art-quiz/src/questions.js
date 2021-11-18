@@ -86,7 +86,9 @@ class QuestionPaintings {
       if (i == 0) {
         this.liArr.push(new Tag("img", "", this.pic))
       } else {
-        this.liArr.push(new Tag("img", "", filteredObj[random(filteredObj.length)].pic))
+        let randomNum = random(filteredObj.length)
+        this.liArr.push(new Tag("img", "", filteredObj[randomNum].pic))
+        filteredObj = filteredObj.slice().filter(elem => filteredObj[randomNum].desc.author != elem.desc.author);
       }
     }
 
@@ -193,13 +195,19 @@ class QuestionArtist {
 
 
     let filteredObj = obj.slice().filter(elem => this.author != elem.desc.author);
+    //console.log(obj, filteredObj)
     for (let i = 0; i < 4; i++) {
       if (i == 0) {
         this.liArr.push(new Tag("li", this.author, ""));
       } else {
+        let randomNum = random(filteredObj.length)
 
-        this.liArr.push(new Tag("li", filteredObj[random(filteredObj.length)].desc.author, ""))
+        this.liArr.push(new Tag("li", filteredObj[randomNum].desc.author, ""))
+
+        filteredObj = filteredObj.slice().filter(item => filteredObj[randomNum].desc.author != item.desc.author);
+
       }
+
     }
 
     shuffle(this.liArr);
