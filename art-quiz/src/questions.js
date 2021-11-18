@@ -61,6 +61,7 @@ export class Tag {
 
 class QuestionPaintings {
   constructor(obj, block, arr, k) {
+    this.parent = obj;
     this.obj = obj[k]
     this._pic = this.obj.pic;
     this.desc = this.obj.desc;
@@ -75,25 +76,20 @@ class QuestionPaintings {
     let h2 = new Tag("h2", `Which of these paintings did ${this.author} paint?`, "")
     mainLi.append(h2);
 
-    let filteredArr = arr.slice().filter(elem => this._pic != elem);
 
 
-    console.log(this.obj)
+    //let filteredArr = obj.slice().filter(elem => this._pic != elem.pic);
+    let filteredObj = obj.slice().filter(elem => this.author != elem.desc.author);
+    console.log(filteredObj.length)
 
     for (let i = 0; i < 4; i++) {
       if (i == 0) {
         this._liArr.push(new Tag("img", "", this._pic))
       } else {
-        let m;
-        do {
-          m = random(240)
-        } while (this._liArr.includes(new Tag("img", "", arr[m])) || this.author == obj[m].desc.author)
-
-
-
-        this._liArr.push(new Tag("img", "", filteredArr[m]))
+        this._liArr.push(new Tag("img", "", filteredObj[random(filteredObj.length)].pic))
       }
     }
+
 
     shuffle(this._liArr);
 
@@ -223,7 +219,7 @@ class QuestionArtist {
         this._liArr.push(new Tag("li", this.desc.author, ""));
       } else {
 
-        this._liArr.push(new Tag("li", filteredArr[random(240)], ""))
+        this._liArr.push(new Tag("li", filteredArr[random(filteredArr.length)], ""))
       }
     }
     shuffle(this._liArr);
