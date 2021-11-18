@@ -413,8 +413,14 @@ body {
 
     .detailedResult {
       position: absolute;
-      z-index: 9999999999999999;
+
       font-size: 14px;
+
+      .itemCloseButtomImg {
+        position: fixed;
+        bottom: 160px;
+        right: 20px;
+      }
 
       li {
 
@@ -702,6 +708,12 @@ body {
 
       .cat-title,
       .detailedResult {
+        .itemCloseButtomImg {
+          position: fixed;
+          bottom: 130px;
+          right: 30px;
+        }
+
         li {
           width: 200px;
 
@@ -877,6 +889,7 @@ body {
       .detailedResult {
         column-gap: 30px;
         row-gap: 40px;
+
 
         li {
           width: 250px;

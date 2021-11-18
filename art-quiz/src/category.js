@@ -46,6 +46,11 @@ window.onload = function () {
         }
 
         mainBlock.append(ul)
+        let itemCloseButtomImg = document.querySelector(".itemCloseButtomImg");
+        itemCloseButtomImg.addEventListener("click", function () {
+          ul.remove()
+          document.querySelector(".activeCat").classList.remove("displayNone")
+        })
 
       })
     }

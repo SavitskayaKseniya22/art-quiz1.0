@@ -121,6 +121,7 @@ export function fillPaintingsCat(block, arrImgs) {
 function fillAllCatPaint(arrImgs, k, block) {
   rA = 0;
   aA = 0;
+  let objCat = [];
   for (let i = 0; i < 10; i++) {
     let obj = new QuestionPaintings(arrImgs, block, k)
     k++;
@@ -130,9 +131,12 @@ function fillAllCatPaint(arrImgs, k, block) {
           printCard(elem, obj, "true", getNext, aA).then((res) => {
             rA++;
             aA++;
+            obj.result = "true";
+            objCat.push(obj)
             res.querySelector(".but-total").addEventListener("click", function () {
               getNext()
               printTotalCard(rA, elem.parentNode.parentNode)
+              saveDetailedResult(objCat, block)
             })
 
           })
@@ -140,9 +144,12 @@ function fillAllCatPaint(arrImgs, k, block) {
         } else {
           printCard(elem, obj, "false", getNext, aA).then((res) => {
             aA++;
+            obj.result = "false";
+            objCat.push(obj)
             res.querySelector(".but-total").addEventListener("click", function () {
               getNext()
               printTotalCard(rA, elem.parentNode.parentNode)
+              saveDetailedResult(objCat, block)
             })
 
           })
@@ -387,6 +394,13 @@ function printTotalCard(rightAnsw, block) {
         }
       }
       mainBlock.append(ul)
+      let itemCloseButtomImg = document.querySelector(".itemCloseButtomImg");
+      itemCloseButtomImg.addEventListener("click", function () {
+        //ul.remove()
+        document.querySelector(".detailedResult").remove()
+        document.querySelector(".activeCat").classList.remove("displayNone")
+
+      })
     })
   }
 
@@ -394,6 +408,8 @@ function printTotalCard(rightAnsw, block) {
     if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".back-repeate")) {
       makePropStorage(block)
       div.remove()
+      document.querySelector(".detailedResult").remove()
+      document.querySelector(".activeCat").classList.remove("displayNone")
     }
   })
   return div
