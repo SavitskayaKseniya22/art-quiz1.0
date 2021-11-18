@@ -31,7 +31,23 @@ window.onload = function () {
           elem.remove()
         }
       }
-      item.append(new Tag("span", `${localStorage.getItem(key)} / 10`, "", "numTotal"))
+      let numTotal = new Tag("span", `${localStorage.getItem(key)} / 10`, "", "numTotal")
+      item.append(numTotal)
+
+      numTotal.addEventListener("click", function (event) {
+        let temp = myStorage.getItem(`${myStorage.key(i)}`);
+        let ul = new Tag("ul", "", "", "detailedResult")
+        ul.innerHTML = temp;
+        for (let item of mainBlock.childNodes) {
+          if (item.tagName) {
+            item.classList.add("displayNone")
+
+          }
+        }
+
+        mainBlock.append(ul)
+
+      })
     }
 
   }
@@ -97,18 +113,22 @@ export function makeCat(arr, catName) {
 
     li.append(img);
 
-    li.addEventListener("click", function () {
-      makeAllQInvis()
-      makeAllCatInvis()
-      backCat.removeAttribute("disabled")
-      let elem;
-      if (catName == "Artists") {
-        elem = document.querySelector(`ul.cat1.subCat${i}`)
-      } else {
-        elem = document.querySelector(`ul.cat2.subCat${i}`)
+    li.addEventListener("click", function (event) {
+      if (!event.target.closest(".numTotal")) {
+        makeAllQInvis()
+        makeAllCatInvis()
+        backCat.removeAttribute("disabled")
+        let elem;
+        if (catName == "Artists") {
+          elem = document.querySelector(`ul.cat1.subCat${i}`)
+        } else {
+          elem = document.querySelector(`ul.cat2.subCat${i}`)
+        }
+        elem.classList.remove("displayNone")
       }
-      elem.classList.remove("displayNone")
+
     })
+
     ul.append(li);
   }
   mainBlock.append(ul);

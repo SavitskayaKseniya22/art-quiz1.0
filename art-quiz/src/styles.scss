@@ -261,6 +261,7 @@ body {
     align-items: center;
     padding: 10%;
     overflow-y: auto;
+    font-size: 40px;
 
     &.main-not-centered {
       align-items: unset;
@@ -276,7 +277,6 @@ body {
       justify-content: center;
       row-gap: 20px;
 
-      font-size: 40px;
       position: relative;
       z-index: 99;
 
@@ -389,6 +389,7 @@ body {
           flex-direction: column;
           row-gap: 20px;
 
+
           &.displayNone {
             display: none;
           }
@@ -413,6 +414,28 @@ body {
     .detailedResult {
       position: absolute;
       z-index: 9999999999999999;
+      font-size: 14px;
+
+      li {
+
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        column-gap: 10px;
+        row-gap: 10px;
+
+        &>* {
+          width: 100%;
+
+        }
+
+        span {
+          font-size: 16px;
+
+        }
+
+      }
+
     }
 
     .tempDiv {

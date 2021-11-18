@@ -1,3 +1,11 @@
+import {
+
+  mainBlock
+
+} from "./category.js";
+
+
+
 export let rA = 0;
 export let aA = 0;
 
@@ -221,22 +229,16 @@ export function fillArtistsCat(block, arrImgs) {
 
 function saveDetailedResult(arr, block) {
 
-  /*
-  for (let item of block.childNodes) {
-    if (item.classList.contains("detailedResult")) {
-      item.remove()
-    }
-  }*/
-
-
   let ul = new Tag("div", "", "", "detailedResult", "displayNone")
   for (let item of arr) {
     let itemResult = new Tag("li", "", "", "itemResult")
-
     let imgInRes = new Tag("img", "", item.pic, "imgInRes")
     let itemTitle = new Tag("h3", `"${item.desc.name}"`, "", "itemTitle")
     let itemAuthor = new Tag("p", item.author, "", "itemAuthor")
     let itemYear = new Tag("span", item.desc.year, "", "itemYear")
+
+
+
     itemResult.append(itemTitle, imgInRes, itemAuthor, itemYear)
     ul.append(itemResult)
 
@@ -244,8 +246,10 @@ function saveDetailedResult(arr, block) {
       itemResult.style.opacity = "0.5"
     }
   }
-
-  //block.append(ul)
+  let itemCloseButtom = new Tag("button", "", "", "itemCloseButtom")
+  let itemCloseButtomImg = new Tag("img", "", "./images/crossWhite.png", "itemCloseButtomImg")
+  itemCloseButtom.append(itemCloseButtomImg)
+  ul.append(itemCloseButtom)
   myStorage.setItem(`.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`, ul.innerHTML);
 }
 
@@ -353,7 +357,7 @@ function printTotalCard(rightAnsw, block) {
 
 
 
-  function makePropStorage() {
+  function makePropStorage(block) {
     let node = document.querySelector(`li.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`)
     myStorage.setItem(`li.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`, rightAnsw);
     for (let item of node.childNodes) {
@@ -361,34 +365,40 @@ function printTotalCard(rightAnsw, block) {
         item.remove()
       }
     }
+
     let numTotal = new Tag("span", `${rightAnsw} / 10`, "", "numTotal")
     node.append(numTotal)
+
     numTotal.addEventListener("click", function (event) {
-      let temp = myStorage.getItem(`.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`);
-      let ul = new Tag("ul", "", "")
-
-      ul.innerHTML = temp
-      block.parentNode.append(div)
-
+      let temp = myStorage.getItem(`.${node.classList[0]}.${node.classList[1]}.${node.classList[2]}`);
+      let ul = new Tag("ul", "", "", "detailedResult")
+      ul.innerHTML = temp;
+      for (let item of mainBlock.childNodes) {
+        if (item.tagName) {
+          item.classList.add("displayNone")
+        }
+      }
+      mainBlock.append(ul)
     })
-
-
-
-
-
-
-
   }
 
   document.addEventListener("click", function (event) {
     if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".back-repeate")) {
-      makePropStorage()
-
+      makePropStorage(block)
       div.remove()
     }
   })
   return div
 }
+
+
+
+
+
+
+
+
+
 
 
 async function printCard(elem, obj, result, func, aA) {
@@ -397,6 +407,13 @@ async function printCard(elem, obj, result, func, aA) {
   }
   return new Card(obj, elem.parentNode, result, func, aA)
 }
+
+
+
+
+
+
+
 
 
 function getNext() {
@@ -419,6 +436,18 @@ function getNext() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -426,6 +455,14 @@ function shuffle(arr) {
   }
   return arr;
 }
+
+
+
+
+
+
+
+
 
 function random(max) {
   let arr = [];
@@ -438,18 +475,28 @@ function random(max) {
   return arr[0];
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 class Card {
   constructor(obj, block, result, func, aA) {
-
-
     this.pic = obj.pic;
     this.author = obj.desc.author;
     this.name = obj.desc.name;
     this.year = obj.desc.year;
-    //this.result = result
+
     this.func = func;
     this.imageNum = obj.desc.imageNum;
-    //alert(this.imageNum)
+
 
     let div = new Tag("div", "", "", "tempDiv")
     let a = document.createElement("a");
@@ -493,13 +540,6 @@ class Card {
       divCont.append(buttonTotal)
       slowSlide(buttonTotal)
     }
-
-
-
-
-
-
-
     divCont.append(h2, h3, span, imgResult)
     div.append(a, divCont)
     block.append(div)
@@ -508,6 +548,9 @@ class Card {
   }
 
 }
+
+
+
 
 function slowSlide(item) {
   setTimeout(() => {
