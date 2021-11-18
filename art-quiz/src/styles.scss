@@ -267,7 +267,8 @@ body {
     }
 
     .quiz-type,
-    .cat-title {
+    .cat-title,
+    .detailedResult {
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -296,7 +297,8 @@ body {
       }
     }
 
-    .cat-title {
+    .cat-title,
+    .detailedResult {
       flex-direction: row;
       flex-wrap: wrap;
       padding: 20px;
@@ -669,7 +671,8 @@ body {
     main {
       padding: 5%;
 
-      .cat-title {
+      .cat-title,
+      .detailedResult {
         li {
           width: 200px;
 
@@ -840,7 +843,9 @@ body {
     }
 
     main {
-      .cat-title {
+
+      .cat-title,
+      .detailedResult {
         column-gap: 30px;
         row-gap: 40px;
 

@@ -19,8 +19,8 @@ getImgs().then((value) => {
   makeCat(value, "Artists");
   makeCat(value, "Paintings");
   getAllImages(value, images).then((res) => {
-    fillArtistsCat(images, mainBlock, res);
-    fillPaintingsCat(value, mainBlock, res);
+    fillArtistsCat(mainBlock, res);
+    fillPaintingsCat(mainBlock, res);
   })
 
 });

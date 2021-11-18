@@ -27,13 +27,7 @@ export async function getAllImages(arrPic, arrDesc) {
   return allImages;
 }
 
-function getAllAuthors(arrDesc) {
-  let authors = [];
-  for (let i = 0; i < arrDesc.length; i++) {
-    authors.push(arrDesc[i].author);
-  }
-  return authors;
-}
+
 
 
 
@@ -60,15 +54,15 @@ export class Tag {
 
 
 class QuestionPaintings {
-  constructor(obj, block, arr, k) {
-    this.parent = obj;
+  constructor(obj, block, k) {
+
     this.obj = obj[k]
-    this._pic = this.obj.pic;
+    this.pic = this.obj.pic;
     this.desc = this.obj.desc;
     this.author = this.obj.desc.author;
-    this._liArr = [];
-    let mainLi = new Tag("li", "", "", "questionCard", "qCImgCont")
+    this.liArr = [];
 
+    let mainLi = new Tag("li", "", "", "questionCard", "qCImgCont")
     if (block.childNodes.length != 0) {
       mainLi.classList.add("displayNone")
     }
@@ -78,33 +72,22 @@ class QuestionPaintings {
 
 
 
-    //let filteredArr = obj.slice().filter(elem => this._pic != elem.pic);
-    let filteredObj = obj.slice().filter(elem => this.author != elem.desc.author);
-    console.log(filteredObj.length)
 
+    let filteredObj = obj.slice().filter(elem => this.author != elem.desc.author);
     for (let i = 0; i < 4; i++) {
       if (i == 0) {
-        this._liArr.push(new Tag("img", "", this._pic))
+        this.liArr.push(new Tag("img", "", this.pic))
       } else {
-        this._liArr.push(new Tag("img", "", filteredObj[random(filteredObj.length)].pic))
+        this.liArr.push(new Tag("img", "", filteredObj[random(filteredObj.length)].pic))
       }
     }
 
+    shuffle(this.liArr);
 
-    shuffle(this._liArr);
-
-    for (let elem of this._liArr) {
+    for (let elem of this.liArr) {
       mainLi.append(elem);
     }
     block.append(mainLi);
-  }
-
-
-  get pic() {
-    return this._pic
-  }
-  get liArr() {
-    return this._liArr
   }
 }
 
@@ -112,76 +95,61 @@ class QuestionPaintings {
 
 
 
-export function fillPaintingsCat(arrPic, block, arrImgs) {
+export function fillPaintingsCat(block, arrImgs) {
   let k = 120;
 
   for (let j = 0; j < 12; j++) {
 
     let ul = new Tag("ul", "", "", "cat2", "cat", `subCat${j}`, "displayNone")
-    fillAllCatPaint(arrImgs, k, ul, arrPic)
+    fillAllCatPaint(arrImgs, k, ul)
 
     k += 10
     block.append(ul);
   }
 }
 
-function fillAllCatPaint(arrImgs, k, block, arr) {
+function fillAllCatPaint(arrImgs, k, block) {
   rA = 0;
   aA = 0;
-
   for (let i = 0; i < 10; i++) {
-    let obj = new QuestionPaintings(arrImgs, block, arr, k)
+    let obj = new QuestionPaintings(arrImgs, block, k)
     k++;
     for (let elem of obj.liArr) {
       elem.addEventListener("click", function () {
-
         if (elem.src == obj.pic) {
-          printCard(elem, obj, "true", getNext, aA).then(() => {
+          printCard(elem, obj, "true", getNext, aA).then((res) => {
             rA++;
             aA++;
+            res.querySelector(".but-total").addEventListener("click", function () {
+              getNext()
+              printTotalCard(rA, elem.parentNode.parentNode)
+            })
 
-            let butTotal = document.querySelector(".but-total")
-            if (butTotal) {
-              butTotal.addEventListener("click", function () {
-                getNext()
-                printTotalCard(rA, elem.parentNode.parentNode, aA)
-              })
-            }
           })
 
         } else {
-          printCard(elem, obj, "false", getNext, aA).then(() => {
+          printCard(elem, obj, "false", getNext, aA).then((res) => {
             aA++;
-
-            let butTotal = document.querySelector(".but-total")
-            if (butTotal) {
-              butTotal.addEventListener("click", function () {
-                getNext()
-                printTotalCard(rA, elem.parentNode.parentNode, aA)
-
-              })
-            }
-
+            res.querySelector(".but-total").addEventListener("click", function () {
+              getNext()
+              printTotalCard(rA, elem.parentNode.parentNode)
+            })
 
           })
         }
         document.addEventListener("click", function (event) {
           if (event.target.closest(".but-repeate")) {
             refillCat(block, k)
-            fillAllCatPaint(arrImgs, k - 10, block, arr)
+            fillAllCatPaint(arrImgs, k - 10, block)
             block.childNodes[0].classList.remove("displayNone")
           } else if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
             refillCat(block, k)
-            fillAllCatPaint(arrImgs, k - 10, block, arr)
+            fillAllCatPaint(arrImgs, k - 10, block)
           }
-
         })
       })
-
     }
-
   }
-
 }
 
 
@@ -198,11 +166,13 @@ function fillAllCatPaint(arrImgs, k, block, arr) {
 
 
 class QuestionArtist {
-  constructor(obj, block, arr) {
-    this.pic = obj.pic;
-    this.desc = obj.desc;
-    this._rightAnswer = this.desc.author;
-    this._liArr = [];
+  constructor(obj, block, k) {
+    this.obj = obj[k]
+    this.pic = this.obj.pic;
+    this.desc = this.obj.desc;
+    this.author = this.obj.desc.author;
+    this.liArr = [];
+
     let mainLi = new Tag("li", "", "", "questionCard")
     if (block.childNodes.length != 0) {
       mainLi.classList.add("displayNone")
@@ -212,105 +182,124 @@ class QuestionArtist {
     let img = new Tag("img", "", this.pic)
     let ul = new Tag("ul", "", "", "possibleAnswers")
     mainLi.append(h2, img, ul);
-    let filteredArr = arr.slice().filter(elem => elem != this.desc.author);
-    //console.log(arr.length, filteredArr.length)
+
+
+    let filteredObj = obj.slice().filter(elem => this.author != elem.desc.author);
     for (let i = 0; i < 4; i++) {
       if (i == 0) {
-        this._liArr.push(new Tag("li", this.desc.author, ""));
+        this.liArr.push(new Tag("li", this.author, ""));
       } else {
 
-        this._liArr.push(new Tag("li", filteredArr[random(filteredArr.length)], ""))
+        this.liArr.push(new Tag("li", filteredObj[random(filteredObj.length)].desc.author, ""))
       }
     }
-    shuffle(this._liArr);
 
-    for (let elem of this._liArr) {
+    shuffle(this.liArr);
+    for (let elem of this.liArr) {
       elem.classList.add("possibleAnswerElem");
       ul.append(elem);
     }
     block.append(mainLi);
-
   }
-
-  get rightAnswer() {
-    return this._rightAnswer
-  }
-  get liArr() {
-    return this._liArr
-  }
-
 }
 
 
 
-export function fillArtistsCat(arrDesc, block, arrImgs) {
+export function fillArtistsCat(block, arrImgs) {
   let k = 0;
 
-  let arrAuthors = getAllAuthors(arrDesc);
-  for (let j = 0; j < 12; j++) {
 
+  for (let j = 0; j < 12; j++) {
     let ul = new Tag("ul", "", "", "cat1", "cat", `subCat${j}`, "displayNone");
-    fillAllCat(arrImgs, k, ul, arrAuthors)
+    fillAllCat(arrImgs, k, ul)
     k += 10
     block.append(ul);
   }
-  rA = 0;
-  aA = 0;
+
 }
 
+function printDetailedResult(arr, block) {
+  let ul = new Tag("div", "", "", "detailedResult", "displayNone")
+  for (let item of arr) {
+    let itemResult = new Tag("li", "", "", "itemResult")
+
+    let imgInRes = new Tag("img", "", item.pic, "imgInRes")
+    let itemTitle = new Tag("h3", `"${item.desc.name}"`, "", "itemTitle")
+    let itemAuthor = new Tag("p", item.author, "", "itemAuthor")
+    let itemYear = new Tag("span", item.desc.year, "", "itemYear")
+    itemResult.append(itemTitle, imgInRes, itemAuthor, itemYear)
+    ul.append(itemResult)
+
+    if (item.result == "false") {
+      itemResult.style.opacity = "0.5"
+    } else {
+      itemResult.style.transform = "scale(1.5)"
+    }
 
 
-function fillAllCat(arrImgs, k, block, arr) {
-  let rA = 0;
-  let aA = 0;
-  //console.log(block.classList)
+    //console.log(item)
+
+
+  }
+  block.append(ul)
+}
+
+function fillAllCat(arrImgs, k, block) {
+  rA = 0;
+  aA = 0;
+  let objCat = [];
   for (let i = 0; i < 10; i++) {
-    let obj = new QuestionArtist(arrImgs[k], block, arr);
+
+    let obj = new QuestionArtist(arrImgs, block, k);
     k++;
     for (let elem of obj.liArr) {
       elem.addEventListener("click", function () {
         console.log(rA, aA)
-        if (elem.textContent == obj.rightAnswer) {
+        if (elem.textContent == obj.author) {
 
-          printCard(elem.parentNode, obj, "true", getNext, aA).then(() => {
+          printCard(elem.parentNode, obj, "true", getNext, aA).then((res) => {
             rA++;
             aA++;
+            obj.result = "true";
+            objCat.push(obj)
+            res.querySelector(".but-total").addEventListener("click", function () {
+              getNext()
+              printTotalCard(rA, block)
+              printDetailedResult(objCat, block)
+            })
 
-            let butTotal = document.querySelector(".but-total")
-            if (butTotal) {
-              butTotal.addEventListener("click", function () {
-                getNext()
-                printTotalCard(rA, block, aA)
 
-
-              })
-            }
           })
         } else {
-          printCard(elem.parentNode, obj, "false", getNext, aA).then(() => {
+          printCard(elem.parentNode, obj, "false", getNext, aA).then((res) => {
             aA++;
-            let butTotal = document.querySelector(".but-total")
-            if (butTotal) {
-              butTotal.addEventListener("click", function () {
-                getNext()
-                printTotalCard(rA, block, aA)
-              })
-            }
+            obj.result = "false";
+            objCat.push(obj)
+            res.querySelector(".but-total").addEventListener("click", function () {
+              getNext()
+              printTotalCard(rA, block)
+              printDetailedResult(objCat, block)
+            })
+
+
+
           })
         }
         document.addEventListener("click", function (event) {
+
           if (event.target.closest(".but-repeate")) {
-            refillCat(block, k)
-            fillAllCat(arrImgs, k - 10, block, arr)
+            refillCat(block)
+            fillAllCat(arrImgs, k - 10, block)
             block.childNodes[0].classList.remove("displayNone")
           } else if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
-            refillCat(block, k)
-            fillAllCat(arrImgs, k - 10, block, arr)
+            refillCat(block)
+            fillAllCat(arrImgs, k - 10, block)
           }
         })
       })
     }
   }
+
 }
 
 function refillCat(elem) {
@@ -356,7 +345,7 @@ function printTotalCard(rightAnsw, block) {
   div.append(h3, p, span, buttonHome, buttonRepeate, buttonCat)
   block.append(div)
 
-  let arr = div.querySelectorAll("button");
+
 
   function makePropStorage() {
     let node = document.querySelector(`li.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`)
@@ -366,7 +355,7 @@ function printTotalCard(rightAnsw, block) {
         item.remove()
       }
     }
-    node.append(new Tag("span", rightAnsw, "", "numTotal"))
+    node.append(new Tag("span", `${rightAnsw} / 10`, "", "numTotal"))
 
 
 
@@ -384,25 +373,18 @@ function printTotalCard(rightAnsw, block) {
 
 
   }
-  /*
-    for (let item of arr) {
-      item.addEventListener("click", function () {
-        makePropStorage()
-        
-      })
 
-    }*/
   document.addEventListener("click", function (event) {
-    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || arr.includes(event.target)) {
+    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
       makePropStorage()
 
-      myStorage.setItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`, block.innerHTML);
-      console.log(myStorage.getItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`))
+      //myStorage.setItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`, block.innerHTML);
+      //console.log(myStorage.getItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`))
 
-      let content = myStorage.getItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`)
-      let totalDesc = new Tag("div", "", "");
-      totalDesc.innerHTML = content;
-      block.append(totalDesc)
+      //let content = myStorage.getItem(`ul.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}.content`)
+      //let totalDesc = new Tag("div", "", "");
+      // totalDesc.innerHTML = content;
+      //block.append(totalDesc)
 
 
       div.remove()

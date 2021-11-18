@@ -30,7 +30,7 @@ window.onload = function () {
         elem.remove()
       }
     }
-    item.append(new Tag("span", localStorage.getItem(key), "", "numTotal"))
+    item.append(new Tag("span", `${localStorage.getItem(key)} / 10`, "", "numTotal"))
   }
 }
 
