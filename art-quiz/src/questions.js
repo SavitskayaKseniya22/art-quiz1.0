@@ -78,9 +78,6 @@ class QuestionPaintings {
     let h2 = new Tag("h2", `Which of these paintings did ${this.author} paint?`, "")
     mainLi.append(h2);
 
-
-
-
     let filteredObj = obj.slice().filter(elem => this.author != elem.desc.author);
     for (let i = 0; i < 4; i++) {
       if (i == 0) {
@@ -396,7 +393,7 @@ function printTotalCard(rightAnsw, block) {
       mainBlock.append(ul)
       let itemCloseButtomImg = document.querySelector(".itemCloseButtomImg");
       itemCloseButtomImg.addEventListener("click", function () {
-        //ul.remove()
+
         document.querySelector(".detailedResult").remove()
         document.querySelector(".activeCat").classList.remove("displayNone")
 
