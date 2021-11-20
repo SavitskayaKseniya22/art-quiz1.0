@@ -1,7 +1,7 @@
 import {
   Tag,
   nullCounts,
-  rA,
+
   aA,
   myStorage
 } from "./questions.js";
@@ -34,20 +34,19 @@ window.onload = function () {
       let numTotal = new Tag("span", `${localStorage.getItem(key)} / 10`, "", "numTotal")
       item.append(numTotal)
 
-      numTotal.addEventListener("click", function (event) {
-        let temp = myStorage.getItem(`${myStorage.key(i)}`);
+      numTotal.addEventListener("click", function () {
         let ul = new Tag("ul", "", "", "detailedResult")
-        ul.innerHTML = temp;
+        ul.innerHTML = myStorage.getItem(`${myStorage.key(i)}`);
         for (let item of mainBlock.childNodes) {
           if (item.tagName) {
             item.classList.add("displayNone")
 
           }
         }
-
         mainBlock.append(ul)
-        let itemCloseButtomImg = document.querySelector(".itemCloseButtomImg");
-        itemCloseButtomImg.addEventListener("click", function () {
+
+
+        document.querySelector(".itemCloseButtomImg").addEventListener("click", function () {
           ul.remove()
           document.querySelector(".activeCat").classList.remove("displayNone")
         })
@@ -60,8 +59,6 @@ window.onload = function () {
 
 
 document.addEventListener("click", function (event) {
-
-  //alert(event.target.tagName)
 
 
   if (event.target.closest(".quiz-type h2")) {
@@ -80,17 +77,16 @@ document.addEventListener("click", function (event) {
     makeAllCatInvis()
     makeAllQInvis()
     makeAllCatInactive()
-
-
-    nullCounts(rA, aA)
+    nullCounts(aA)
+    document.querySelector(".detailedResult").remove()
 
 
   } else if (event.target.closest(".back-cat")) {
     backCat.setAttribute("disabled", "true")
     makeAllQInvis()
-    let activeCat = document.querySelector(".activeCat");
-    activeCat.classList.remove("displayNone");
-    nullCounts(rA, aA)
+    document.querySelector(".activeCat").classList.remove("displayNone")
+    nullCounts(aA)
+    document.querySelector(".detailedResult").remove()
   }
 })
 

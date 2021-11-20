@@ -6,7 +6,7 @@ import {
 
 
 
-export let rA = 0;
+
 export let aA = 0;
 
 export let myStorage = window.localStorage;
@@ -63,20 +63,19 @@ export class Tag {
 
 class QuestionPaintings {
   constructor(obj, block, k) {
-
     this.obj = obj[k]
     this.pic = this.obj.pic;
     this.desc = this.obj.desc;
     this.author = this.obj.desc.author;
     this.liArr = [];
 
-    let mainLi = new Tag("li", "", "", "questionCard", "qCImgCont")
+    let questionContainer = new Tag("li", "", "", "questionCard", "questionCardPaintings")
     if (block.childNodes.length != 0) {
-      mainLi.classList.add("displayNone")
+      questionContainer.classList.add("displayNone")
     }
 
     let h2 = new Tag("h2", `Which of these paintings did ${this.author} paint?`, "")
-    mainLi.append(h2);
+    questionContainer.append(h2);
 
     let filteredObj = obj.slice().filter(elem => this.author != elem.desc.author);
     for (let i = 0; i < 4; i++) {
@@ -92,9 +91,9 @@ class QuestionPaintings {
     shuffle(this.liArr);
 
     for (let elem of this.liArr) {
-      mainLi.append(elem);
+      questionContainer.append(elem);
     }
-    block.append(mainLi);
+    block.append(questionContainer);
   }
 }
 
@@ -104,20 +103,16 @@ class QuestionPaintings {
 
 export function fillPaintingsCat(block, arrImgs) {
   let k = 120;
-
   for (let j = 0; j < 12; j++) {
-
     let ul = new Tag("ul", "", "", "cat2", "cat", `subCat${j}`, "displayNone")
     fillAllCatPaint(arrImgs, k, ul)
-
     k += 10
     block.append(ul);
   }
 }
 
 function fillAllCatPaint(arrImgs, k, block) {
-  rA = 0;
-  aA = 0;
+
   let objCat = [];
   for (let i = 0; i < 10; i++) {
     let obj = new QuestionPaintings(arrImgs, block, k)
@@ -126,15 +121,35 @@ function fillAllCatPaint(arrImgs, k, block) {
       elem.addEventListener("click", function () {
         if (elem.src == obj.pic) {
           printCard(elem, obj, "true", getNext, aA).then((res) => {
-            rA++;
+
             aA++;
             obj.result = "true";
             objCat.push(obj)
-            res.querySelector(".but-total").addEventListener("click", function () {
-              getNext()
-              printTotalCard(rA, elem.parentNode.parentNode)
-              saveDetailedResult(objCat, block)
-            })
+            if (res.querySelector(".but-total")) {
+              res.querySelector(".but-total").addEventListener("click", function () {
+                getNext()
+                let trueAnswers = document.querySelectorAll(".trueAnswer")
+                printTotalCard(trueAnswers.length, elem.parentNode.parentNode).then(() => {
+                  document.addEventListener("click", function (event) {
+                    if (event.target.closest(".but-repeate")) {
+                      block.childNodes[0].classList.remove("displayNone")
+                    }
+                    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
+                      clearCat(block)
+                      fillAllCatPaint(arrImgs, k - 10, block)
+
+                      makePropStorage(block, trueAnswers.length)
+                      //document.querySelector(".totalCard").remove()
+                      //document.querySelector(".detailedResult").remove()
+                      //document.querySelector(".activeCat").classList.remove("displayNone")
+                    }
+                  })
+                  saveDetailedResult(objCat, block)
+                })
+
+              })
+            }
+
 
           })
 
@@ -143,24 +158,36 @@ function fillAllCatPaint(arrImgs, k, block) {
             aA++;
             obj.result = "false";
             objCat.push(obj)
-            res.querySelector(".but-total").addEventListener("click", function () {
-              getNext()
-              printTotalCard(rA, elem.parentNode.parentNode)
-              saveDetailedResult(objCat, block)
-            })
+            if (res.querySelector(".but-total")) {
+              res.querySelector(".but-total").addEventListener("click", function () {
+                getNext()
+                let trueAnswers = document.querySelectorAll(".trueAnswer")
+                printTotalCard(trueAnswers.length, elem.parentNode.parentNode).then(() => {
+                  document.addEventListener("click", function (event) {
+                    if (event.target.closest(".but-repeate")) {
+                      block.childNodes[0].classList.remove("displayNone")
+                    }
+                    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
+                      clearCat(block)
+                      fillAllCatPaint(arrImgs, k - 10, block)
+
+
+                      makePropStorage(block, trueAnswers.length)
+                      //document.querySelector(".totalCard").remove()
+                      //document.querySelector(".detailedResult").remove()
+                      // document.querySelector(".activeCat").classList.remove("displayNone")
+                    }
+                  })
+                  saveDetailedResult(objCat, block)
+                })
+
+              })
+            }
+
 
           })
         }
-        document.addEventListener("click", function (event) {
-          if (event.target.closest(".but-repeate")) {
-            refillCat(block, k)
-            fillAllCatPaint(arrImgs, k - 10, block)
-            block.childNodes[0].classList.remove("displayNone")
-          } else if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
-            refillCat(block, k)
-            fillAllCatPaint(arrImgs, k - 10, block)
-          }
-        })
+
       })
     }
   }
@@ -187,19 +214,18 @@ class QuestionArtist {
     this.author = this.obj.desc.author;
     this.liArr = [];
 
-    let mainLi = new Tag("li", "", "", "questionCard")
+    let questionContainer = new Tag("li", "", "", "questionCard")
     if (block.childNodes.length != 0) {
-      mainLi.classList.add("displayNone")
+      questionContainer.classList.add("displayNone")
 
     }
     let h2 = new Tag("h2", "Who is the author of the painting?", "")
     let img = new Tag("img", "", this.pic)
     let ul = new Tag("ul", "", "", "possibleAnswers")
-    mainLi.append(h2, img, ul);
-
+    questionContainer.append(h2, img, ul);
 
     let filteredObj = obj.slice().filter(elem => this.author != elem.desc.author);
-    //console.log(obj, filteredObj)
+
     for (let i = 0; i < 4; i++) {
       if (i == 0) {
         this.liArr.push(new Tag("li", this.author, ""));
@@ -219,16 +245,17 @@ class QuestionArtist {
       elem.classList.add("possibleAnswerElem");
       ul.append(elem);
     }
-    block.append(mainLi);
+    block.append(questionContainer);
   }
 }
 
 
 
+
+
+
 export function fillArtistsCat(block, arrImgs) {
   let k = 0;
-
-
   for (let j = 0; j < 12; j++) {
     let ul = new Tag("ul", "", "", "cat1", "cat", `subCat${j}`, "displayNone");
     fillAllCat(arrImgs, k, ul)
@@ -239,8 +266,101 @@ export function fillArtistsCat(block, arrImgs) {
 }
 
 
-function saveDetailedResult(arr, block) {
 
+
+function fillAllCat(arrImgs, k, block) {
+  aA = 0;
+  let objCat = [];
+  for (let i = 0; i < 10; i++) {
+
+    let obj = new QuestionArtist(arrImgs, block, k);
+    k++;
+    for (let elem of obj.liArr) {
+      elem.addEventListener("click", function () {
+        if (elem.textContent == obj.author) {
+          printCard(elem.parentNode, obj, "true", getNext, aA).then((res) => {
+            aA++;
+            obj.result = "true";
+            objCat.push(obj)
+            if (res.querySelector(".but-total")) {
+              res.querySelector(".but-total").addEventListener("click", function () {
+                getNext()
+                let trueAnswers = document.querySelectorAll(".trueAnswer")
+                //alert( trueAnswers.length)
+                printTotalCard(trueAnswers.length, block).then((card) => {
+
+                  document.addEventListener("click", function (event) {
+
+                    if (event.target.closest(".but-repeate")) {
+                      block.childNodes[0].classList.remove("displayNone")
+                    }
+                    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
+                      clearCat(block)
+                      fillAllCat(arrImgs, k - 10, block)
+                      makePropStorage(block, trueAnswers.length)
+                      //card.remove()
+                      // document.querySelector(".detailedResult").remove()
+                      // document.querySelector(".activeCat").classList.remove("displayNone")
+                    }
+
+                  })
+                  saveDetailedResult(objCat, block)
+                })
+
+              })
+            }
+
+
+
+          })
+        } else {
+          printCard(elem.parentNode, obj, "false", getNext, aA).then((res) => {
+            aA++;
+            obj.result = "false";
+            objCat.push(obj)
+            if (res.querySelector(".but-total")) {
+              res.querySelector(".but-total").addEventListener("click", function () {
+                getNext()
+                let trueAnswers = document.querySelectorAll(".trueAnswer")
+                //alert(arr.length)
+                printTotalCard(trueAnswers.length, block).then((card) => {
+
+                  document.addEventListener("click", function (event) {
+
+
+                    if (event.target.closest(".but-repeate")) {
+                      block.childNodes[0].classList.remove("displayNone")
+                    }
+                    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
+                      clearCat(block)
+                      fillAllCat(arrImgs, k - 10, block)
+                      makePropStorage(block, trueAnswers.length)
+                      //card.remove()
+                      // document.querySelector(".detailedResult").remove()
+                      // document.querySelector(".activeCat").classList.remove("displayNone")
+                    }
+
+
+
+                  })
+                  saveDetailedResult(objCat, block)
+                })
+
+              })
+            }
+
+
+
+
+          })
+        }
+
+      })
+    }
+  }
+}
+
+function saveDetailedResult(arr, block) {
   let ul = new Tag("div", "", "", "detailedResult", "displayNone")
   for (let item of arr) {
     let itemResult = new Tag("li", "", "", "itemResult")
@@ -248,12 +368,8 @@ function saveDetailedResult(arr, block) {
     let itemTitle = new Tag("h3", `"${item.desc.name}"`, "", "itemTitle")
     let itemAuthor = new Tag("p", item.author, "", "itemAuthor")
     let itemYear = new Tag("span", item.desc.year, "", "itemYear")
-
-
-
     itemResult.append(itemTitle, imgInRes, itemAuthor, itemYear)
     ul.append(itemResult)
-
     if (item.result == "false") {
       itemResult.style.opacity = "0.5"
     }
@@ -265,66 +381,13 @@ function saveDetailedResult(arr, block) {
   myStorage.setItem(`.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`, ul.innerHTML);
 }
 
-function fillAllCat(arrImgs, k, block) {
-  rA = 0;
-  aA = 0;
-  let objCat = [];
-  for (let i = 0; i < 10; i++) {
-
-    let obj = new QuestionArtist(arrImgs, block, k);
-    k++;
-    for (let elem of obj.liArr) {
-      elem.addEventListener("click", function () {
-        console.log(rA, aA)
-        if (elem.textContent == obj.author) {
-
-          printCard(elem.parentNode, obj, "true", getNext, aA).then((res) => {
-            rA++;
-            aA++;
-            obj.result = "true";
-            objCat.push(obj)
-            res.querySelector(".but-total").addEventListener("click", function () {
-              getNext()
-              printTotalCard(rA, block)
-              saveDetailedResult(objCat, block)
-            })
-
-
-          })
-        } else {
-          printCard(elem.parentNode, obj, "false", getNext, aA).then((res) => {
-            aA++;
-            obj.result = "false";
-            objCat.push(obj)
-            res.querySelector(".but-total").addEventListener("click", function () {
-              getNext()
-              printTotalCard(rA, block)
-              saveDetailedResult(objCat, block)
-            })
 
 
 
-          })
-        }
-        document.addEventListener("click", function (event) {
 
-          if (event.target.closest(".but-repeate")) {
-            refillCat(block)
-            fillAllCat(arrImgs, k - 10, block)
-            block.childNodes[0].classList.remove("displayNone")
-          } else if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
-            refillCat(block)
-            fillAllCat(arrImgs, k - 10, block)
-          }
-        })
-      })
-    }
-  }
 
-}
 
-function refillCat(elem) {
-
+function clearCat(elem) {
   elem.innerHTML = "";
 
 }
@@ -339,7 +402,7 @@ export function nullCounts() {
 
 
 
-function printTotalCard(rightAnsw, block) {
+async function printTotalCard(rightAnsw, block) {
   let div = new Tag("div", "", "", "totalCard");
   let h3 = new Tag("h3", "Round completed!", "");
   let buttonHome = new Tag("button", "", "", "back-home-button")
@@ -366,52 +429,38 @@ function printTotalCard(rightAnsw, block) {
   let span = new Tag("span", `${rightAnsw} correct answers out of 10`, "")
   div.append(h3, p, span, buttonHome, buttonRepeate, buttonCat)
   block.append(div)
-
-
-
-  function makePropStorage(block) {
-    let node = document.querySelector(`li.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`)
-    myStorage.setItem(`li.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`, rightAnsw);
-    for (let item of node.childNodes) {
-      if (item.classList.contains("numTotal")) {
-        item.remove()
-      }
-    }
-
-    let numTotal = new Tag("span", `${rightAnsw} / 10`, "", "numTotal")
-    node.append(numTotal)
-
-    numTotal.addEventListener("click", function (event) {
-      let temp = myStorage.getItem(`.${node.classList[0]}.${node.classList[1]}.${node.classList[2]}`);
-      let ul = new Tag("ul", "", "", "detailedResult")
-      ul.innerHTML = temp;
-      for (let item of mainBlock.childNodes) {
-        if (item.tagName) {
-          item.classList.add("displayNone")
-        }
-      }
-      mainBlock.append(ul)
-      let itemCloseButtomImg = document.querySelector(".itemCloseButtomImg");
-      itemCloseButtomImg.addEventListener("click", function () {
-
-        document.querySelector(".detailedResult").remove()
-        document.querySelector(".activeCat").classList.remove("displayNone")
-
-      })
-    })
-  }
-
-  document.addEventListener("click", function (event) {
-    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".back-repeate")) {
-      makePropStorage(block)
-      div.remove()
-      document.querySelector(".detailedResult").remove()
-      document.querySelector(".activeCat").classList.remove("displayNone")
-    }
-  })
   return div
 }
 
+
+function makePropStorage(block, rightAnsw) {
+  let node = document.querySelector(`li.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`)
+  myStorage.setItem(`li.${block.classList[0]}.${block.classList[1]}.${block.classList[2]}`, rightAnsw);
+  for (let item of node.childNodes) {
+    if (item.classList.contains("numTotal")) {
+      item.remove()
+    }
+  }
+  let numTotal = new Tag("span", `${rightAnsw} / 10`, "", "numTotal")
+  node.append(numTotal)
+  numTotal.addEventListener("click", function () {
+
+    let ul = new Tag("ul", "", "", "detailedResult")
+    ul.innerHTML = myStorage.getItem(`.${node.classList[0]}.${node.classList[1]}.${node.classList[2]}`);
+    for (let item of mainBlock.childNodes) {
+      if (item.tagName) {
+        item.classList.add("displayNone")
+      }
+    }
+    mainBlock.append(ul)
+
+    document.querySelector(".itemCloseButtomImg").addEventListener("click", function () {
+      document.querySelector(".detailedResult").remove()
+      document.querySelector(".activeCat").classList.remove("displayNone")
+
+    })
+  })
+}
 
 
 
@@ -469,6 +518,9 @@ function getNext() {
 
 
 
+
+
+
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -476,8 +528,6 @@ function shuffle(arr) {
   }
   return arr;
 }
-
-
 
 
 
@@ -535,12 +585,14 @@ class Card {
     let imgResult = new Tag("img", "", "", "imgResult")
 
     if (result == "true") {
+      block.classList.add("trueAnswer")
       setTimeout(() => {
         imgResult.style.backgroundColor = "GREEN";
         imgResult.style.transform = "scale(2)"
       }, 100);
       imgResult.src = "./images/correct-right-arrow-direction-left-down-up-svgrepo-com.svg"
     } else {
+      block.classList.add("falseAnswer")
       setTimeout(() => {
         imgResult.style.backgroundColor = "RED";
         imgResult.style.transform = "scale(2)"
