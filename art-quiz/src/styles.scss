@@ -602,12 +602,14 @@ body {
       justify-content: space-between;
       row-gap: 20px;
 
+
       &>li {
         display: flex;
         flex-direction: column;
         row-gap: 10px;
         padding: 10px;
         background-color: #57574f38;
+        transition: .3s;
 
         &:nth-child(2n+1) {
           width: 75%;
@@ -662,12 +664,14 @@ body {
       }
 
       #toggle-button-timer:checked~label[name="off"],
-      #toggle-button-music:checked~label[name="off"] {
+      #toggle-button-music:checked~label[name="off"],
+      #toggle-button-soundEffects:checked~label[name="off"] {
         display: none;
       }
 
       #toggle-button-timer:checked~label[name="on"],
-      #toggle-button-music:checked~label[name="on"] {
+      #toggle-button-music:checked~label[name="on"],
+      #toggle-button-soundEffects:checked~label[name="on"] {
         display: block;
       }
 

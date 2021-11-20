@@ -44,8 +44,29 @@
 
         <h2>Settings</h2>
         <ul class="settings-list">
+          <li class="musicSet">
+            <h3>Volume of music</h3>
+            <div class="settings-block-content">
+              <button class="but-volume-off but-volume"></button>
+              <input type="range" class="volumeMusic" min="0" max="1" step="0.1">
+              <button class="but-volume-on but-volume"></button>
+            </div>
+          </li>
+
           <li>
-            <h3>Volume</h3>
+            <h3>Music</h3>
+            <div class="settings-block-content">
+              <audio src="./sounds/slow_music.mp3" loop class="music"></audio>
+              <input type="checkbox" id="toggle-button-music" class="toggle-button" />
+              <label for="toggle-button-music" name="off" value="off">Off</label>
+              <label for="toggle-button-music" name="on" value="On">On</label>
+            </div>
+          </li>
+
+
+
+          <li>
+            <h3>Volume of sound effects</h3>
             <div class="settings-block-content">
               <button class="but-volume-off but-volume"></button>
               <input type="range" />
@@ -54,20 +75,21 @@
           </li>
 
           <li>
-            <h3>Music</h3>
+            <h3>Sound effects</h3>
             <div class="settings-block-content">
-              <input type="checkbox" id="toggle-button-music" class="toggle-button" />
-              <label for="toggle-button-music" name="off" value="off">Off</label>
-              <label for="toggle-button-music" name="on" value="On">On</label>
+
+              <input type="checkbox" id="toggle-button-soundEffects" class="toggle-button" />
+              <label for="toggle-button-soundEffects" name="off" value="off">Off</label>
+              <label for="toggle-button-soundEffects" name="on" value="On">On</label>
             </div>
           </li>
 
 
-          <li>
+          <li class="timerSet">
             <h3>Time to answer</h3>
             <div class="settings-block-content">
               <button class="but-time-down but-time"></button>
-              <input type="text" value="15" />
+              <input type="text" class="timeToAnswer" />
               <button class="but-time-up but-time"></button>
             </div>
           </li>
