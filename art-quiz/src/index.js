@@ -9,6 +9,9 @@ import {
   images
 } from "./images.js";
 import {
+  Settings
+} from "./settings.js";
+import {
   fillPaintingsCat,
   fillArtistsCat,
   getAllImages
@@ -21,8 +24,10 @@ getImgs().then((value) => {
   getAllImages(value, images).then((res) => {
     fillArtistsCat(mainBlock, res);
     fillPaintingsCat(mainBlock, res);
+
   })
 
 });
-
+let on = new Settings;
+//alert(on.volumeMusic)
 //console.log(images)
