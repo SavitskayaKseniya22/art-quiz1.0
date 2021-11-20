@@ -35,6 +35,7 @@ window.onload = function () {
       item.append(numTotal)
 
       numTotal.addEventListener("click", function () {
+        backCat.removeAttribute("disabled")
         let ul = new Tag("ul", "", "", "detailedResult")
         ul.innerHTML = myStorage.getItem(`${myStorage.key(i)}`);
         for (let item of mainBlock.childNodes) {
@@ -45,7 +46,13 @@ window.onload = function () {
         }
         mainBlock.append(ul)
 
+        for (let item of document.querySelectorAll(".imgInRes")) {
+          item.addEventListener("click", function () {
+            alert(1)
+            item.nextSibling.classList.toggle("displayNone")
+          })
 
+        }
         document.querySelector(".itemCloseButtomImg").addEventListener("click", function () {
           ul.remove()
           document.querySelector(".activeCat").classList.remove("displayNone")

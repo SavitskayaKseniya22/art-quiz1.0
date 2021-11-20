@@ -119,74 +119,31 @@ function fillAllCatPaint(arrImgs, k, block) {
     k++;
     for (let elem of obj.liArr) {
       elem.addEventListener("click", function () {
-        if (elem.src == obj.pic) {
-          printCard(elem, obj, "true", getNext, aA).then((res) => {
-
-            aA++;
-            obj.result = "true";
-            objCat.push(obj)
-            if (res.querySelector(".but-total")) {
-              res.querySelector(".but-total").addEventListener("click", function () {
-                getNext()
-                let trueAnswers = document.querySelectorAll(".trueAnswer")
-                printTotalCard(trueAnswers.length, elem.parentNode.parentNode).then(() => {
-                  document.addEventListener("click", function (event) {
-                    if (event.target.closest(".but-repeate")) {
-                      block.childNodes[0].classList.remove("displayNone")
-                    }
-                    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
-                      clearCat(block)
-                      fillAllCatPaint(arrImgs, k - 10, block)
-
-                      makePropStorage(block, trueAnswers.length)
-                      //document.querySelector(".totalCard").remove()
-                      //document.querySelector(".detailedResult").remove()
-                      //document.querySelector(".activeCat").classList.remove("displayNone")
-                    }
-                  })
-                  saveDetailedResult(objCat, block)
+        printCard(elem, obj, elem.src == obj.pic, getNext, aA).then((res) => {
+          aA++;
+          obj.result = (elem.src == obj.pic);
+          objCat.push(obj)
+          if (res.querySelector(".but-total")) {
+            res.querySelector(".but-total").addEventListener("click", function () {
+              getNext()
+              let trueAnswers = document.querySelectorAll(".trueAnswer")
+              printTotalCard(trueAnswers.length, elem.parentNode.parentNode).then(() => {
+                document.addEventListener("click", function (event) {
+                  if (event.target.closest(".but-repeate")) {
+                    block.childNodes[0].classList.remove("displayNone")
+                  }
+                  if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
+                    clearCat(block)
+                    fillAllCatPaint(arrImgs, k - 10, block)
+                    makePropStorage(block, trueAnswers.length)
+                  }
                 })
-
+                saveDetailedResult(objCat, block)
               })
-            }
 
-
-          })
-
-        } else {
-          printCard(elem, obj, "false", getNext, aA).then((res) => {
-            aA++;
-            obj.result = "false";
-            objCat.push(obj)
-            if (res.querySelector(".but-total")) {
-              res.querySelector(".but-total").addEventListener("click", function () {
-                getNext()
-                let trueAnswers = document.querySelectorAll(".trueAnswer")
-                printTotalCard(trueAnswers.length, elem.parentNode.parentNode).then(() => {
-                  document.addEventListener("click", function (event) {
-                    if (event.target.closest(".but-repeate")) {
-                      block.childNodes[0].classList.remove("displayNone")
-                    }
-                    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
-                      clearCat(block)
-                      fillAllCatPaint(arrImgs, k - 10, block)
-
-
-                      makePropStorage(block, trueAnswers.length)
-                      //document.querySelector(".totalCard").remove()
-                      //document.querySelector(".detailedResult").remove()
-                      // document.querySelector(".activeCat").classList.remove("displayNone")
-                    }
-                  })
-                  saveDetailedResult(objCat, block)
-                })
-
-              })
-            }
-
-
-          })
-        }
+            })
+          }
+        })
 
       })
     }
@@ -223,7 +180,6 @@ class QuestionArtist {
     let img = new Tag("img", "", this.pic)
     let ul = new Tag("ul", "", "", "possibleAnswers")
     questionContainer.append(h2, img, ul);
-
     let filteredObj = obj.slice().filter(elem => this.author != elem.desc.author);
 
     for (let i = 0; i < 4; i++) {
@@ -231,15 +187,10 @@ class QuestionArtist {
         this.liArr.push(new Tag("li", this.author, ""));
       } else {
         let randomNum = random(filteredObj.length)
-
         this.liArr.push(new Tag("li", filteredObj[randomNum].desc.author, ""))
-
         filteredObj = filteredObj.slice().filter(item => filteredObj[randomNum].desc.author != item.desc.author);
-
       }
-
     }
-
     shuffle(this.liArr);
     for (let elem of this.liArr) {
       elem.classList.add("possibleAnswerElem");
@@ -272,89 +223,34 @@ function fillAllCat(arrImgs, k, block) {
   aA = 0;
   let objCat = [];
   for (let i = 0; i < 10; i++) {
-
     let obj = new QuestionArtist(arrImgs, block, k);
     k++;
     for (let elem of obj.liArr) {
       elem.addEventListener("click", function () {
-        if (elem.textContent == obj.author) {
-          printCard(elem.parentNode, obj, "true", getNext, aA).then((res) => {
-            aA++;
-            obj.result = "true";
-            objCat.push(obj)
-            if (res.querySelector(".but-total")) {
-              res.querySelector(".but-total").addEventListener("click", function () {
-                getNext()
-                let trueAnswers = document.querySelectorAll(".trueAnswer")
-                //alert( trueAnswers.length)
-                printTotalCard(trueAnswers.length, block).then((card) => {
-
-                  document.addEventListener("click", function (event) {
-
-                    if (event.target.closest(".but-repeate")) {
-                      block.childNodes[0].classList.remove("displayNone")
-                    }
-                    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
-                      clearCat(block)
-                      fillAllCat(arrImgs, k - 10, block)
-                      makePropStorage(block, trueAnswers.length)
-                      //card.remove()
-                      // document.querySelector(".detailedResult").remove()
-                      // document.querySelector(".activeCat").classList.remove("displayNone")
-                    }
-
-                  })
-                  saveDetailedResult(objCat, block)
+        printCard(elem.parentNode, obj, elem.textContent == obj.author, getNext, aA).then((res) => {
+          aA++;
+          obj.result = (elem.textContent == obj.author);
+          objCat.push(obj)
+          if (res.querySelector(".but-total")) {
+            res.querySelector(".but-total").addEventListener("click", function () {
+              getNext()
+              let trueAnswers = document.querySelectorAll(".trueAnswer")
+              printTotalCard(trueAnswers.length, block).then(() => {
+                document.addEventListener("click", function (event) {
+                  if (event.target.closest(".but-repeate")) {
+                    block.childNodes[0].classList.remove("displayNone")
+                  }
+                  if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
+                    clearCat(block)
+                    fillAllCat(arrImgs, k - 10, block)
+                    makePropStorage(block, trueAnswers.length)
+                  }
                 })
-
+                saveDetailedResult(objCat, block)
               })
-            }
-
-
-
-          })
-        } else {
-          printCard(elem.parentNode, obj, "false", getNext, aA).then((res) => {
-            aA++;
-            obj.result = "false";
-            objCat.push(obj)
-            if (res.querySelector(".but-total")) {
-              res.querySelector(".but-total").addEventListener("click", function () {
-                getNext()
-                let trueAnswers = document.querySelectorAll(".trueAnswer")
-                //alert(arr.length)
-                printTotalCard(trueAnswers.length, block).then((card) => {
-
-                  document.addEventListener("click", function (event) {
-
-
-                    if (event.target.closest(".but-repeate")) {
-                      block.childNodes[0].classList.remove("displayNone")
-                    }
-                    if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
-                      clearCat(block)
-                      fillAllCat(arrImgs, k - 10, block)
-                      makePropStorage(block, trueAnswers.length)
-                      //card.remove()
-                      // document.querySelector(".detailedResult").remove()
-                      // document.querySelector(".activeCat").classList.remove("displayNone")
-                    }
-
-
-
-                  })
-                  saveDetailedResult(objCat, block)
-                })
-
-              })
-            }
-
-
-
-
-          })
-        }
-
+            })
+          }
+        })
       })
     }
   }
@@ -368,10 +264,14 @@ function saveDetailedResult(arr, block) {
     let itemTitle = new Tag("h3", `"${item.desc.name}"`, "", "itemTitle")
     let itemAuthor = new Tag("p", item.author, "", "itemAuthor")
     let itemYear = new Tag("span", item.desc.year, "", "itemYear")
-    itemResult.append(itemTitle, imgInRes, itemAuthor, itemYear)
+    let containerResult = new Tag("div", "", "", "containerResult", "displayNone")
+    containerResult.append(itemTitle, itemAuthor, itemYear)
+    itemResult.append(imgInRes, containerResult)
+
     ul.append(itemResult)
-    if (item.result == "false") {
-      itemResult.style.opacity = "0.5"
+    if (item.result == false) {
+      itemResult.style.opacity = "0.8"
+      imgInRes.style.filter = "grayscale(1)";
     }
   }
   let itemCloseButtom = new Tag("button", "", "", "itemCloseButtom")
@@ -444,6 +344,7 @@ function makePropStorage(block, rightAnsw) {
   let numTotal = new Tag("span", `${rightAnsw} / 10`, "", "numTotal")
   node.append(numTotal)
   numTotal.addEventListener("click", function () {
+    document.querySelector(".back-cat").removeAttribute("disabled")
 
     let ul = new Tag("ul", "", "", "detailedResult")
     ul.innerHTML = myStorage.getItem(`.${node.classList[0]}.${node.classList[1]}.${node.classList[2]}`);
@@ -453,6 +354,14 @@ function makePropStorage(block, rightAnsw) {
       }
     }
     mainBlock.append(ul)
+
+    for (let item of document.querySelectorAll(".imgInRes")) {
+      item.addEventListener("click", function () {
+        item.nextSibling.classList.toggle("displayNone")
+      })
+
+    }
+
 
     document.querySelector(".itemCloseButtomImg").addEventListener("click", function () {
       document.querySelector(".detailedResult").remove()
@@ -584,7 +493,7 @@ class Card {
     let span = new Tag("span", this.year, "")
     let imgResult = new Tag("img", "", "", "imgResult")
 
-    if (result == "true") {
+    if (result == true) {
       block.classList.add("trueAnswer")
       setTimeout(() => {
         imgResult.style.backgroundColor = "GREEN";

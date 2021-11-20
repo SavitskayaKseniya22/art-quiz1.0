@@ -334,7 +334,7 @@ body {
         padding: 10px;
         width: 100%;
         cursor: pointer;
-        background-color: rgba(255, 0, 0, 0.473);
+        background-color: rgba(255, 0, 0, 0.5);
         text-align: right;
         z-index: 999999999;
 
@@ -413,7 +413,6 @@ body {
 
     .detailedResult {
       position: absolute;
-
       font-size: 14px;
 
       .itemCloseButtomImg {
@@ -429,6 +428,16 @@ body {
         align-items: center;
         column-gap: 10px;
         row-gap: 10px;
+        position: relative;
+
+        .containerResult {
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
+          background-color: rgba(255, 0, 0, 0.5);
+          padding: 10px;
+        }
+
 
         &>* {
           width: 100%;
