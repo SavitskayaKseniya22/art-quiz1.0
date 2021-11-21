@@ -146,6 +146,10 @@ export function makeCat(arr, catName) {
           elem = document.querySelector(`ul.cat2.subCat${i}`)
         }
         elem.classList.remove("displayNone")
+
+
+
+
       }
 
     })

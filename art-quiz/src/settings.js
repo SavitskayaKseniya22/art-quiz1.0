@@ -268,6 +268,9 @@ export class Settings {
         if (myStorage.getItem("timeToAnswer")) {
             this.timerValue = JSON.parse(myStorage.getItem("timeToAnswer"))
             timeToAnswer.value = this.timerValue
+        } else {
+            this.timerValue = timeToAnswer.value
+            myStorage.setItem("timeToAnswer", JSON.stringify(this.timerValue))
         }
 
 
