@@ -505,6 +505,7 @@ body {
       flex-direction: column;
       justify-content: center;
       row-gap: 30px;
+      transition: 0.5s;
 
       a {
         width: 100%;
@@ -976,8 +977,11 @@ body {
         align-items: center;
         padding: 20px;
 
+
+
         a {
-          width: 60%;
+          width: 400px;
+          height: 400px;
         }
 
         .tempDivCont {
@@ -1084,6 +1088,11 @@ body {
       .tempDiv {
 
         padding: 80px;
+
+        a {
+          width: 600px;
+          height: 600px;
+        }
       }
 
     }

@@ -177,6 +177,7 @@ function fillAllCatPaint(arrImgs, k, block) {
 
                   }
                 })
+
                 makePropStorage(block, trueAnswers.length)
                 saveDetailedResult(objCat, block)
               })
@@ -184,7 +185,13 @@ function fillAllCatPaint(arrImgs, k, block) {
             })
           }
         })
+        document.addEventListener("click", function (event) {
+          if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
+            clearCat(block)
+            fillAllCatPaint(arrImgs, k - 10, block)
 
+          }
+        })
       })
     }
   }
@@ -215,6 +222,10 @@ class QuestionArtist {
 
 
     let questionContainer = new Tag("li", "", "", "questionCard")
+
+
+
+
     if (block.childNodes.length != 0) {
       questionContainer.classList.add("displayNone")
 
@@ -328,6 +339,13 @@ function fillAllCat(arrImgs, k, block) {
                 saveDetailedResult(objCat, block)
               })
             })
+          }
+        })
+        document.addEventListener("click", function (event) {
+          if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
+            clearCat(block)
+            fillAllCatPaint(arrImgs, k - 10, block)
+
           }
         })
       })
@@ -597,10 +615,25 @@ class Card {
     this.imageNum = obj.desc.imageNum;
 
 
-    let div = new Tag("div", "", "", "tempDiv")
+    let div = new Tag("div", "", "", "tempDiv");
+
+    div.style.opacity = "0";
+
+    setTimeout(() => {
+      div.style.opacity = "1";
+      div.style.transform = "scale(0.7)"
+    }, 200);
+    setTimeout(() => {
+
+      div.style.transform = "scale(1)"
+    }, 700);
+
 
     let a = document.createElement("a");
     let img = new Tag("img", "", this.pic)
+
+
+
     a.append(img)
     a.target = "_blank"
     img.addEventListener("click", function () {
@@ -620,7 +653,7 @@ class Card {
       setTimeout(() => {
         imgResult.style.backgroundColor = "GREEN";
         imgResult.style.transform = "scale(2)"
-      }, 100);
+      }, 700);
       imgResult.src = "./images/correct-right-arrow-direction-left-down-up-svgrepo-com.svg"
     } else {
       block.classList.add("falseAnswer")
@@ -629,7 +662,7 @@ class Card {
       setTimeout(() => {
         imgResult.style.backgroundColor = "RED";
         imgResult.style.transform = "scale(2)"
-      }, 100);
+      }, 700);
       imgResult.src = "./images/wrong-delete-remove-trash-minus-cancel-close-svgrepo-com.svg"
     }
 
@@ -641,12 +674,14 @@ class Card {
       let nextQButton = new Tag("button", "", "", "nextQButton")
       nextQButton.addEventListener("click", this.func)
       let nextQImage = new Tag("img", "", "./images/next-arrow-direction-down-left-up-right-svgrepo-com.svg")
+      nextQButton.style.transition = ".3s"
       nextQButton.append(nextQImage)
       divCont.append(nextQButton)
       slowSlide(nextQButton)
     } else {
       let buttonTotal = new Tag("button", "", "", "but-total")
       let imgTotal = new Tag("img", "", "./images/clipboard-check-line-svgrepo-com.svg")
+      buttonTotal.style.transition = ".3s"
       buttonTotal.append(imgTotal)
       divCont.append(buttonTotal)
       slowSlide(buttonTotal)
@@ -685,10 +720,13 @@ class Card {
 
 
 function slowSlide(item) {
+
   setTimeout(() => {
-    item.style.transform = "translateX(20px)"
-    setTimeout(() => {
-      item.style.transform = "scale(2)"
-    }, 200);
-  }, 400);
+
+    item.style.transform = "scale(2) translateX(20px) "
+  }, 1000);
+  setTimeout(() => {
+
+    item.style.transform = "scale(2)"
+  }, 1200);
 }

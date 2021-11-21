@@ -48,8 +48,22 @@ window.onload = function () {
 
         for (let item of document.querySelectorAll(".imgInRes")) {
           item.addEventListener("click", function () {
-
+            item.nextSibling.style.opacity = "0";
+            item.nextSibling.style.transition = "0.3s"
             item.nextSibling.classList.toggle("displayNone")
+            if (!item.nextSibling.classList.contains("displayNone")) {
+              setTimeout(() => {
+                item.nextSibling.style.opacity = "1";
+                item.nextSibling.style.transform = "translate(-20px, -30px)";
+              }, 200);
+              setTimeout(() => {
+
+
+                item.nextSibling.style.transform = "translate(0px, 0px)";
+              }, 600);
+            }
+
+
           })
 
         }
