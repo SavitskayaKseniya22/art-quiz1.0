@@ -1,13 +1,18 @@
+import {
+
+    myStorage
+} from "./questions.js";
 export class Settings {
 
     constructor() {
-        this._soundEffects = false;
-        this._music = false;
+        this.name = "settings"
+        this._soundEffects;
+        this._music;
 
-        this._timer = false;
+        this._timer;
 
-        this._timerValue = 15;
-        this._timerStep = 5;
+        this._timerValue;
+        this._timerStep;
 
         this._language = "en";
 
@@ -86,8 +91,38 @@ export class Settings {
         //отключить музыку\включить музыку
         let musicSet = document.querySelector(".musicSet")
 
+        if (myStorage.getItem("music")) {
+            /*
+                        let res;
+                        if (myStorage.getItem("music") == "true") {
+                            res = true;
+                        } else {
+                            res = false
+                        }
+                        this.music = res;
+                        */
+            this.music = JSON.parse(myStorage.getItem("music"));
+            music.checked = this.music
+            if (this.music == false) {
+                audioMusic.pause()
+                volumeMusic.setAttribute("disabled", "true");
+                musicSet.style.opacity = "0.5"
+            } else {
+                audioMusic.play()
+                volumeMusic.removeAttribute("disabled");
+                musicSet.style.opacity = "1"
+            }
+        } else {
+            this.music = false;
+            music.checked = this.music;
+            audioMusic.pause()
+            volumeMusic.setAttribute("disabled", "true");
+            musicSet.style.opacity = "0.5"
+        }
+
         music.onchange = function () {
             this.music = music.checked;
+            myStorage.setItem("music", JSON.stringify(this.music))
             if (this.music == false) {
                 audioMusic.pause()
                 volumeMusic.setAttribute("disabled", "true");
@@ -135,12 +170,9 @@ export class Settings {
         let timerSet = document.querySelector(".timerSet")
         let timer = document.querySelector("input[id='toggle-button-timer']")
         let timeToAnswer = document.querySelector(".timeToAnswer")
-        timeToAnswer.value = this.timerValue
+
         timer.onchange = function () {
             this.timer = timer.checked;
-
-
-
             if (this.timer == false) {
 
                 timeToAnswer.setAttribute("disabled", "true");
@@ -150,28 +182,28 @@ export class Settings {
                 timeToAnswer.removeAttribute("disabled");
                 timerSet.style.opacity = "1"
             }
-
         }
 
         let timerSetDown = document.querySelector(".timerSet .but-time-down")
         let timerSetUp = document.querySelector(".timerSet .but-time-up")
-
-
-
-
         timerSetDown.onclick = function () {
-
-            if (this.timerValue >= 10 && this.timerValue <= 35)
-                this.timerValue -= this.timerStep;
-
-            timeToAnswer.value = this.timerValue
+            if (!timeToAnswer.hasAttribute("disabled")) {
+                this.timerStep = 5
+                this.timerValue = Number(timeToAnswer.value)
+                if (this.timerValue >= 10 && this.timerValue <= 35)
+                    this.timerValue -= this.timerStep;
+                timeToAnswer.value = this.timerValue
+            }
         }
         timerSetUp.onclick = function () {
+            if (!timeToAnswer.hasAttribute("disabled")) {
+                this.timerStep = 5
+                this.timerValue = Number(timeToAnswer.value)
+                if (this.timerValue >= 0 && this.timerValue <= 25)
+                    this.timerValue += this.timerStep;
+                timeToAnswer.value = this.timerValue
+            }
 
-            if (this.timerValue >= 0 && this.timerValue <= 25)
-                this.timerValue += this.timerStep;
-
-            timeToAnswer.value = this.timerValue
         }
 
 
@@ -213,6 +245,9 @@ export class Settings {
         return this._music
     }
 
+
+
+
     set soundEffects(value) {
         this._soundEffects = value;
     }
@@ -249,7 +284,12 @@ export class Settings {
     }
 
 
-    method2() {}
-    method3() {}
+    saveInStorage() {
+        myStorage.setItem(this.name, JSON.stringify(this))
+        return 1
+    }
+    readFromStorage() {
+        return JSON.parse(myStorage.getItem(this.name))
+    }
 
 }

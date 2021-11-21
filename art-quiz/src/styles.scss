@@ -635,6 +635,19 @@ body {
           width: 100%;
         }
 
+        .timeToAnswer {
+          border: none;
+          background-color: transparent;
+          text-align: center;
+          width: 30px;
+          color: white;
+
+          &:focus {
+            outline: none
+              /* Рамка при получении фокуса */
+          }
+        }
+
       }
 
       .settings-block-content {
