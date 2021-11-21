@@ -171,8 +171,30 @@ export class Settings {
         let timer = document.querySelector("input[id='toggle-button-timer']")
         let timeToAnswer = document.querySelector(".timeToAnswer")
 
+
+
+        if (myStorage.getItem("timer")) {
+
+            this.timer = JSON.parse(myStorage.getItem("timer"));
+            timer.checked = this.timer
+            if (this.timer == false) {
+                timeToAnswer.setAttribute("disabled", "true");
+                timerSet.style.opacity = "0.5"
+            } else {
+                timeToAnswer.removeAttribute("disabled");
+                timerSet.style.opacity = "1"
+            }
+        } else {
+            this.timer = false;
+            timer.checked = this.timer;
+            timeToAnswer.setAttribute("disabled", "true");
+            timerSet.style.opacity = "0.5"
+        }
+
+
         timer.onchange = function () {
             this.timer = timer.checked;
+            myStorage.setItem("timer", JSON.stringify(this.timer))
             if (this.timer == false) {
 
                 timeToAnswer.setAttribute("disabled", "true");
@@ -186,6 +208,13 @@ export class Settings {
 
         let timerSetDown = document.querySelector(".timerSet .but-time-down")
         let timerSetUp = document.querySelector(".timerSet .but-time-up")
+
+        if (myStorage.getItem("timeToAnswer")) {
+            this.timerValue = JSON.parse(myStorage.getItem("timeToAnswer"))
+            timeToAnswer.value = this.timerValue
+        }
+
+
         timerSetDown.onclick = function () {
             if (!timeToAnswer.hasAttribute("disabled")) {
                 this.timerStep = 5
@@ -193,6 +222,7 @@ export class Settings {
                 if (this.timerValue >= 10 && this.timerValue <= 35)
                     this.timerValue -= this.timerStep;
                 timeToAnswer.value = this.timerValue
+                myStorage.setItem("timeToAnswer", JSON.stringify(this.timerValue))
             }
         }
         timerSetUp.onclick = function () {
@@ -202,6 +232,7 @@ export class Settings {
                 if (this.timerValue >= 0 && this.timerValue <= 25)
                     this.timerValue += this.timerStep;
                 timeToAnswer.value = this.timerValue
+                myStorage.setItem("timeToAnswer", JSON.stringify(this.timerValue))
             }
 
         }
