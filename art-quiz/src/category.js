@@ -48,10 +48,18 @@ window.onload = function () {
 
         for (let item of document.querySelectorAll(".imgInRes")) {
           item.addEventListener("click", function () {
-            alert(1)
+
             item.nextSibling.classList.toggle("displayNone")
           })
 
+        }
+        for (let item of document.querySelectorAll(".detailedResult a")) {
+          item.addEventListener("click", function () {
+            let endI = (item.parentNode.childNodes[0].src.lastIndexOf("."))
+            let startI = (item.parentNode.childNodes[0].src.lastIndexOf("/"))
+            let num = item.parentNode.childNodes[0].src.slice(startI + 1, endI)
+            item.href = `https://raw.githubusercontent.com/irinainina/image-data/dadea6e2555841b3f136d8ab07ce6474391f1a3f/full/${num}full.jpg`
+          })
         }
         document.querySelector(".itemCloseButtomImg").addEventListener("click", function () {
           ul.remove()

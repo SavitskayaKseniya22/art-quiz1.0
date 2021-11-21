@@ -266,7 +266,16 @@ function saveDetailedResult(arr, block) {
     let itemYear = new Tag("span", item.desc.year, "", "itemYear")
     let containerResult = new Tag("div", "", "", "containerResult", "displayNone")
     containerResult.append(itemTitle, itemAuthor, itemYear)
-    itemResult.append(imgInRes, containerResult)
+
+
+
+    let a = new Tag("a", "", "")
+    a.target = "_blank"
+    let imgA = new Tag("img", "", "./images/arrow_corner.svg")
+    a.append(imgA)
+
+
+    itemResult.append(imgInRes, containerResult, a)
 
     ul.append(itemResult)
     if (item.result == false) {
@@ -359,8 +368,16 @@ function makePropStorage(block, rightAnsw) {
       item.addEventListener("click", function () {
         item.nextSibling.classList.toggle("displayNone")
       })
-
     }
+    for (let item of document.querySelectorAll(".detailedResult a")) {
+      item.addEventListener("click", function () {
+        let endI = (item.parentNode.childNodes[0].src.lastIndexOf("."))
+        let startI = (item.parentNode.childNodes[0].src.lastIndexOf("/"))
+        let num = item.parentNode.childNodes[0].src.slice(startI + 1, endI)
+        item.href = `https://raw.githubusercontent.com/irinainina/image-data/dadea6e2555841b3f136d8ab07ce6474391f1a3f/full/${num}full.jpg`
+      })
+    }
+
 
 
     document.querySelector(".itemCloseButtomImg").addEventListener("click", function () {

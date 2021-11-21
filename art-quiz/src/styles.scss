@@ -430,6 +430,18 @@ body {
         row-gap: 10px;
         position: relative;
 
+        a {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          top: 20px;
+          right: 20px;
+
+          img {
+            width: 100%;
+          }
+        }
+
         .containerResult {
           position: absolute;
           bottom: 10px;
