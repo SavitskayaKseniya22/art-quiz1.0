@@ -257,13 +257,27 @@ export class Settings {
 
 
         let languages = document.querySelectorAll("input[name='radioButtonLang']")
+
+        if (myStorage.getItem("language")) {
+            this.language = JSON.parse(myStorage.getItem("language"))
+            for (let item of languages) {
+
+                item.removeAttribute("checked")
+                if (item.value == this.language) {
+                    item.setAttribute("checked", "checked")
+                }
+            }
+        }
+
         for (let item of languages) {
             item.onchange = function () {
+
                 this.language = item.value;
-                //alert(this.language)
+                myStorage.setItem("language", JSON.stringify(this.language))
 
             }
         }
+
 
 
 
