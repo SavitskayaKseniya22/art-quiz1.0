@@ -2,11 +2,18 @@ import {
 
     myStorage
 } from "./questions.js";
+
+export let soundEffects = {
+    correctAnswer: './sounds/correctA.mp3',
+    wrongAnswer: './sounds/wrongA.mp3',
+    endOfRound: './sounds/endOfRound.mp3'
+}
 export class Settings {
 
     constructor() {
         this.name = "settings"
         this._soundEffects;
+        this._volumeSoundEffects;
         this._music;
 
         this._timer;
@@ -21,14 +28,24 @@ export class Settings {
         let music = document.querySelector("input[id='toggle-button-music']")
         let audioMusic = document.querySelector("audio.music");
         let volumeMusic = document.querySelector(".volumeMusic")
-        audioMusic.volume = 0.2;
-        volumeMusic.value = audioMusic.volume;
+
         let tempVol;
 
+        if (myStorage.getItem("volumeMusic")) {
+            audioMusic.volume = JSON.parse(myStorage.getItem("volumeMusic"))
+            volumeMusic.value = audioMusic.volume;
+
+        } else {
+            audioMusic.volume = "0.5";
+            volumeMusic.value = audioMusic.volume;
+
+
+        }
         //кнопка сделать активным инпут рендж
 
         volumeMusic.addEventListener("input", function () {
-            audioMusic.volume = volumeMusic.value
+            audioMusic.volume = volumeMusic.value;
+            myStorage.setItem("volumeMusic", JSON.stringify(audioMusic.volume))
             tempVol = audioMusic.volume;
             if (audioMusic.volume == 0) {
                 audioMusic.muted = true;
@@ -92,15 +109,7 @@ export class Settings {
         let musicSet = document.querySelector(".musicSet")
 
         if (myStorage.getItem("music")) {
-            /*
-                        let res;
-                        if (myStorage.getItem("music") == "true") {
-                            res = true;
-                        } else {
-                            res = false
-                        }
-                        this.music = res;
-                        */
+
             this.music = JSON.parse(myStorage.getItem("music"));
             music.checked = this.music
             if (this.music == false) {
@@ -148,11 +157,58 @@ export class Settings {
 
 
         let soundEffects = document.querySelector("input[id='toggle-button-soundEffects']")
-        soundEffects.onchange = function () {
-            this.soundEffects = soundEffects.checked;
-            alert(this.soundEffects)
+        let soundSet = document.querySelector(".soundSet")
+        let volumeSoundEffects = document.querySelector(".volumeSoundEffects")
+
+
+        if (myStorage.getItem("soundEffects")) {
+
+            this.soundEffects = JSON.parse(myStorage.getItem("soundEffects"));
+            soundEffects.checked = this.soundEffects
+            if (this.soundEffects == false) {
+                volumeSoundEffects.setAttribute("disabled", "true");
+                soundSet.style.opacity = "0.5"
+            } else {
+                volumeSoundEffects.removeAttribute("disabled");
+                soundSet.style.opacity = "1"
+            }
+        } else {
+            this.soundEffects = false;
+            soundEffects.checked = this.soundEffects;
+            volumeSoundEffects.setAttribute("disabled", "true");
+            soundSet.style.opacity = "0.5"
+
 
         }
+
+        soundEffects.onchange = function () {
+            this.soundEffects = soundEffects.checked;
+            myStorage.setItem("soundEffects", JSON.stringify(this.soundEffects))
+            if (this.soundEffects == false) {
+                volumeSoundEffects.setAttribute("disabled", "true");
+                soundSet.style.opacity = "0.5"
+            } else {
+
+                volumeSoundEffects.removeAttribute("disabled");
+                soundSet.style.opacity = "1"
+            }
+        }
+
+        if (myStorage.getItem("volumeSoundEffects")) {
+            this.volumeSoundEffects = JSON.parse(myStorage.getItem("volumeSoundEffects"))
+            this.volumeSoundEffects = volumeSoundEffects.value;
+
+        } else {
+            this.volumeSoundEffects = "0.5";
+            volumeSoundEffects.value = this.volumeSoundEffects
+
+
+        }
+
+        volumeSoundEffects.addEventListener("input", function () {
+            this.volumeSoundEffects = volumeSoundEffects.value;
+            myStorage.setItem("volumeSoundEffects", JSON.stringify(this.volumeSoundEffects))
+        })
 
 
 
@@ -277,11 +333,6 @@ export class Settings {
 
             }
         }
-
-
-
-
-
     }
     set music(value) {
         this._music = value;
@@ -291,7 +342,12 @@ export class Settings {
     }
 
 
-
+    set volumeSoundEffects(value) {
+        this._volumeSoundEffects = value;
+    }
+    get volumeSoundEffects() {
+        return this._volumeSoundEffects
+    }
 
     set soundEffects(value) {
         this._soundEffects = value;

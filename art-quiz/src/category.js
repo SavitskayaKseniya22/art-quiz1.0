@@ -93,7 +93,10 @@ document.addEventListener("click", function (event) {
     makeAllQInvis()
     makeAllCatInactive()
     nullCounts(aA)
-    document.querySelector(".detailedResult").remove()
+    if (document.querySelector(".detailedResult")) {
+      document.querySelector(".detailedResult").remove()
+    }
+
 
 
   } else if (event.target.closest(".back-cat")) {
@@ -101,7 +104,9 @@ document.addEventListener("click", function (event) {
     makeAllQInvis()
     document.querySelector(".activeCat").classList.remove("displayNone")
     nullCounts(aA)
-    document.querySelector(".detailedResult").remove()
+    if (document.querySelector(".detailedResult")) {
+      document.querySelector(".detailedResult").remove()
+    }
   }
 })
 

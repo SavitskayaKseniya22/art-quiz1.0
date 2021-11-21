@@ -3,7 +3,11 @@ import {
   mainBlock
 
 } from "./category.js";
+import {
 
+  soundEffects
+
+} from "./settings";
 
 
 
@@ -325,6 +329,8 @@ async function printTotalCard(rightAnsw, block) {
   let buttonRepeate = new Tag("button", "", "", "but-repeate")
   let imgRepeate = new Tag("img", "", "./images/arrow_repeat.svg")
   buttonRepeate.append(imgRepeate)
+  let audio = new Tag("audio", "", soundEffects.endOfRound, "soundsEffect")
+
   let p;
   if (rightAnsw <= 3) {
     p = new Tag("p", "Please try again. You can do better!", "")
@@ -337,6 +343,26 @@ async function printTotalCard(rightAnsw, block) {
   }
   let span = new Tag("span", `${rightAnsw} correct answers out of 10`, "")
   div.append(h3, p, span, buttonHome, buttonRepeate, buttonCat)
+
+  if (myStorage.getItem("soundEffects")) {
+    if (JSON.parse(myStorage.getItem("soundEffects")) == true) {
+      div.append(audio)
+      audio.setAttribute("autoplay", "autoplay")
+    }
+  }
+
+
+  if (myStorage.getItem("volumeSoundEffects")) {
+    audio.volume = JSON.parse(myStorage.getItem("volumeSoundEffects"))
+  } else {
+    audio.volume = "0.5";
+
+  }
+
+
+
+
+
   block.append(div)
   return div
 }
@@ -496,6 +522,7 @@ class Card {
 
 
     let div = new Tag("div", "", "", "tempDiv")
+
     let a = document.createElement("a");
     let img = new Tag("img", "", this.pic)
     a.append(img)
@@ -509,9 +536,11 @@ class Card {
     let h3 = new Tag("h3", this.author, "")
     let span = new Tag("span", this.year, "")
     let imgResult = new Tag("img", "", "", "imgResult")
-
+    let audio;
     if (result == true) {
       block.classList.add("trueAnswer")
+      audio = new Tag("audio", "", soundEffects.correctAnswer, "soundsEffect")
+
       setTimeout(() => {
         imgResult.style.backgroundColor = "GREEN";
         imgResult.style.transform = "scale(2)"
@@ -519,12 +548,19 @@ class Card {
       imgResult.src = "./images/correct-right-arrow-direction-left-down-up-svgrepo-com.svg"
     } else {
       block.classList.add("falseAnswer")
+      audio = new Tag("audio", "", soundEffects.wrongAnswer, "soundsEffect")
+
       setTimeout(() => {
         imgResult.style.backgroundColor = "RED";
         imgResult.style.transform = "scale(2)"
       }, 100);
       imgResult.src = "./images/wrong-delete-remove-trash-minus-cancel-close-svgrepo-com.svg"
     }
+
+
+
+
+
     if (aA != 9) {
       let nextQButton = new Tag("button", "", "", "nextQButton")
       nextQButton.addEventListener("click", this.func)
@@ -540,6 +576,24 @@ class Card {
       slowSlide(buttonTotal)
     }
     divCont.append(h2, h3, span, imgResult)
+
+    if (myStorage.getItem("soundEffects")) {
+      if (JSON.parse(myStorage.getItem("soundEffects")) == true) {
+        divCont.append(audio)
+        audio.setAttribute("autoplay", "autoplay")
+      }
+    }
+    if (myStorage.getItem("volumeSoundEffects")) {
+
+      audio.volume = JSON.parse(myStorage.getItem("volumeSoundEffects"))
+
+    } else {
+      audio.volume = 0.5;
+
+
+    }
+
+
     div.append(a, divCont)
     block.append(div)
 
