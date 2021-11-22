@@ -107,12 +107,13 @@ label {
   display: none;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+//@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&family=Neucha&family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Neucha&display=swap');
 
 body {
   background-color: #363636;
   color: white;
-  font-family: "Righteous", cursive;
+  font-family: 'Neucha', cursive;
   min-width: 320px;
 
   .container {
@@ -302,7 +303,7 @@ body {
     .detailedResult {
       flex-direction: row;
       flex-wrap: wrap;
-      padding: 20px;
+
       column-gap: 20px;
       row-gap: 20px;
       align-items: baseline;
@@ -782,7 +783,7 @@ body {
       row-gap: 10px;
 
       li {
-        font-size: 12px;
+        font-size: 14px;
       }
 
       a {

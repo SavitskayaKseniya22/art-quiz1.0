@@ -24,7 +24,6 @@ window.onunload = function () {
 window.onload = function () {
   for (let i = 0; i < myStorage.length; i++) {
     let key = `li${myStorage.key(i)}`;
-
     let item = document.querySelector(key)
     if (item) {
       for (let elem of item.childNodes) {
@@ -32,9 +31,8 @@ window.onload = function () {
           elem.remove()
         }
       }
-      let numTotal = new Tag("span", `${localStorage.getItem(key)} / 10`, "", "numTotal")
+      let numTotal = new Tag("span", `${myStorage.getItem(key)} / 10`, "", "numTotal")
       item.append(numTotal)
-
       numTotal.addEventListener("click", function () {
         backCat.removeAttribute("disabled")
         let ul = new Tag("ul", "", "", "detailedResult")
@@ -42,33 +40,11 @@ window.onload = function () {
         for (let item of mainBlock.childNodes) {
           if (item.tagName) {
             item.classList.add("displayNone")
-
           }
         }
         mainBlock.append(ul)
-
-        for (let item of document.querySelectorAll(".imgInRes")) {
-          item.addEventListener("click", function () {
-            item.nextSibling.style.opacity = "0";
-            item.nextSibling.style.transition = "0.3s"
-            item.nextSibling.classList.toggle("displayNone")
-            if (!item.nextSibling.classList.contains("displayNone")) {
-              setTimeout(() => {
-                item.nextSibling.style.opacity = "1";
-                item.nextSibling.style.transform = "translate(-20px, -30px)";
-              }, 200);
-              setTimeout(() => {
-
-
-                item.nextSibling.style.transform = "translate(0px, 0px)";
-              }, 600);
-            }
-
-
-          })
-
-        }
-        for (let item of document.querySelectorAll(".detailedResult a")) {
+        shiftRes()
+        for (let item of document.querySelectorAll(".detailedResult .linkFullSize")) {
           item.addEventListener("click", function () {
             let endI = (item.parentNode.childNodes[0].src.lastIndexOf("."))
             let startI = (item.parentNode.childNodes[0].src.lastIndexOf("/"))
@@ -76,18 +52,36 @@ window.onload = function () {
             item.href = `https://raw.githubusercontent.com/irinainina/image-data/dadea6e2555841b3f136d8ab07ce6474391f1a3f/full/${num}full.jpg`
           })
         }
-        document.querySelector(".itemCloseButtomImg").addEventListener("click", function () {
-          ul.remove()
-          document.querySelector(".activeCat").classList.remove("displayNone")
+        document.addEventListener("click", function (event) {
+          if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".itemCloseButtomImg")) {
+            document.querySelector(".detailedResult").remove()
+            document.querySelector(".activeCat").classList.remove("displayNone")
+          }
         })
-
       })
     }
-
   }
 }
 
+export function shiftRes() {
+  for (let item of document.querySelectorAll(".imgInRes")) {
+    item.addEventListener("click", function () {
+      item.nextSibling.style.opacity = "0";
+      item.nextSibling.style.transition = "0.3s"
+      item.nextSibling.classList.toggle("displayNone")
+      if (!item.nextSibling.classList.contains("displayNone")) {
+        setTimeout(() => {
+          item.nextSibling.style.opacity = "1";
+          item.nextSibling.style.transform = "translate(-20px, -30px)";
+        }, 200);
+        setTimeout(() => {
+          item.nextSibling.style.transform = "translate(0px, 0px)";
+        }, 600);
+      }
+    })
+  }
 
+}
 document.addEventListener("click", function (event) {
 
 
@@ -141,6 +135,7 @@ export function makeCat(arr, catName) {
     li.append(h3);
 
     let img = new Tag("img", "", "")
+    img.style.filter = "blur(1px)";
 
     if (catName == "Artists") {
       img.src = arr[i];
@@ -159,9 +154,7 @@ export function makeCat(arr, catName) {
         if (catName == "Artists") {
           elem = document.querySelector(`ul.cat1.subCat${i}`)
         } else {
-
           elem = document.querySelector(`ul.cat2.subCat${i}`)
-
         }
         elem.classList.remove("displayNone")
 
@@ -170,8 +163,8 @@ export function makeCat(arr, catName) {
         slidePic(elem.childNodes[0])
 
         //таймер для первого
-        console.log(elem)
-        if (myStorage.getItem("timer")) {
+
+        if (myStorage.getItem("timer") == "true") {
           let timerBox;
           if (myStorage.getItem("timeToAnswer")) {
             timerBox = new Tag("span", JSON.parse(myStorage.getItem("timeToAnswer")), "", "timerBox")
@@ -181,7 +174,6 @@ export function makeCat(arr, catName) {
             timerBox = new Tag("span", 15, "", "timerBox")
             elem.childNodes[0].append(timerBox)
           }
-
           let timeDown = setInterval(() => {
             let num = Number(timerBox.textContent)
             num--;

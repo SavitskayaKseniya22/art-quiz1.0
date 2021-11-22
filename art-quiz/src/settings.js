@@ -117,17 +117,21 @@ export class Settings {
                 volumeMusic.setAttribute("disabled", "true");
                 musicSet.style.opacity = "0.5"
             } else {
+                let event = new Event("click");
+                musicSet.dispatchEvent(event)
                 audioMusic.play()
                 volumeMusic.removeAttribute("disabled");
                 musicSet.style.opacity = "1"
             }
         } else {
             this.music = false;
+            myStorage.setItem("music", JSON.stringify(this.music))
             music.checked = this.music;
             audioMusic.pause()
             volumeMusic.setAttribute("disabled", "true");
             musicSet.style.opacity = "0.5"
         }
+
 
         music.onchange = function () {
             this.music = music.checked;
@@ -174,6 +178,7 @@ export class Settings {
             }
         } else {
             this.soundEffects = false;
+            myStorage.setItem("soundEffects", JSON.stringify(this.soundEffects))
             soundEffects.checked = this.soundEffects;
             volumeSoundEffects.setAttribute("disabled", "true");
             soundSet.style.opacity = "0.5"
@@ -242,6 +247,7 @@ export class Settings {
             }
         } else {
             this.timer = false;
+            myStorage.setItem("timer", JSON.stringify(this.timer))
             timer.checked = this.timer;
             timeToAnswer.setAttribute("disabled", "true");
             timerSet.style.opacity = "0.5"

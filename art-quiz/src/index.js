@@ -30,6 +30,4 @@ getImgs().then((value) => {
   })
 
 });
-let on = new Settings;
-//alert(on.volumeMusic)
-//console.log(images)
+new Settings;
