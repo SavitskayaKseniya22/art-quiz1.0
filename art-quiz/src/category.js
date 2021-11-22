@@ -93,7 +93,8 @@ document.addEventListener("click", function (event) {
   if (event.target.closest(".quiz-type h2")) {
     quizType.classList.add("displayNone");
     mainBlock.classList.add("main-not-centered");
-    let list = document.querySelector(`.${event.target.textContent}`);
+    let list = document.querySelector(`.${event.target.id}`);
+
     list.classList.remove("displayNone");
     list.classList.add("activeCat");
     backHomeButton.removeAttribute("disabled")
@@ -160,6 +161,40 @@ export function makeCat(arr, catName) {
           elem = document.querySelector(`ul.cat2.subCat${i}`)
         }
         elem.classList.remove("displayNone")
+
+
+        //for (let y of elem.childNodes) {console.log(y)}
+        let imgFirst = elem.childNodes[0].childNodes[1];
+
+
+        setTimeout(() => {
+          imgFirst.style.opacity = "1"
+          imgFirst.style.transform = "translateX(500px)"
+        }, 200);
+
+        let activeCat = document.querySelector(".activeCat")
+        if (activeCat.classList.contains("Paintings")) {
+          let imgSecond = elem.childNodes[0].childNodes[2];
+          let imgThird = elem.childNodes[0].childNodes[3];
+          let imgFourth = elem.childNodes[0].childNodes[4];
+          setTimeout(() => {
+            imgSecond.style.opacity = "1"
+            imgSecond.style.transform = "translateX(500px)"
+          }, 500);
+          setTimeout(() => {
+            imgThird.style.opacity = "1"
+            imgThird.style.transform = "translateX(500px)"
+          }, 800);
+          setTimeout(() => {
+            imgFourth.style.opacity = "1"
+            imgFourth.style.transform = "translateX(500px)"
+          }, 1100);
+
+
+        }
+
+
+
 
 
 

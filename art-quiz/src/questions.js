@@ -232,6 +232,7 @@ class QuestionArtist {
     }
     let h2 = new Tag("h2", "Who is the author of the painting?", "")
     let img = new Tag("img", "", this.pic)
+
     let ul = new Tag("ul", "", "", "possibleAnswers")
     questionContainer.append(h2, img, ul);
     let filteredObj = obj.slice().filter(elem => this.author != elem.desc.author);
@@ -539,6 +540,34 @@ function getNext() {
   tempDiv.parentNode.classList.add("complete")
   if (tempDiv.parentNode.nextSibling) {
     tempDiv.parentNode.nextSibling.classList.remove("displayNone")
+
+    let img = tempDiv.parentNode.nextSibling.childNodes[1]
+    setTimeout(() => {
+      img.style.opacity = "1"
+      img.style.transform = "translateX(500px)"
+    }, 300);
+
+    let activeCat = document.querySelector(".activeCat")
+    if (activeCat.classList.contains("Paintings")) {
+      let imgSecond = tempDiv.parentNode.nextSibling.childNodes[2];
+      let imgThird = tempDiv.parentNode.nextSibling.childNodes[3];
+      let imgFourth = tempDiv.parentNode.nextSibling.childNodes[4];
+      setTimeout(() => {
+        imgSecond.style.opacity = "1"
+        imgSecond.style.transform = "translateX(500px)"
+      }, 500);
+      setTimeout(() => {
+        imgThird.style.opacity = "1"
+        imgThird.style.transform = "translateX(500px)"
+      }, 800);
+      setTimeout(() => {
+        imgFourth.style.opacity = "1"
+        imgFourth.style.transform = "translateX(500px)"
+      }, 1100);
+
+
+    }
+
   }
   tempDiv.remove()
 

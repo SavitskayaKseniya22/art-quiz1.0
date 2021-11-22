@@ -381,6 +381,13 @@ body {
 
         }
 
+        &>img {
+          position: relative;
+          left: -500px;
+          opacity: 0;
+          transition: .5s;
+        }
+
         &.displayNone {
           display: none;
         }
