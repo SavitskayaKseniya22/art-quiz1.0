@@ -65,7 +65,7 @@ export class Tag {
 
 
 
-class QuestionPaintings {
+export class QuestionPaintings {
   constructor(obj, block, k) {
     this.obj = obj[k]
     this.pic = this.obj.pic;
@@ -73,12 +73,10 @@ class QuestionPaintings {
     this.author = this.obj.desc.author;
     this.liArr = [];
     this.correct = this.pic;
-
     let questionContainer = new Tag("li", "", "", "questionCard", "questionCardPaintings")
     if (block.childNodes.length != 0) {
       questionContainer.classList.add("displayNone")
     }
-
     let h2 = new Tag("h2", `Which of these paintings did ${this.author} paint?`, "")
     questionContainer.append(h2);
 
@@ -92,9 +90,7 @@ class QuestionPaintings {
         filteredObj = filteredObj.slice().filter(elem => filteredObj[randomNum].desc.author != elem.desc.author);
       }
     }
-
     shuffle(this.liArr);
-
     for (let elem of this.liArr) {
       questionContainer.append(elem);
     }
@@ -102,90 +98,7 @@ class QuestionPaintings {
   }
 }
 
-
-
-
-
-export function fillPaintingsCat(block, arrImgs) {
-  let k = 120;
-  for (let j = 0; j < 12; j++) {
-    let ul = new Tag("ul", "", "", "cat2", "cat", `subCat${j}`, "displayNone")
-    fillAllCat(arrImgs, k, ul, QuestionPaintings, "src")
-    k += 10
-    block.append(ul);
-  }
-}
-/*
-function fillAllCatPaint(arrImgs, k, block) {
-  aA = 0;
-  let indicators = new Tag("ul", "", "", "indicators")
-  for (let i = 0; i < 10; i++) {
-    indicators.append(new Tag("li"))
-  }
-  let objCat = [];
-  for (let i = 0; i < 10; i++) {
-    let obj = new QuestionPaintings(arrImgs, block, k)
-    obj.number = i;
-    k++;
-    for (let elem of obj.liArr) {
-      elem.addEventListener("click", function (event) {
-        printCard(elem, obj, event.target["src"] == obj.correct, getNext, aA).then((res) => {
-          aA++;
-          obj.result = (event.target["src"] == obj.correct);
-          objCat.push(obj)
-          let indicatorsArr = document.querySelector(`.${block.classList[0]}.${block.classList[1]}.${block.classList[2]} .indicators`)
-          if (obj.result) {
-            indicatorsArr.childNodes[obj.number].style.backgroundColor = "GREEN"
-          } else {
-            indicatorsArr.childNodes[obj.number].style.backgroundColor = "RED"
-          }
-          if (res.querySelector(".but-total")) {
-            res.querySelector(".but-total").addEventListener("click", function () {
-              getNext()
-              indicatorsArr.classList.add("displayNone")
-              let trueAnswers = document.querySelectorAll(".trueAnswer")
-              printTotalCard(trueAnswers.length, block).then(() => {
-                document.addEventListener("click", function (event) {
-                  if (event.target.closest(".but-repeate")) {
-                    block.childNodes[0].classList.remove("displayNone")
-                  }
-                  if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
-                    clearCat(block)
-                    fillAllCatPaint(arrImgs, k - 10, block)
-                  }
-                })
-                makePropStorage(block, trueAnswers.length)
-                saveDetailedResult(objCat, block)
-              })
-            })
-          }
-        })
-        document.addEventListener("click", function (event) {
-          if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
-            clearCat(block)
-            fillAllCatPaint(arrImgs, k - 10, block)
-          }
-        })
-      })
-    }
-  }
-  block.append(indicators)
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-class QuestionArtist {
+export class QuestionArtist {
   constructor(obj, block, k) {
     this.obj = obj[k]
     this.pic = this.obj.pic;
@@ -193,14 +106,7 @@ class QuestionArtist {
     this.author = this.obj.desc.author;
     this.liArr = [];
     this.correct = this.author;
-
-
-
     let questionContainer = new Tag("li", "", "", "questionCard")
-
-
-
-
     if (block.childNodes.length != 0) {
       questionContainer.classList.add("displayNone")
 
@@ -227,10 +133,6 @@ class QuestionArtist {
       ul.append(elem);
     }
 
-
-
-
-
     block.append(questionContainer);
   }
 }
@@ -240,80 +142,30 @@ class QuestionArtist {
 
 
 
-export function fillArtistsCat(block, arrImgs) {
-  let k = 0;
+
+
+
+
+
+
+
+export function fillCat(block, arrImgs, Class, arg, num) {
+  let k = num;
+  let l;
+  if (num == 0) {
+    l = 1
+  } else {
+    l = 2
+  }
   for (let j = 0; j < 12; j++) {
-    let ul = new Tag("ul", "", "", "cat1", "cat", `subCat${j}`, "displayNone");
-    //fillAllCat(arrImgs, k, ul)
-    fillAllCat(arrImgs, k, ul, QuestionArtist, "textContent")
+    let ul = new Tag("ul", "", "", `cat${l}`, "cat", `subCat${j}`, "displayNone");
+    fillAllCat(arrImgs, k, ul, Class, arg)
     k += 10
     block.append(ul);
   }
 
 }
 
-/*
-function fillAllCat(arrImgs, k, block) {
-  aA = 0;
-  let indicators = new Tag("ul", "", "", "indicators")
-  for (let i = 0; i < 10; i++) {
-    indicators.append(new Tag("li"))
-  }
-  let objCat = [];
-  for (let i = 0; i < 10; i++) {
-    let obj = new QuestionArtist(arrImgs, block, k);
-    obj.number = i;
-    k++;
-    for (let elem of obj.liArr) {
-
-      elem.addEventListener("click", function (event) {
-        printCard(elem, obj, event.target["textContent"] == obj.correct, getNext, aA).then((res) => {
-          aA++;
-          obj.result = (event.target["textContent"] == obj.correct);
-          objCat.push(obj)
-          let indicatorsArr = document.querySelector(`.${block.classList[0]}.${block.classList[1]}.${block.classList[2]} .indicators`)
-          if (obj.result) {
-            indicatorsArr.childNodes[obj.number].style.backgroundColor = "GREEN"
-          } else {
-            indicatorsArr.childNodes[obj.number].style.backgroundColor = "RED"
-          }
-          if (res.querySelector(".but-total")) {
-            res.querySelector(".but-total").addEventListener("click", function () {
-              getNext()
-              indicatorsArr.classList.add("displayNone")
-              let trueAnswers = document.querySelectorAll(".trueAnswer")
-              printTotalCard(trueAnswers.length, block).then(() => {
-                document.addEventListener("click", function (event) {
-                  if (event.target.closest(".but-repeate")) {
-                    block.childNodes[0].classList.remove("displayNone")
-                  }
-                  if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
-                    clearCat(block)
-                    fillAllCat(arrImgs, k - 10, block)
-                  }
-                })
-                makePropStorage(block, trueAnswers.length)
-                saveDetailedResult(objCat, block)
-              })
-            })
-          }
-        })
-        document.addEventListener("click", function (event) {
-          if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
-            clearCat(block)
-            fillAllCatPaint(arrImgs, k - 10, block)
-          }
-        })
-      })
-    }
-  }
-  block.append(indicators)
-}
-*/
-
-
-
-//fillAllCat(arrImgs, k, ul,QuestionArtist,"textContent")
 function fillAllCat(arrImgs, k, block, Class, atr) {
   aA = 0;
   let indicators = new Tag("ul", "", "", "indicators")
@@ -328,6 +180,9 @@ function fillAllCat(arrImgs, k, block, Class, atr) {
     for (let elem of obj.liArr) {
 
       elem.addEventListener("click", function (event) {
+
+
+
         printCard(elem, obj, event.target[atr] == obj.correct, getNext, aA).then((res) => {
           aA++;
           obj.result = (event.target[atr] == obj.correct);
@@ -345,12 +200,14 @@ function fillAllCat(arrImgs, k, block, Class, atr) {
               let trueAnswers = document.querySelectorAll(".trueAnswer")
               printTotalCard(trueAnswers.length, block).then(() => {
                 document.addEventListener("click", function (event) {
-                  if (event.target.closest(".but-repeate")) {
-                    block.childNodes[0].classList.remove("displayNone")
-                  }
+
                   if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
                     clearCat(block)
                     fillAllCat(arrImgs, k - 10, block, Class, atr)
+                  }
+                  if (event.target.closest(".but-repeate")) {
+                    block.childNodes[0].classList.remove("displayNone")
+                    slidePic(block.childNodes[0])
                   }
                 })
                 makePropStorage(block, trueAnswers.length)
@@ -362,7 +219,7 @@ function fillAllCat(arrImgs, k, block, Class, atr) {
         document.addEventListener("click", function (event) {
           if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
             clearCat(block)
-            fillAllCatPaint(arrImgs, k - 10, block)
+            fillAllCat(arrImgs, k - 10, block)
           }
         })
       })
@@ -577,36 +434,14 @@ async function printCard(elem, obj, result, func, aA) {
 
 function getNext() {
   let tempDiv = document.querySelector(".tempDiv")
-
   tempDiv.parentNode.classList.add("displayNone")
   tempDiv.parentNode.classList.add("complete")
   if (tempDiv.parentNode.nextSibling) {
     tempDiv.parentNode.nextSibling.classList.remove("displayNone")
     //анимация для вариантов ответа
-    let img = tempDiv.parentNode.nextSibling.childNodes[1]
-    setTimeout(() => {
-      img.style.opacity = "1"
-      img.style.transform = "translateX(500px)"
-    }, 300);
+    console.log(tempDiv.parentNode.nextSibling)
+    slidePic(tempDiv.parentNode.nextSibling)
 
-    let activeCat = document.querySelector(".activeCat")
-    if (activeCat.classList.contains("Paintings")) {
-      let imgSecond = tempDiv.parentNode.nextSibling.childNodes[2];
-      let imgThird = tempDiv.parentNode.nextSibling.childNodes[3];
-      let imgFourth = tempDiv.parentNode.nextSibling.childNodes[4];
-      setTimeout(() => {
-        imgSecond.style.opacity = "1"
-        imgSecond.style.transform = "translateX(500px)"
-      }, 500);
-      setTimeout(() => {
-        imgThird.style.opacity = "1"
-        imgThird.style.transform = "translateX(500px)"
-      }, 800);
-      setTimeout(() => {
-        imgFourth.style.opacity = "1"
-        imgFourth.style.transform = "translateX(500px)"
-      }, 1100);
-    }
 
     //таймер для всех кроме первого
     if (myStorage.getItem("timer")) {
@@ -621,6 +456,32 @@ function getNext() {
 
 }
 
+export function slidePic(cont) {
+  let img = cont.childNodes[1]
+  setTimeout(() => {
+    img.style.opacity = "1"
+    img.style.transform = "translateX(500px)"
+  }, 300);
+
+  let activeCat = document.querySelector(".activeCat")
+  if (activeCat.classList.contains("Paintings")) {
+    let imgSecond = cont.childNodes[2];
+    let imgThird = cont.childNodes[3];
+    let imgFourth = cont.childNodes[4];
+    setTimeout(() => {
+      imgSecond.style.opacity = "1"
+      imgSecond.style.transform = "translateX(500px)"
+    }, 500);
+    setTimeout(() => {
+      imgThird.style.opacity = "1"
+      imgThird.style.transform = "translateX(500px)"
+    }, 800);
+    setTimeout(() => {
+      imgFourth.style.opacity = "1"
+      imgFourth.style.transform = "translateX(500px)"
+    }, 1100);
+  }
+}
 
 
 

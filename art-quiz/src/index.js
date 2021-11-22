@@ -12,9 +12,11 @@ import {
   Settings
 } from "./settings.js";
 import {
-  fillPaintingsCat,
-  fillArtistsCat,
-  getAllImages
+
+  fillCat,
+  getAllImages,
+  QuestionArtist,
+  QuestionPaintings
 } from "./questions.js";
 
 
@@ -22,8 +24,8 @@ getImgs().then((value) => {
   makeCat(value, "Artists");
   makeCat(value, "Paintings");
   getAllImages(value, images).then((res) => {
-    fillArtistsCat(mainBlock, res);
-    fillPaintingsCat(mainBlock, res);
+    fillCat(mainBlock, res, QuestionArtist, "textContent", 0);
+    fillCat(mainBlock, res, QuestionPaintings, "src", 120);
 
   })
 

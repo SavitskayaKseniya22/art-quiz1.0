@@ -3,7 +3,8 @@ import {
   nullCounts,
 
   aA,
-  myStorage
+  myStorage,
+  slidePic
 } from "./questions.js";
 
 
@@ -158,38 +159,16 @@ export function makeCat(arr, catName) {
         if (catName == "Artists") {
           elem = document.querySelector(`ul.cat1.subCat${i}`)
         } else {
+
           elem = document.querySelector(`ul.cat2.subCat${i}`)
+
         }
         elem.classList.remove("displayNone")
 
 
         //анимация для вариантов ответа
-        let imgFirst = elem.childNodes[0].childNodes[1];
-        setTimeout(() => {
-          imgFirst.style.opacity = "1"
-          imgFirst.style.transform = "translateX(500px)"
-        }, 200);
+        slidePic(elem.childNodes[0])
 
-        let activeCat = document.querySelector(".activeCat")
-        if (activeCat.classList.contains("Paintings")) {
-          let imgSecond = elem.childNodes[0].childNodes[2];
-          let imgThird = elem.childNodes[0].childNodes[3];
-          let imgFourth = elem.childNodes[0].childNodes[4];
-          setTimeout(() => {
-            imgSecond.style.opacity = "1"
-            imgSecond.style.transform = "translateX(500px)"
-          }, 500);
-          setTimeout(() => {
-            imgThird.style.opacity = "1"
-            imgThird.style.transform = "translateX(500px)"
-          }, 800);
-          setTimeout(() => {
-            imgFourth.style.opacity = "1"
-            imgFourth.style.transform = "translateX(500px)"
-          }, 1100);
-
-
-        }
         //таймер для первого
 
         if (myStorage.getItem("timer")) {
