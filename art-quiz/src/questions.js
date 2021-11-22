@@ -180,42 +180,17 @@ function fillAllCat(arrImgs, k, block, Class, atr) {
     for (let elem of obj.liArr) {
 
       elem.addEventListener("click", function (event) {
+        ttt(event.target[atr] == obj.correct, elem, obj, objCat, block, arrImgs, k, Class, atr)
+        let timer = document.querySelector(`.${block.classList[0]}.${block.classList[1]}.${block.classList[2]} .timerBox`)
+        console.log(timer)
 
 
 
-        printCard(elem, obj, event.target[atr] == obj.correct, getNext, aA).then((res) => {
-          aA++;
-          obj.result = (event.target[atr] == obj.correct);
-          objCat.push(obj)
-          let indicatorsArr = document.querySelector(`.${block.classList[0]}.${block.classList[1]}.${block.classList[2]} .indicators`)
-          if (obj.result) {
-            indicatorsArr.childNodes[obj.number].style.backgroundColor = "GREEN"
-          } else {
-            indicatorsArr.childNodes[obj.number].style.backgroundColor = "RED"
-          }
-          if (res.querySelector(".but-total")) {
-            res.querySelector(".but-total").addEventListener("click", function () {
-              getNext()
-              indicatorsArr.classList.add("displayNone")
-              let trueAnswers = document.querySelectorAll(".trueAnswer")
-              printTotalCard(trueAnswers.length, block).then(() => {
-                document.addEventListener("click", function (event) {
 
-                  if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
-                    clearCat(block)
-                    fillAllCat(arrImgs, k - 10, block, Class, atr)
-                  }
-                  if (event.target.closest(".but-repeate")) {
-                    block.childNodes[0].classList.remove("displayNone")
-                    slidePic(block.childNodes[0])
-                  }
-                })
-                makePropStorage(block, trueAnswers.length)
-                saveDetailedResult(objCat, block)
-              })
-            })
-          }
-        })
+
+
+
+
         document.addEventListener("click", function (event) {
           if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
             clearCat(block)
@@ -223,9 +198,48 @@ function fillAllCat(arrImgs, k, block, Class, atr) {
           }
         })
       })
+
     }
+
+
   }
   block.append(indicators)
+}
+
+function ttt(condition, elem, obj, objCat, block, arrImgs, k, Class, atr) {
+  printCard(elem, obj, condition, getNext, aA).then((res) => {
+    aA++;
+    obj.result = (condition);
+    objCat.push(obj)
+    let indicatorsArr = document.querySelector(`.${block.classList[0]}.${block.classList[1]}.${block.classList[2]} .indicators`)
+    if (obj.result) {
+      indicatorsArr.childNodes[obj.number].style.backgroundColor = "GREEN"
+    } else {
+      indicatorsArr.childNodes[obj.number].style.backgroundColor = "RED"
+    }
+    if (res.querySelector(".but-total")) {
+      res.querySelector(".but-total").addEventListener("click", function () {
+        getNext()
+        indicatorsArr.classList.add("displayNone")
+        let trueAnswers = document.querySelectorAll(".trueAnswer")
+        printTotalCard(trueAnswers.length, block).then(() => {
+          document.addEventListener("click", function (event) {
+
+            if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
+              clearCat(block)
+              fillAllCat(arrImgs, k - 10, block, Class, atr)
+            }
+            if (event.target.closest(".but-repeate")) {
+              block.childNodes[0].classList.remove("displayNone")
+              slidePic(block.childNodes[0])
+            }
+          })
+          makePropStorage(block, trueAnswers.length)
+          saveDetailedResult(objCat, block)
+        })
+      })
+    }
+  })
 }
 
 
@@ -439,16 +453,46 @@ function getNext() {
   if (tempDiv.parentNode.nextSibling) {
     tempDiv.parentNode.nextSibling.classList.remove("displayNone")
     //анимация для вариантов ответа
-    console.log(tempDiv.parentNode.nextSibling)
+
     slidePic(tempDiv.parentNode.nextSibling)
 
 
     //таймер для всех кроме первого
     if (myStorage.getItem("timer")) {
-      //tempDiv.parentNode.nextSibling.style.backgroundColor = 'RED'
 
-      let timerBox = new Tag("span", JSON.parse(myStorage.getItem("timeToAnswer")), "", "timerBox")
-      tempDiv.parentNode.nextSibling.childNodes[0].append(timerBox)
+
+
+      let timerBox;
+      if (myStorage.getItem("timeToAnswer")) {
+        timerBox = new Tag("span", JSON.parse(myStorage.getItem("timeToAnswer")), "", "timerBox")
+        tempDiv.parentNode.nextSibling.append(timerBox)
+
+      } else {
+        timerBox = new Tag("span", 15, "", "timerBox")
+        tempDiv.parentNode.nextSibling.append(timerBox)
+      }
+
+      let timeDown = setInterval(() => {
+        let num = Number(timerBox.textContent)
+        num--;
+        timerBox.textContent = num;
+        if (num == 0) {
+          clearInterval(timeDown)
+          timerBox.remove()
+        }
+        document.addEventListener("click", function (event) {
+          if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
+            clearInterval(timeDown)
+            timerBox.remove()
+          }
+        })
+      }, 1000);
+
+
+
+
+
+
     }
 
   }

@@ -170,7 +170,7 @@ export function makeCat(arr, catName) {
         slidePic(elem.childNodes[0])
 
         //таймер для первого
-
+        console.log(elem)
         if (myStorage.getItem("timer")) {
           let timerBox;
           if (myStorage.getItem("timeToAnswer")) {
