@@ -72,6 +72,7 @@ class QuestionPaintings {
     this.desc = this.obj.desc;
     this.author = this.obj.desc.author;
     this.liArr = [];
+    this.correct = this.pic;
 
     let questionContainer = new Tag("li", "", "", "questionCard", "questionCardPaintings")
     if (block.childNodes.length != 0) {
@@ -109,64 +110,41 @@ export function fillPaintingsCat(block, arrImgs) {
   let k = 120;
   for (let j = 0; j < 12; j++) {
     let ul = new Tag("ul", "", "", "cat2", "cat", `subCat${j}`, "displayNone")
-    fillAllCatPaint(arrImgs, k, ul)
+    fillAllCat(arrImgs, k, ul, QuestionPaintings, "src")
     k += 10
     block.append(ul);
   }
 }
-
+/*
 function fillAllCatPaint(arrImgs, k, block) {
   aA = 0;
-
-
   let indicators = new Tag("ul", "", "", "indicators")
   for (let i = 0; i < 10; i++) {
-
     indicators.append(new Tag("li"))
   }
-
-
   let objCat = [];
   for (let i = 0; i < 10; i++) {
     let obj = new QuestionPaintings(arrImgs, block, k)
-
     obj.number = i;
-
     k++;
     for (let elem of obj.liArr) {
-      elem.addEventListener("click", function () {
-        printCard(elem, obj, elem.src == obj.pic, getNext, aA).then((res) => {
-
+      elem.addEventListener("click", function (event) {
+        printCard(elem, obj, event.target["src"] == obj.correct, getNext, aA).then((res) => {
           aA++;
-          console.log(aA)
-          obj.result = (elem.src == obj.pic);
+          obj.result = (event.target["src"] == obj.correct);
           objCat.push(obj)
-
           let indicatorsArr = document.querySelector(`.${block.classList[0]}.${block.classList[1]}.${block.classList[2]} .indicators`)
-
           if (obj.result) {
             indicatorsArr.childNodes[obj.number].style.backgroundColor = "GREEN"
           } else {
             indicatorsArr.childNodes[obj.number].style.backgroundColor = "RED"
           }
-
-
-
-
-
-
           if (res.querySelector(".but-total")) {
             res.querySelector(".but-total").addEventListener("click", function () {
-
-
               getNext()
-
               indicatorsArr.classList.add("displayNone")
-
-
-
               let trueAnswers = document.querySelectorAll(".trueAnswer")
-              printTotalCard(trueAnswers.length, elem.parentNode.parentNode).then(() => {
+              printTotalCard(trueAnswers.length, block).then(() => {
                 document.addEventListener("click", function (event) {
                   if (event.target.closest(".but-repeate")) {
                     block.childNodes[0].classList.remove("displayNone")
@@ -174,14 +152,11 @@ function fillAllCatPaint(arrImgs, k, block) {
                   if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
                     clearCat(block)
                     fillAllCatPaint(arrImgs, k - 10, block)
-
                   }
                 })
-
                 makePropStorage(block, trueAnswers.length)
                 saveDetailedResult(objCat, block)
               })
-
             })
           }
         })
@@ -189,7 +164,6 @@ function fillAllCatPaint(arrImgs, k, block) {
           if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
             clearCat(block)
             fillAllCatPaint(arrImgs, k - 10, block)
-
           }
         })
       })
@@ -197,7 +171,7 @@ function fillAllCatPaint(arrImgs, k, block) {
   }
   block.append(indicators)
 }
-
+*/
 
 
 
@@ -218,6 +192,7 @@ class QuestionArtist {
     this.desc = this.obj.desc;
     this.author = this.obj.desc.author;
     this.liArr = [];
+    this.correct = this.author;
 
 
 
@@ -269,26 +244,21 @@ export function fillArtistsCat(block, arrImgs) {
   let k = 0;
   for (let j = 0; j < 12; j++) {
     let ul = new Tag("ul", "", "", "cat1", "cat", `subCat${j}`, "displayNone");
-    fillAllCat(arrImgs, k, ul)
+    //fillAllCat(arrImgs, k, ul)
+    fillAllCat(arrImgs, k, ul, QuestionArtist, "textContent")
     k += 10
     block.append(ul);
   }
 
 }
 
-
+/*
 function fillAllCat(arrImgs, k, block) {
   aA = 0;
-
   let indicators = new Tag("ul", "", "", "indicators")
   for (let i = 0; i < 10; i++) {
-
     indicators.append(new Tag("li"))
   }
-
-
-
-
   let objCat = [];
   for (let i = 0; i < 10; i++) {
     let obj = new QuestionArtist(arrImgs, block, k);
@@ -296,34 +266,21 @@ function fillAllCat(arrImgs, k, block) {
     k++;
     for (let elem of obj.liArr) {
 
-      elem.addEventListener("click", function () {
-        printCard(elem.parentNode, obj, elem.textContent == obj.author, getNext, aA).then((res) => {
+      elem.addEventListener("click", function (event) {
+        printCard(elem, obj, event.target["textContent"] == obj.correct, getNext, aA).then((res) => {
           aA++;
-
-          obj.result = (elem.textContent == obj.author);
+          obj.result = (event.target["textContent"] == obj.correct);
           objCat.push(obj)
-
-
           let indicatorsArr = document.querySelector(`.${block.classList[0]}.${block.classList[1]}.${block.classList[2]} .indicators`)
-
           if (obj.result) {
             indicatorsArr.childNodes[obj.number].style.backgroundColor = "GREEN"
           } else {
             indicatorsArr.childNodes[obj.number].style.backgroundColor = "RED"
           }
-
-
-
-
           if (res.querySelector(".but-total")) {
             res.querySelector(".but-total").addEventListener("click", function () {
-
-
               getNext()
-
               indicatorsArr.classList.add("displayNone")
-
-
               let trueAnswers = document.querySelectorAll(".trueAnswer")
               printTotalCard(trueAnswers.length, block).then(() => {
                 document.addEventListener("click", function (event) {
@@ -333,7 +290,6 @@ function fillAllCat(arrImgs, k, block) {
                   if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
                     clearCat(block)
                     fillAllCat(arrImgs, k - 10, block)
-
                   }
                 })
                 makePropStorage(block, trueAnswers.length)
@@ -346,7 +302,6 @@ function fillAllCat(arrImgs, k, block) {
           if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
             clearCat(block)
             fillAllCatPaint(arrImgs, k - 10, block)
-
           }
         })
       })
@@ -354,6 +309,90 @@ function fillAllCat(arrImgs, k, block) {
   }
   block.append(indicators)
 }
+*/
+
+
+
+//fillAllCat(arrImgs, k, ul,QuestionArtist,"textContent")
+function fillAllCat(arrImgs, k, block, Class, atr) {
+  aA = 0;
+  let indicators = new Tag("ul", "", "", "indicators")
+  for (let i = 0; i < 10; i++) {
+    indicators.append(new Tag("li"))
+  }
+  let objCat = [];
+  for (let i = 0; i < 10; i++) {
+    let obj = new Class(arrImgs, block, k);
+    obj.number = i;
+    k++;
+    for (let elem of obj.liArr) {
+
+      elem.addEventListener("click", function (event) {
+        printCard(elem, obj, event.target[atr] == obj.correct, getNext, aA).then((res) => {
+          aA++;
+          obj.result = (event.target[atr] == obj.correct);
+          objCat.push(obj)
+          let indicatorsArr = document.querySelector(`.${block.classList[0]}.${block.classList[1]}.${block.classList[2]} .indicators`)
+          if (obj.result) {
+            indicatorsArr.childNodes[obj.number].style.backgroundColor = "GREEN"
+          } else {
+            indicatorsArr.childNodes[obj.number].style.backgroundColor = "RED"
+          }
+          if (res.querySelector(".but-total")) {
+            res.querySelector(".but-total").addEventListener("click", function () {
+              getNext()
+              indicatorsArr.classList.add("displayNone")
+              let trueAnswers = document.querySelectorAll(".trueAnswer")
+              printTotalCard(trueAnswers.length, block).then(() => {
+                document.addEventListener("click", function (event) {
+                  if (event.target.closest(".but-repeate")) {
+                    block.childNodes[0].classList.remove("displayNone")
+                  }
+                  if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
+                    clearCat(block)
+                    fillAllCat(arrImgs, k - 10, block, Class, atr)
+                  }
+                })
+                makePropStorage(block, trueAnswers.length)
+                saveDetailedResult(objCat, block)
+              })
+            })
+          }
+        })
+        document.addEventListener("click", function (event) {
+          if (event.target.closest(".back-home-button") || event.target.closest(".back-cat") || event.target.closest(".but-repeate")) {
+            clearCat(block)
+            fillAllCatPaint(arrImgs, k - 10, block)
+          }
+        })
+      })
+    }
+  }
+  block.append(indicators)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function saveDetailedResult(arr, block) {
   let ul = new Tag("div", "", "", "detailedResult", "displayNone")
@@ -519,10 +558,13 @@ function makePropStorage(block, rightAnsw) {
 
 
 async function printCard(elem, obj, result, func, aA) {
-  for (let item of elem.parentNode.childNodes) {
+
+
+  for (let item of elem.closest(".questionCard").childNodes) {
     item.classList.add("displayNone")
+
   }
-  return new Card(obj, elem.parentNode, result, func, aA)
+  return new Card(obj, elem.closest(".questionCard"), result, func, aA)
 }
 
 
@@ -540,7 +582,7 @@ function getNext() {
   tempDiv.parentNode.classList.add("complete")
   if (tempDiv.parentNode.nextSibling) {
     tempDiv.parentNode.nextSibling.classList.remove("displayNone")
-
+    //анимация для вариантов ответа
     let img = tempDiv.parentNode.nextSibling.childNodes[1]
     setTimeout(() => {
       img.style.opacity = "1"
@@ -564,8 +606,14 @@ function getNext() {
         imgFourth.style.opacity = "1"
         imgFourth.style.transform = "translateX(500px)"
       }, 1100);
+    }
 
+    //таймер для всех кроме первого
+    if (myStorage.getItem("timer")) {
+      //tempDiv.parentNode.nextSibling.style.backgroundColor = 'RED'
 
+      let timerBox = new Tag("span", JSON.parse(myStorage.getItem("timeToAnswer")), "", "timerBox")
+      tempDiv.parentNode.nextSibling.childNodes[0].append(timerBox)
     }
 
   }

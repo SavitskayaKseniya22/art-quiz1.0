@@ -163,10 +163,8 @@ export function makeCat(arr, catName) {
         elem.classList.remove("displayNone")
 
 
-        //for (let y of elem.childNodes) {console.log(y)}
+        //анимация для вариантов ответа
         let imgFirst = elem.childNodes[0].childNodes[1];
-
-
         setTimeout(() => {
           imgFirst.style.opacity = "1"
           imgFirst.style.transform = "translateX(500px)"
@@ -190,6 +188,36 @@ export function makeCat(arr, catName) {
             imgFourth.style.transform = "translateX(500px)"
           }, 1100);
 
+
+        }
+        //таймер для первого
+
+        if (myStorage.getItem("timer")) {
+          let timerBox;
+          if (myStorage.getItem("timeToAnswer")) {
+            timerBox = new Tag("span", JSON.parse(myStorage.getItem("timeToAnswer")), "", "timerBox")
+            elem.childNodes[0].append(timerBox)
+
+          } else {
+            timerBox = new Tag("span", 15, "", "timerBox")
+            elem.childNodes[0].append(timerBox)
+          }
+
+          let timeDown = setInterval(() => {
+            let num = Number(timerBox.textContent)
+            num--;
+            timerBox.textContent = num;
+            if (num == 0) {
+              clearInterval(timeDown)
+              timerBox.remove()
+            }
+            document.addEventListener("click", function (event) {
+              if (event.target.closest(".back-home-button") || event.target.closest(".back-cat")) {
+                clearInterval(timeDown)
+                timerBox.remove()
+              }
+            })
+          }, 1000);
 
         }
 

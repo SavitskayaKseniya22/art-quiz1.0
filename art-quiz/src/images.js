@@ -1,5 +1,4 @@
-export const images = [
-  {
+export const images = [{
     author: "Павел Федотов",
     name: "Сватовство майора",
     year: "1852",
@@ -1218,7 +1217,7 @@ export const images = [
     imageNum: "202",
   },
   {
-    author: "Винсент Ван Гог",
+    author: "Винсент ван Гог",
     name: "Автопортрет с перевязанным ухом",
     year: "1889",
     imageNum: "203",
@@ -1248,7 +1247,7 @@ export const images = [
     imageNum: "207",
   },
   {
-    author: "Винсент Ван Гог",
+    author: "Винсент ван Гог",
     name: "Пшеничное поле с кипарисами",
     year: "1889",
     imageNum: "208",
@@ -1290,7 +1289,7 @@ export const images = [
     imageNum: "214",
   },
   {
-    author: "Винсент Ван Гог",
+    author: "Винсент ван Гог",
     name: "Ночное кафе в Арле",
     year: "1888",
     imageNum: "215",
