@@ -21,6 +21,8 @@
 
 
 ### To start project: 
-1. cd art-quiz
-2. npm install
-3. npm start
+1. cd art-quiz1.0
+2. git checkout art-quiz
+3. cd art-quiz
+4. npm install
+5. npm start
